@@ -24,6 +24,20 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'contraseña', 'remember_token',
     ];
+
+
+    public function publicaciones() {
+        return $this->hasMany(Gauchada::class);
+    }
+
+    public function postulaciones() {
+        return $this->hasMany(Gauchada::class);
+    }
+
+    public function compras() {
+        return $this->hasMany(Compra::class);
+    }
+
 }
