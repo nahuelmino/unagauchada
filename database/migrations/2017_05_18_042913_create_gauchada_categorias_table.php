@@ -15,6 +15,7 @@ class CreateGauchadaCategoriasTable extends Migration
     {
         Schema::create('gauchada_categorias', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
             $table->timestamps();
         });
     }
