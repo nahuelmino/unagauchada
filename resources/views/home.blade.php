@@ -12,11 +12,12 @@
                         <span>Créditos: </span><span>{{ $user->credits }}</span>
                     </div>
                     <form action="/compras" method="post" class="form">
-                        {{ csrf_field() }}
+                        {{ csrf_field() }}<!--
                         <div class="form-group">
                             <label for="compra_creditos">Comprar creditos</label>
                             <input id="compra_creditos" type="number" name="cantidad_creditos" class="form-control">
-                        </div>
+                        </div>-->
+                        <input id="compra_creditos" type="hidden" name="cantidad_creditos" class="form-control" value=1>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Comprar</button>
                         </div>
