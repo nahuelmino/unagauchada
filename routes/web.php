@@ -19,3 +19,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/compras', 'ComprasController@generar');
+
+Route::get('/gauchadas/create', 'GauchadasController@create');
