@@ -22,4 +22,4 @@ Route::post('compras', 'ComprasController@generar');
 
 Route::get('/gauchadas/create', 'GauchadasController@create');
 
-Route::post('publicar', 'GauchadasController@store');
+Route::post('/gauchadas/create', 'GauchadasController@store');

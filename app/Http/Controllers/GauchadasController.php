@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Gauchada;
 
 class GauchadasController extends Controller
 {
@@ -53,10 +55,17 @@ class GauchadasController extends Controller
             ]);
 
         //crear y guardar
-        Gauchada::create(request(['name', 'description', 'location', 'categoria']));
+        Gauchada::create([
+            'creado_por' => Auth::user()->id,
+            'title' => request()->title,
+            'description' => request()->description,
+            'location' => request()->location,
+            'categoria' => request()->categoria,
+            'ends_at' => '2018-05-26 01:24:59'
+        ]);
 
         //redirigir
-        return redirect('/');
+        return redirect('/home');
     }
 
     /**

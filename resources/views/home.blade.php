@@ -24,6 +24,11 @@
                             <button type="submit" class="btn btn-primary">Comprar</button>
                         </div>
                     </form>
+
+                    <!--
+                    <input type="button" class="btn btn-primary" onclick="/gauchadas/create" value="Comprar"></input>
+                    -->
+                    <a class="btn btn-primary" href="/gauchadas/create">Nueva Gauchada</a>
                 </div>
             </div>
         </div>
