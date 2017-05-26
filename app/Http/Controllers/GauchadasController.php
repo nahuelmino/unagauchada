@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Gauchada;
+use Carbon\Carbon;
 
 class GauchadasController extends Controller
 {
@@ -38,6 +39,22 @@ class GauchadasController extends Controller
         return view('gauchadas.create');
     }
 
+    public function checkCreditos()
+    {
+        $credits = Auth::user()->credits;// <= 0;
+        return $credits > 0;
+        //  dd($credits);
+        //if ($credits) {
+            //return redirect()->back()->withErrors('No tiene suficientes créditos!');
+        //}
+    }
+
+    public function reducirCreditos() {
+        $user = Auth::user();
+        $user->credits = $user->credits - 1;
+        $user->save();
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -47,6 +64,12 @@ class GauchadasController extends Controller
     public function store(Request $request)
     {
         //Validar
+
+        if (! $this->checkCreditos()) {
+            return redirect('/home')->withErrors('No tiene suficientes créditos!');
+        }
+        $this->reducirCreditos();
+
         $this->validate(request(), [
                 'title' => 'required|string',
                 'description' => 'required|string|min:10',
@@ -61,7 +84,7 @@ class GauchadasController extends Controller
             'description' => request()->description,
             'location' => request()->location,
             'categoria' => request()->categoria,
-            'ends_at' => '2018-05-26 01:24:59'
+            'ends_at' => Carbon::now()->addMonths(1)
         ]);
 
         //redirigir

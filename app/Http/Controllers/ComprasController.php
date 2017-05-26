@@ -10,7 +10,9 @@ class ComprasController extends Controller
 {
     public function generar() {
         
-        $this->validarCompra();
+        if(! $this->validarCompra()) {
+            return redirect()->back()->withErrors('La tarjeta es invalida');
+        }
 
         $this->crearCompra();
 
@@ -29,11 +31,7 @@ class ComprasController extends Controller
         // $fecha_inicio = request()->fecha_inicio
         // $fecha_expiracion = request()->fecha_expiracion
 
-        $tarjeta_valida = true;
-        
-        if (!$tarjeta_valida) {
-            return redirect()->back()->withErrors('La tarjeta es invalida');
-        }
+        return true;
 
     }
 
@@ -56,4 +54,5 @@ class ComprasController extends Controller
         $user->save();
 
     }
+
 }
