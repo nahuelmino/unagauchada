@@ -44,7 +44,19 @@ class GauchadasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Validar
+        $this->validate(request(), [
+                'title' => 'required|string',
+                'description' => 'required|string|min:10',
+                'location' => 'required|string',
+                'categoria' => 'required'
+            ]);
+
+        //crear y guardar
+        Gauchada::create(request(['name', 'description', 'location', 'categoria']));
+
+        //redirigir
+        return redirect('/');
     }
 
     /**
