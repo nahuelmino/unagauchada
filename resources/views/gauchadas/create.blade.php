@@ -55,6 +55,7 @@
                         <!-- Parche hasta hacer las categorías -->
                         <input id="categoria" type="hidden" name="categoria" value="1">
 
+                        <?php /* ?>
                         <!-- TODO - 
                         <div class="form-group{{ $errors->has('categoria') ? ' has-error' : '' }}">
                             <label for="categoria" class="col-md-4 control-label">Categoría</label>
@@ -78,12 +79,13 @@
                             </div>
                         </div>
                         -->
+                        <?php */ ?>
 
                         <div class="form-group{{ $errors->has('photo') ? ' has-error' : '' }}">
                             <label for="photo" class="col-md-4 control-label">Foto (opcional)</label>
 
                             <div class="col-md-6">
-                                <input id="photo" type="file" class="form-control" name="photo" value="{{ old('photo') }}">
+                                <input id="photo" type="file" name="photo" value="{{ old('photo') }}">
 
                                 @if ($errors->has('photo'))
                                     <span class="help-block">
