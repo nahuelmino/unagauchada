@@ -41,12 +41,7 @@ class GauchadasController extends Controller
 
     public function checkCreditos()
     {
-        $credits = Auth::user()->credits;// <= 0;
-        return $credits > 0;
-        //  dd($credits);
-        //if ($credits) {
-            //return redirect()->back()->withErrors('No tiene suficientes créditos!');
-        //}
+        return Auth::user()->credits > 0;
     }
 
     public function reducirCreditos() {
@@ -65,17 +60,16 @@ class GauchadasController extends Controller
     {
         //Validar
 
-        if (! $this->checkCreditos()) {
-            return redirect('/home')->withErrors('No tiene suficientes créditos!');
-        }
-        $this->reducirCreditos();
-
         $this->validate(request(), [
                 'title' => 'required|string',
                 'description' => 'required|string|min:10',
                 'location' => 'required|string',
-                'categoria' => 'required'
+                'categoria' => 'required|numeric|min:1'
             ]);
+
+        if (! $this->checkCreditos()) {
+            return redirect('/home')->withErrors('No tiene suficientes créditos!');
+        }
 
         //crear y guardar
         Gauchada::create([
@@ -86,6 +80,7 @@ class GauchadasController extends Controller
             'categoria' => request()->categoria,
             'ends_at' => Carbon::now()->addMonths(1)
         ]);
+        $this->reducirCreditos();
 
         //redirigir
         return redirect('/home');

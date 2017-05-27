@@ -20,8 +20,14 @@
                         </div>
                         -->
                         <input id="compra_creditos" type="hidden" name="cantidad_creditos" class="form-control" value=1>
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('0') ? ' has-error' : '' }}">
                             <button type="submit" class="btn btn-primary">Comprar</button>
+
+                            @if ($errors->has('0'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('0') }}</strong>
+                                </span>
+                            @endif
                         </div>
                     </form>
 

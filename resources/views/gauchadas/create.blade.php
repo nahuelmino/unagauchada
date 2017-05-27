@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<?php use \App\Categoria; ?>
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -52,23 +53,25 @@
                             </div>
                         </div>
 
-                        <!-- Parche hasta hacer las categorías -->
-                        <input id="categoria" type="hidden" name="categoria" value="1">
+                        <!-- Parche hasta hacer las categorías
+                        <input id="categoria" type="hidden" name="categoria" value="1">-->
 
-                        <?php /* ?>
-                        <!-- TODO - 
+                        <?php /* ?> <!-- TODO - 
+                        --> <?php */ ?>
                         <div class="form-group{{ $errors->has('categoria') ? ' has-error' : '' }}">
                             <label for="categoria" class="col-md-4 control-label">Categoría</label>
 
                             <div class="col-md-6">
-                                <select id="categoria" class="form-control" name="categoria" required>
-                                    @foreach ($categorias as $categoria)
-                                        $sel = ''
-                                        @if old('categoria') == $categoria->id()
+                                <select id="categoria" class="form-control" name="categoria">
+                                    <option value="0">-- Seleccione una --</option>
+                                    <?php
+                                    foreach (Categoria::all() as $categoria) {
+                                        $sel = '';
+                                        if (old('categoria') == $categoria->id)
                                             $sel = ' selected'
-                                        @endif
-                                        <option value={{ $categoria->id() }}{{ $sel }} > {{ $categoria->name() }} </option>
-                                    @endforeach
+                                        ?>
+                                        <option value="{{ $categoria->id }}{{ $sel }}">{{ $categoria->name }}</option>
+                                    <?php } ?>
                                 </select>
 
                                 @if ($errors->has('categoria'))
@@ -78,8 +81,6 @@
                                 @endif
                             </div>
                         </div>
-                        -->
-                        <?php */ ?>
 
                         <div class="form-group{{ $errors->has('photo') ? ' has-error' : '' }}">
                             <label for="photo" class="col-md-4 control-label">Foto (opcional)</label>
