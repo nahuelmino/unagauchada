@@ -26,7 +26,15 @@ class GauchadasController extends Controller
      */
     public function index()
     {
-        //
+        $gauchadas = Gauchada::latest();
+
+        if ($title = request('title')) {
+            $gauchadas->where('title',$title);
+        }
+
+        $gauchadas = $gauchadas->get();
+
+        return view('gauchadas.lista', compact('gauchadas'));
     }
 
     /**

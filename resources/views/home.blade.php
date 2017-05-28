@@ -9,32 +9,9 @@
 
                 <div class="panel-body">
                     <div class="input-group" style="margin-bottom: 10px">
-                        <span>Créditos: </span><span>{{ $user->credits }}</span>
+                        <span>Créditos: </span><span>{{ Auth::user()->credits }}</span>
                     </div>
-                    <form action="/compras" method="post" class="form">
-                        {{ csrf_field() }}
-                        <!--
-                        <div class="form-group">
-                            <label for="compra_creditos">Comprar creditos</label>
-                            <input id="compra_creditos" type="number" name="cantidad_creditos" class="form-control">
-                        </div>
-                        -->
-                        <input id="compra_creditos" type="hidden" name="cantidad_creditos" class="form-control" value=1>
-                        <div class="form-group{{ $errors->has('0') ? ' has-error' : '' }}">
-                            <button type="submit" class="btn btn-primary">Comprar</button>
-
-                            @if ($errors->has('0'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('0') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </form>
-
-                    <!--
-                    <input type="button" class="btn btn-primary" onclick="/gauchadas/create" value="Comprar"></input>
-                    -->
-                    <a class="btn btn-primary" href="/gauchadas/create">Nueva Gauchada</a>
+                    <a href="{{ route('comprar') }}" class="btn btn-primary">Comprar</a>
                 </div>
             </div>
         </div>

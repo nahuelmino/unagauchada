@@ -39,8 +39,7 @@ class ComprasController extends Controller
 
         Compra::create([
             'user_id' => Auth::user()->id,
-            'precio_unitario' => config('app.precio_credito'),
-            'cantidad' => request()->cantidad_creditos
+            'precio_unitario' => config('app.precio_credito')
         ]);
 
     }
@@ -49,10 +48,14 @@ class ComprasController extends Controller
 
         $user = Auth::user();
 
-        $user->credits = $user->credits + request()->cantidad_creditos;
+        $user->credits = $user->credits + 1;
 
         $user->save();
 
+    }
+
+    public function index() {
+        return view('creditos.comprar');
     }
 
 }

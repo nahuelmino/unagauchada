@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Compra extends Model
 {
     protected $fillable = [
-        'user_id', 'precio_unitario', 'cantidad'
+        'user_id', 'precio_unitario', 'num_tarjeta'
     ];
 
     public function usuario() {

@@ -3,8 +3,12 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-        	Hola!
+        <div class="flex-center position-ref full-height">>
+            <div class="content">
+                <div class="title m-b-md">
+                    Bienvenidos a Una Gauchada!
+                </div>
+            </div>
         </div>
     </div>
 </div>
