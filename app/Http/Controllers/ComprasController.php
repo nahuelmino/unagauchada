@@ -10,13 +10,15 @@ class ComprasController extends Controller
 {
     public function generar() {
         
-        $this->validarCompra();
+        if(! $this->validarCompra()) {
+            return redirect()->back()->withErrors('La tarjeta es invalida');
+        }
 
         $this->crearCompra();
 
         $this->agregarCreditosAUsuario();
 
-        return redirect()->back();
+        return redirect('/home');
     
     }
 
@@ -29,11 +31,7 @@ class ComprasController extends Controller
         // $fecha_inicio = request()->fecha_inicio
         // $fecha_expiracion = request()->fecha_expiracion
 
-        $tarjeta_valida = true;
-        
-        if (!$tarjeta_valida) {
-            return redirect()->back()->withErrors('La tarjeta es invalida');
-        }
+        return true;
 
     }
 
@@ -42,7 +40,7 @@ class ComprasController extends Controller
         Compra::create([
             'user_id' => Auth::user()->id,
             'precio_unitario' => config('app.precio_credito'),
-            'cantidad' => request()->cantidad_creditos
+            'cantidad' => '1'
         ]);
 
     }
@@ -51,9 +49,14 @@ class ComprasController extends Controller
 
         $user = Auth::user();
 
-        $user->credits = $user->credits + request()->cantidad_creditos;
+        $user->credits = $user->credits + 1;
 
         $user->save();
 
     }
+
+    public function index() {
+        return view('creditos.comprar');
+    }
+
 }

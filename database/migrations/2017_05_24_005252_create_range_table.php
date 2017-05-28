@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRespuestasTable extends Migration
+class CreateRangeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateRespuestasTable extends Migration
      */
     public function up()
     {
-        Schema::create('respuestas', function (Blueprint $table) {
+        Schema::create('range', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('text');
-            $table->integer('pregunta')->unsigned();
-            //$table->foreign('pregunta')->references('id')->on('preguntas');
+            $table->integer('from');
+            $table->integer('to');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateRespuestasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('respuestas');
+        Schema::dropIfExists('range');
     }
 }

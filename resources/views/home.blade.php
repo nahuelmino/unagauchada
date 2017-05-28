@@ -9,18 +9,9 @@
 
                 <div class="panel-body">
                     <div class="input-group" style="margin-bottom: 10px">
-                        <span>Créditos: </span><span>{{ $user->credits }}</span>
+                        <span>Créditos: </span><span>{{ Auth::user()->credits }}</span>
                     </div>
-                    <form action="/compras" method="post" class="form">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <label for="compra_creditos">Comprar creditos</label>
-                            <input id="compra_creditos" type="number" name="cantidad_creditos" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Comprar</button>
-                        </div>
-                    </form>
+                    <a href="{{ route('comprar') }}" class="btn btn-primary">Comprar</a>
                 </div>
             </div>
         </div>
