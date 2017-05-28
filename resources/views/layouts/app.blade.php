@@ -98,8 +98,9 @@
                 </div>
 
                 <!-- Left Side Of Navbar -->
-                <ul class="navbar-left col-md-6">
-                    <div>
+                <ul class="nav navbar-nav navbar-left">
+                    <li><a href="{{ route('gauchadas') }}">Todas</a></li>
+                    <li class="col-md-18">
                         <form class="navbar-form" role="search" method="GET" action="gauchadas">
                             <div class="input-group col-md-12">
                                 <input type="text" class="form-control" placeholder="Buscar Gauchada..." name="title">
@@ -108,7 +109,7 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

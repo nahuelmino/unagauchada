@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-	<a class="btn btn-primary" href="/gauchadas/create">Nueva Gauchada</a>
+	@if (Auth::user())
+		<a class="btn btn-primary" href="/gauchadas/create">Nueva Gauchada</a>
+	@endif
 	<ul>
 		@foreach ($gauchadas as $gauchada)
 			<li>

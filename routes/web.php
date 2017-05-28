@@ -22,7 +22,7 @@ Route::post('compras', 'ComprasController@generar');
 
 Route::get('/gauchadas/create', 'GauchadasController@create');
 
-Route::get('/gauchadas', 'GauchadasController@index');
+Route::get('/gauchadas', 'GauchadasController@index')->name('gauchadas');
 
 Route::get('comprar', 'ComprasController@index')->name('comprar');
 
