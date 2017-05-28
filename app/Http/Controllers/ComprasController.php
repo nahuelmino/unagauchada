@@ -18,7 +18,7 @@ class ComprasController extends Controller
 
         $this->agregarCreditosAUsuario();
 
-        return redirect()->back();
+        return redirect('/home');
     
     }
 
@@ -39,7 +39,8 @@ class ComprasController extends Controller
 
         Compra::create([
             'user_id' => Auth::user()->id,
-            'precio_unitario' => config('app.precio_credito')
+            'precio_unitario' => config('app.precio_credito'),
+            'cantidad' => '1'
         ]);
 
     }

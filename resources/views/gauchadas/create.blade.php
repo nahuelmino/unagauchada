@@ -53,11 +53,20 @@
                             </div>
                         </div>
 
-                        <!-- Parche hasta hacer las categorías
-                        <input id="categoria" type="hidden" name="categoria" value="1">-->
+                        <div class="form-group{{ $errors->has('ends_at') ? ' has-error' : '' }}">
+                            <label for="ends_at" class="col-md-4 control-label">Abierta hasta: </label>
 
-                        <?php /* ?> <!-- TODO - 
-                        --> <?php */ ?>
+                            <div class="col-md-6">
+                                <input id="ends_at" type="date" class="form-control" name="ends_at" value="{{ old('ends_at') }}" required>
+
+                                @if ($errors->has('ends_at'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('ends_at') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('categoria') ? ' has-error' : '' }}">
                             <label for="categoria" class="col-md-4 control-label">Categoría</label>
 
