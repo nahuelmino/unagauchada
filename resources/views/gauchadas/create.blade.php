@@ -74,7 +74,7 @@
                             <label for="categoria" class="col-md-4 control-label">Categoría</label>
 
                             <div class="col-md-6">
-                                <select id="categoria" class="form-control" name="categoria">
+                                <select id="categoria" class="form-control" name="categoria_id">
                                     <option value="0" disabled selected>-- Seleccione una --</option>
                                     <?php
 

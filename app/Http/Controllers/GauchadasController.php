@@ -45,6 +45,7 @@ class GauchadasController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->esAdmin()) return abort(404);
         $categorias = Categoria::all();
         return view('gauchadas.create')->withCategorias($categorias);
     }
@@ -74,7 +75,7 @@ class GauchadasController extends Controller
                 'title' => 'required|string',
                 'description' => 'required|string|min:10',
                 'location' => 'required|string',
-                'categoria' => 'required|numeric|min:1'
+                'categoria_id' => 'required|numeric|min:1'
             ]);
 
         if (! $this->checkCreditos()) {
@@ -87,8 +88,8 @@ class GauchadasController extends Controller
             'title' => request()->title,
             'description' => request()->description,
             'location' => request()->location,
-            'categoria' => request()->categoria,//'date_of_birth' => $data['date_of_birth'],
-            'ends_at' => Carbon::createFromFormat('d/m/Y H:i:s',request()->ends_at)->format('Y-m-d H:i:s')//->addMonths(1)
+            'categoria_id' => request()->categoria,//'date_of_birth' => $data['date_of_birth'],
+            'ends_at' => Carbon::createFromFormat('d/m/Y',request()->ends_at)->format('Y-m-d')
         ]);
         $this->reducirCreditos();
 

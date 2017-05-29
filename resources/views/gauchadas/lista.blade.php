@@ -14,7 +14,7 @@
 				</form>
 			</div>
 			<div class="col-md-4 col-md-offset-4 text-right">
-				@if (Auth::check())
+				@if (Auth::check() && !Auth::user()->esAdmin())
 					<a class="btn btn-orange highlighted" href="/gauchadas/create">Nueva Gauchada</a>
 				@endif
 			</div>

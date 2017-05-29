@@ -73,17 +73,20 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                            <label for="phone" class="col-md-4 control-label">Teléfono</label>
+                                <label for="phone" class="col-md-4 control-label">Teléfono</label>
 
-                            <div class="col-md-6">
-                                <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required>
+                                <div class="col-md-6">
+                                    <div class="flex-container">
+                                        <input id="caracteristica" type="text" class="form-control" name="caracteristica" required minlength="2" maxlength="4">
+                                        <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required>
 
-                                @if ($errors->has('phone'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('phone') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                                        @if ($errors->has('phone'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('phone') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
                         </div>
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">

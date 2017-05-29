@@ -68,6 +68,10 @@ html, body {
     height: 100vh;
 }
 
+.flex-container {
+    display: flex;
+}
+
 .flex-center {
     align-items: center;
     display: flex;

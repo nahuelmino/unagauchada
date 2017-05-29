@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('added_styles')
+    @include('plugins.datepicker.styles')
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -11,7 +15,24 @@
                     <form action="/compras" method="post" class="form">
                         {{ csrf_field() }}
                         <div class="form-group">
+                            <label for="nombre_completo">Nombre completo:</label>
+                            <input id="nombre_completo" class="form-control" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="compra_creditos">Número de tarjeta:</label>
                             <input id="compra_creditos" type="text" name="num_tarjeta" class="form-control" placeholder="xxxx-xxxx-xxxx-xxxx" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="codigo_verification">Código de verificacion</label>
+                            <input id="codigo_verification" type="text" class="form-control" minlength="3" maxlength="3">
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha_inicio">Fecha inicio</label>
+                            <input id="fecha_inicio" type="text" class="form-control datepicker">
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha_expiracion">Fecha de expiracion</label>
+                            <input id="fecha_expiracion" type="text" class="form-control datepicker">
                         </div>
                         <div class="form-group{{ $errors->has('0') ? ' has-error' : '' }}">
                             <button type="submit" class="btn btn-primary btn-orange">Comprar</button>
@@ -28,4 +49,8 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('added_scripts')
+    @include('plugins.datepicker.scripts')
 @endsection
