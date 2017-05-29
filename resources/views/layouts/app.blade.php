@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
         html, body {
-            background-color: #FF8E29;
+            background-color: white;
             color: #636b6f;
             font-family: 'Raleway', sans-serif;
             font-weight: 100;
@@ -24,8 +24,8 @@
         }
 
         .navbar {
-            background-color: #F28729;
-            border-color: #F28729; 
+            background-color: #819FF7;
+            border-color: #819FF7; 
         }
 
         .full-height {
@@ -53,7 +53,9 @@
         }
 
         .title {
-            font-size: 84px;
+            font-size: 60px;
+            color:#FF8000;
+            font-family: "calibri", "geneva";
         }
 
         .links > a {
@@ -67,7 +69,7 @@
         }
 
         .m-b-md {
-            margin-bottom: 30px;
+            margin-bottom: 50%;
         }
     </style>
 
@@ -80,9 +82,12 @@
 </head>
 <body>
     <div id="app">
+    	<header>
+            	<img src="https://image.ibb.co/dOLSsa/header.png"/>
+            	</header>
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container-fuid">
-                <div class="navbar-header col-md-2">
+                <div class="navbar-header col-md-5">
 
                     <!-- Collapsed Hamburger -->
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
@@ -116,8 +121,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a href="{{ route('login') }}">Login</a></li>
-                        <li><a href="{{ route('register') }}">Register</a></li>
+                        <li><a href="{{ route('login') }}">Ingresar</a></li>
+                        <li><a href="{{ route('register') }}">Registrarse</a></li>
                     @else
                         <li><a href="{{ route('comprar') }}">Créditos: {{ Auth::user()->credits }}</a></li>
                         <li class="dropdown">
