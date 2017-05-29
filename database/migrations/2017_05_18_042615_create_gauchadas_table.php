@@ -22,7 +22,7 @@ class CreateGauchadasTable extends Migration
             $table->integer('aceptado')->unsigned()->nullable()->default(null);
             //$table->foreign('aceptado')->references('id')->on('users');
             $table->string('title');
-            $table->string('description');
+            $table->longText('description');
             $table->string('location');
             $table->string('photo')->nullable()->default(null);
             $table->timestamp('ends_at');

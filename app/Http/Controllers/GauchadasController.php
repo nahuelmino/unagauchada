@@ -88,7 +88,7 @@ class GauchadasController extends Controller
             'title' => request()->title,
             'description' => request()->description,
             'location' => request()->location,
-            'categoria_id' => request()->categoria,//'date_of_birth' => $data['date_of_birth'],
+            'categoria_id' => request()->categoria_id,//'date_of_birth' => $data['date_of_birth'],
             'ends_at' => Carbon::createFromFormat('d/m/Y',request()->ends_at)->format('Y-m-d')
         ]);
         $this->reducirCreditos();
