@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
+
+@section('added_styles')
+    @include('plugins.datepicker.styles')
+@endsection
+
 @section('content')
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -56,7 +62,7 @@
                             <label for="date_of_birth" class="col-md-4 control-label">Fecha de nacimiento</label>
 
                             <div class="col-md-6">
-                                <input id="date_of_birth" type="date" class="form-control" name="date_of_birth" value="{{ old('date_of_birth') }}" required>
+                                <input id="date_of_birth" type="text" class="form-control datepicker" name="date_of_birth" value="{{ old('date_of_birth') }}" required>
 
                                 @if ($errors->has('date_of_birth'))
                                     <span class="help-block">
@@ -115,4 +121,8 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section ('added_scripts')
+    @include('plugins.datepicker.scripts')
 @endsection

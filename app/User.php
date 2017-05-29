@@ -44,4 +44,9 @@ class User extends Authenticatable
         return $this->hasMany(Gauchada::class);
     }
 
+    public function esAdmin()
+    {
+        return $this->is_admin === 1;
+    }
+
 }

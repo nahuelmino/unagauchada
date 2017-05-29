@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Gauchada;
@@ -26,13 +27,13 @@ class GauchadasController extends Controller
      */
     public function index()
     {
-        $gauchadas = Gauchada::latest();
-
-        if ($title = request('title')) {
-            $gauchadas->where('title',$title);
+        if (request()->has('title')) {
+            $title = request()->title;
+            $gauchadas = Gauchada::where('title', 'LIKE', "%$title%")->paginate(5);
+        } else {
+            // 2017-05-29: En el próximo sprint, esto tiene que traerlas ordenadas por cantidad de postulantes de menor a mayor
+            $gauchadas = Gauchada::latest()->paginate(5);
         }
-
-        $gauchadas = $gauchadas->get();
 
         return view('gauchadas.lista', compact('gauchadas'));
     }
@@ -44,7 +45,8 @@ class GauchadasController extends Controller
      */
     public function create()
     {
-        return view('gauchadas.create');
+        $categorias = Categoria::all();
+        return view('gauchadas.create')->withCategorias($categorias);
     }
 
     public function checkCreditos()
@@ -90,6 +92,8 @@ class GauchadasController extends Controller
         ]);
         $this->reducirCreditos();
 
+        session()->flash('alert', 'Gauchada publicada');
+
         //redirigir
         return redirect('/home');
     }
@@ -102,7 +106,8 @@ class GauchadasController extends Controller
      */
     public function show($id)
     {
-        //
+        $gauchada = Gauchada::findOrFail($id);
+        return view('gauchadas.show')->withGauchada($gauchada);
     }
 
     /**

@@ -1,0 +1,137 @@
+html, body {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    height: 100vh;
+    margin: 0;
+}
+
+.text-orange {
+    color: #FF8E29 !important;
+}
+
+.text-white {
+    color: #FFFFFF !important;
+}
+
+.bg-orange {
+    background-color: #FF8E29 !important;
+}
+
+.btn-orange {
+    background-color: #FF8E29;
+    color: #000000;
+    text-shadow: none;
+}
+
+.highlighted {
+    font-weight: 800;
+}
+
+.home-button:not(:last-child) {
+    margin-right: 10px;
+}
+
+.navbar {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+}
+
+.navbar-home {
+    margin-bottom: 0;
+}
+
+.navbar-brand {
+    padding: 0;
+}
+
+.navbar-brand > img {
+    margin: 0 auto;
+    width: 48px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.navbar-brand > span {
+    vertical-align: middle;
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.position-ref {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+
+.content {
+    text-align: center;
+}
+
+.title {
+    font-size: 84px;
+}
+
+.links > a {
+    color: #636b6f;
+    padding: 0 25px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.m-b-md {
+    margin-bottom: 30px;
+}
+
+
+@media(max-width: 768px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+@media(max-width: 480px) {
+    .hide-on-mobile {
+        display: none;
+    }
+}
+
+
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: #FF8E29;
+    border-color: #FF8E29;
+}
+
+.pagination>li>a,
+.pagination>li>span {
+    color: #FF8E29;
+}
+
+.pagination>li>a:focus,
+.pagination>li>a:hover,
+.pagination>li>span:focus,
+.pagination>li>span:hover {
+    color: #FF8E29;
+}
+

@@ -16,7 +16,12 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'surname' => 'Admin',
             'email' => 'admin@admin.com',
-            'password' => bcrypt('unagauchada')
+            'password' => bcrypt('unagauchada'),
+            'is_admin' => 1
         ]);
+
+        factory('App\User', 5)->create();
+
+        factory('App\Categoria', 3)->create();
     }
 }

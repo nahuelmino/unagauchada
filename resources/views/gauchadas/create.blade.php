@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<?php use \App\Categoria; ?>
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Publicar nueva gauchada</div>
                 <div class="panel-body">
@@ -57,7 +56,7 @@
                             <label for="ends_at" class="col-md-4 control-label">Abierta hasta: </label>
 
                             <div class="col-md-6">
-                                <input id="ends_at" type="date" class="form-control" name="ends_at" value="{{ old('ends_at') }}" required>
+                                <input id="ends_at" type="text" class="form-control datepicker" name="ends_at" value="{{ old('ends_at') }}" required>
 
                                 @if ($errors->has('ends_at'))
                                     <span class="help-block">
@@ -72,12 +71,14 @@
 
                             <div class="col-md-6">
                                 <select id="categoria" class="form-control" name="categoria">
-                                    <option value="0">-- Seleccione una --</option>
+                                    <option value="0" disabled selected>-- Seleccione una --</option>
                                     <?php
-                                    foreach (Categoria::all() as $categoria) {
+
+                                    foreach ($categorias as $categoria) {
                                         $sel = '';
-                                        if (old('categoria') == $categoria->id)
-                                            $sel = ' selected'
+                                        if (old('categoria') == $categoria->id) {
+                                            $sel = ' selected';
+                                        }
                                         ?>
                                         <option value="{{ $categoria->id }}{{ $sel }}">{{ $categoria->name }}</option>
                                     <?php } ?>
