@@ -73,7 +73,7 @@ class GauchadasController extends Controller
 
         $this->validate(request(), [
                 'title' => 'required|string',
-                'description' => 'required|string|min:10',
+                'description' => 'required|string|min:10|max:255',
                 'location' => 'required|string',
                 'categoria_id' => 'required|numeric|min:1'
             ]);
@@ -82,15 +82,23 @@ class GauchadasController extends Controller
             return redirect('/home')->withErrors('No tiene suficientes créditos!');
         }
 
-        //crear y guardar
-        Gauchada::create([
+        $gauchada_attrs = [
             'creado_por' => Auth::user()->id,
             'title' => request()->title,
             'description' => request()->description,
             'location' => request()->location,
             'categoria_id' => request()->categoria_id,//'date_of_birth' => $data['date_of_birth'],
             'ends_at' => Carbon::createFromFormat('d/m/Y',request()->ends_at)->format('Y-m-d')
-        ]);
+        ];
+
+        if (request()->hasFile('photo')) {
+            $directory = '/gauchadas';
+            $path = request()->file('photo')->store($directory, 'public');
+            $gauchada_attrs['photo'] = $path;
+        }
+
+        //crear y guardar
+        Gauchada::create($gauchada_attrs);
         $this->reducirCreditos();
 
         session()->flash('alert', 'Gauchada publicada');

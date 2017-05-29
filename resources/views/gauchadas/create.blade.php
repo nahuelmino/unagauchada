@@ -11,7 +11,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Publicar nueva gauchada</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="/gauchadas/create">
+                    <form class="form-horizontal" role="form" method="POST" action="/gauchadas/create" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
