@@ -22,83 +22,84 @@
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
-            'csrfToken' => csrf_token(),
+                'csrfToken' => csrf_token(),
         ]) !!};
     </script>
 </head>
 <body>
-    <div id="app">
+<div id="app">
 
-        <nav class="navbar navbar-default navbar-static-top {{ Route::current()->uri === '/' ? 'navbar-home' : '' }}">
-            <div class="container-fluid">
-                <div class="navbar-header col-md-4">
+    <nav class="navbar navbar-default navbar-static-top {{ Route::current()->uri === '/' ? 'navbar-home' : '' }}">
+        <div class="container-fluid">
+            <div class="navbar-header col-md-4">
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                <!-- Collapsed Hamburger -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        <img class="img-responsive" src="{{ asset('/img/icon.png') }}" alt="Una Gauchada">
-                        <span class="hide-on-tablet">Una Gauchada</span>
-                    </a>
-                    <?php //{{ config('app.name', 'Una Gauchada') }}?>
-                </div>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{ route('gauchadas') }}">Gauchadas</a></li>
-                    @if(Auth::check())
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                Menú<span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                @if (Auth::user()->esAdmin())
-                                <li>
-                                    <a href="#"><span class="glyphicon glyphicon-cog"></span> Panel de control</a>
-                                </li>
-                                @else
-                                <li><a href="{{ route('comprar') }}">Créditos: {{ Auth::user()->credits }}</a></li>
-                                <li>
-                                    <a href="#"><span class="glyphicon glyphicon-user"></span> Mi perfil</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('comprar') }}"><span class="glyphicon glyphicon-usd"></span> Comprar créditos</a>
-                                </li>
-                                @endif
-                                <li>
-                                    <a href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();"><span class="glyphicon glyphicon-log-out"></span>
-                                         Salir
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
-                
+                <!-- Branding Image -->
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    <img class="img-responsive" src="{{ asset('/img/icon.png') }}" alt="Una Gauchada">
+                    <span class="hide-on-tablet">Una Gauchada</span>
+                </a>
+                <?php //{{ config('app.name', 'Una Gauchada') }}?>
             </div>
-        </nav>
-        @if (session()->has('alert'))
-        <div class="alert alert-success" role="alert">
-            {{ session('alert') }}
+
+            <!-- Right Side Of Navbar -->
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ route('gauchadas') }}">Gauchadas</a></li>
+                @if(Auth::check())
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Menú<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        @if (Auth::user()->esAdmin())
+                        <li>
+                            <a href="#"><span class="glyphicon glyphicon-cog"></span> Panel de control</a>
+                        </li>
+                        @else
+                        <li><a href="{{ route('comprar') }}">Créditos: {{ Auth::user()->credits }}</a></li>
+                        <li>
+                            <a href="#"><span class="glyphicon glyphicon-user"></span> Mi perfil</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('comprar') }}"><span class="glyphicon glyphicon-usd"></span> Comprar créditos</a>
+                        </li>
+                        @endif
+                        <li>
+                            <a href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();"><span class="glyphicon glyphicon-log-out"></span>
+                                Salir
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        </li>
+
+                    </ul>
+                </li>
+                @endif
+            </ul>
+
         </div>
-        @endif
-        @yield('content')
+    </nav>
+    @if (session()->has('alert'))
+    <div class="alert alert-success" role="alert">
+        {{ session('alert') }}
     </div>
+    @endif
+    @yield('content')
+</div>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}"></script>
 
-    @yield('added_scripts')
+@yield('added_scripts')
 
 </html>
