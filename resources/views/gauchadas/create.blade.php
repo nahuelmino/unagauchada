@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('added_styles')
+    @include('plugins.datepicker.styles')
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -108,7 +112,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary btn-orange">
                                     Publicar
                                 </button>
                             </div>
@@ -119,4 +123,8 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('added_scripts')
+    @include('plugins.datepicker.scripts')
 @endsection

@@ -14,7 +14,7 @@
                             <input id="compra_creditos" type="text" name="num_tarjeta" class="form-control" placeholder="xxxx-xxxx-xxxx-xxxx" required>
                         </div>
                         <div class="form-group{{ $errors->has('0') ? ' has-error' : '' }}">
-                            <button type="submit" class="btn btn-primary">Comprar</button>
+                            <button type="submit" class="btn btn-primary btn-orange">Comprar</button>
 
                             @if ($errors->has('0'))
                                 <span class="help-block">

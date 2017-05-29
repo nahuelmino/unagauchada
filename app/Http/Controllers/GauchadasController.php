@@ -29,10 +29,10 @@ class GauchadasController extends Controller
     {
         if (request()->has('title')) {
             $title = request()->title;
-            $gauchadas = Gauchada::where('title', 'LIKE', "%$title%")->paginate(5);
+            $gauchadas = Gauchada::with('categoria')->where('title', 'LIKE', "%$title%")->paginate(5);
         } else {
             // 2017-05-29: En el próximo sprint, esto tiene que traerlas ordenadas por cantidad de postulantes de menor a mayor
-            $gauchadas = Gauchada::latest()->paginate(5);
+            $gauchadas = Gauchada::with('categoria')->latest()->paginate(5);
         }
 
         return view('gauchadas.lista', compact('gauchadas'));
@@ -88,7 +88,7 @@ class GauchadasController extends Controller
             'description' => request()->description,
             'location' => request()->location,
             'categoria' => request()->categoria,//'date_of_birth' => $data['date_of_birth'],
-            'ends_at' => Carbon::createFromFormat('d/m/Y',request()->ends_at)//->addMonths(1)
+            'ends_at' => Carbon::createFromFormat('d/m/Y H:i:s',request()->ends_at)->format('Y-m-d H:i:s')//->addMonths(1)
         ]);
         $this->reducirCreditos();
 

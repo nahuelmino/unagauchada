@@ -21,8 +21,15 @@ html, body {
 
 .btn-orange {
     background-color: #FF8E29;
+    border-color: #FF8E29;
     color: #000000;
     text-shadow: none;
+}
+
+.btn-orange:hover {
+    background-color: #FFFFFF;
+    border-color: #FF8E29;
+    color: #FF8E29;
 }
 
 .highlighted {

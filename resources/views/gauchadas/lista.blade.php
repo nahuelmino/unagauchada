@@ -28,6 +28,9 @@
 						<div class="panel-heading">
 							<h3 class="panel-title">
 								<a href="#">{{ $gauchada['title'] }}</a>
+								<label for="" class="label label-primary bg-orange pull-right">
+									{{ $gauchada->categoria->name }}
+								</label>
 							</h3>
 						</div>
 						<div class="panel-body">

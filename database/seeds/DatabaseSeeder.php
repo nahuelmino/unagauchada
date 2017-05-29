@@ -23,5 +23,7 @@ class DatabaseSeeder extends Seeder
         factory('App\User', 5)->create();
 
         factory('App\Categoria', 3)->create();
+
+        factory('App\Gauchada', 15)->create();
     }
 }

@@ -35,3 +35,21 @@ $factory->define(App\Categoria::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Gauchada::class, function (Faker\Generator $faker) {
+
+    $users = \App\User::all()->pluck('id')->all();
+    $categorias = \App\Categoria::all()->pluck('id')->all();
+
+    return [
+        'creado_por' => $faker->unique(true)->randomElement($users),
+        'categoria_id' => $faker->unique(true)->randomElement($categorias),
+        'title' => $faker->title,
+        'description' => $faker->realText(180),
+        'location' => $faker->city,
+        'photo' => $faker->image(null, 400, 400),
+        'ends_at' => \Carbon\Carbon::tomorrow(),
+    ];
+});
+
+
+

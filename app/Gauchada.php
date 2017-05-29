@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Gauchada extends Model
 {
     protected $fillable = [
-        'creado_por', 'title', 'description', 'location', 'categoria','ends_at'
+        'creado_por', 'title', 'description', 'location', 'categoria_id','ends_at'
     ];
 
     public function categoria() {

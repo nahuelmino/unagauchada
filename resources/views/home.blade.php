@@ -11,7 +11,7 @@
                     <div class="input-group" style="margin-bottom: 10px">
                         <span>Créditos: </span><span>{{ Auth::user()->credits }}</span>
                     </div>
-                    <a href="{{ route('comprar') }}" class="btn btn-primary">Comprar</a>
+                    <a href="{{ route('comprar') }}" class="btn btn-primary btn-orange">Comprar</a>
                 </div>
             </div>
         </div>
