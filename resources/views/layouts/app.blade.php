@@ -41,6 +41,7 @@
                     <span class="icon-bar"></span>
                 </button>
 
+
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img class="img-responsive" src="{{ asset('/img/icon.png') }}" alt="Una Gauchada">
@@ -48,6 +49,17 @@
                 </a>
                 <?php //{{ config('app.name', 'Una Gauchada') }}?>
             </div>
+            <div class="col-md-5">
+                <form class="form-group" role="search" method="GET" action="gauchadas">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Buscar Gauchada..." name="title">
+                        <div class="input-group-btn">
+                            <button class="btn btn-orange" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
 
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
@@ -84,6 +96,13 @@
 
                     </ul>
                 </li>
+                
+                                        @else (Auth::guest())
+                            <li><a href="{{ route('login') }}">
+                            <span class="glyphicon glyphicon-user">
+                            </span>Ingresar</a></li>
+                            <li><a href="{{ route('register') }}"><span class="glyphicon glyphicon-log-in">
+                </span>Registrarse</a></li>
                 @endif
             </ul>
 
