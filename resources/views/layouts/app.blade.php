@@ -16,6 +16,12 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="{{ asset('css/base.css') }}" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/shop-item.css" rel="stylesheet">
+    <style>
+        .centered { margin: auto; max-width: 300px;}
+        .marg5 {margin-top: 10px;}
+    </style>
 
     @yield('added_styles')
 
@@ -44,14 +50,14 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img class="img-responsive" src="{{ asset('/img/icon.png') }}" alt="Una Gauchada">
+                    <img class="img-responsive " src="{{ asset('/img/icon.png') }}" alt="Una Gauchada">
                     <span class="hide-on-tablet">Una Gauchada</span>
                 </a>
                 <?php //{{ config('app.name', 'Una Gauchada') }}?>
             </div>
             <div class="col-md-5">
                 <form class="form-group" role="search" method="GET" action="gauchadas">
-                    <div class="input-group">
+                    <div class="input-group marg5">
                         <input type="text" class="form-control" placeholder="Buscar Gauchada..." name="title">
                         <div class="input-group-btn">
                             <button class="btn btn-orange" type="submit"><i class="glyphicon glyphicon-search"></i></button>
