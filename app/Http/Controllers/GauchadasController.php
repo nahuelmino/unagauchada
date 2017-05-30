@@ -79,7 +79,7 @@ class GauchadasController extends Controller
             ]);
 
         if (! $this->checkCreditos()) {
-            return redirect('/home')->withErrors('No tiene suficientes créditos!');
+            return redirect()->back()->withErrors('No tiene suficientes créditos! Si querés, podés comprar creditos <a href="/comprar">acá.</a>');
         }
 
         $gauchada_attrs = [

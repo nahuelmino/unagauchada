@@ -16,7 +16,7 @@
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="nombre_completo">Nombre completo:</label>
-                            <input id="nombre_completo" class="form-control" type="text">
+                            <input id="nombre_completo" name="nombre_completo" class="form-control" type="text" required>
                         </div>
                         <div class="form-group">
                             <label for="compra_creditos">Número de tarjeta:</label>
@@ -24,15 +24,15 @@
                         </div>
                         <div class="form-group">
                             <label for="codigo_verification">Código de verificacion</label>
-                            <input id="codigo_verification" type="text" class="form-control" minlength="3" maxlength="3">
+                            <input id="codigo_verification" type="text" class="form-control numbers-only" name="codigo_verificacion" minlength="3" maxlength="3" required>
                         </div>
                         <div class="form-group">
                             <label for="fecha_inicio">Fecha inicio</label>
-                            <input id="fecha_inicio" type="text" class="form-control datepicker">
+                            <input id="fecha_inicio" type="text" name="fecha_inicio" class="form-control datepicker" required>
                         </div>
                         <div class="form-group">
                             <label for="fecha_expiracion">Fecha de expiracion</label>
-                            <input id="fecha_expiracion" type="text" class="form-control datepicker">
+                            <input id="fecha_expiracion" type="text" name="fecha_expiracion" class="form-control datepicker" required>
                         </div>
                         <div class="form-group{{ $errors->has('0') ? ' has-error' : '' }}">
                             <button type="submit" class="btn btn-primary btn-orange">Comprar</button>

@@ -5,22 +5,22 @@
         <div class="page-header">
             <h1><p class="text-center">{{ $gauchada['title'] }}</p></h1> 
         </div>
+</div>
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-12 form-group">
+            @if (isset($gauchada['photo']))
+                <img class="img-responsive" style="margin: 0 auto;" src="{{ $gauchada['photo'] }}" alt="">
+            @endif
+        </div>
     </div>
-    <div class="col-md-2"></div>
-    <div class="container">
-
-        <div class="row">
-
-            <div class="col-md-9">
-
-                <div class="thumbnail">
-                    @if (isset($gauchada['photo']))
-                        <img src="{{ $gauchada['photo'] }}" alt="">
-                    @endif
-                    <div class="caption-full">
-                        <p>{{ $gauchada['description'] }}</p>
-                    </div>
-                </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>{{ $gauchada['description'] }}</p>
+        </div>
+    </div>
 </div>
             <!--div class="row">
 
