@@ -17,7 +17,7 @@
             dayNamesShort: [ "Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab" ],
             dayNamesMin: [ "Do","Lu","Ma","Mi","Ju","Vi","Sa" ],
             changeMonth: true,
-            changeYear: true
+            changeYear: true,
         };
 
         // Determinar si la página actual es la de crear gauchadas para aplicar minDate
@@ -34,8 +34,6 @@
 
         for(i = 0; i < pagesWithChangeYear.length; i++) {
             if (url === pagesWithChangeYear[i]) {
-                datepickerOptions.changeYear = true;
-                datepickerOptions.changeMonth = true;
                 datepickerOptions.maxDate = new Date();
                 datepickerOptions.yearRange = "-80:+80"
             }
@@ -44,10 +42,32 @@
         for(i = 0;i < pagesWithNoDays.length; i++) {
             if (url === pagesWithNoDays[i]) {
                 // setear datepicker para que no muestre dias (solo meses y años)
+                datepickerOptions.dateFormat = 'mm/yy';
+                datepickerOptions.showButtonPanel = true;
+                datepickerOptions.onClose = function(dateText, inst) {
+                    var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                    var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                    $(this).val($.datepicker.formatDate('mm/yy', new Date(year, month, 1)));
+                };
             }
         }
 
         var datepicker = $('.datepicker').datepicker(datepickerOptions);
+
+        if (datepickerOptions.dateFormat === 'mm/yy') {
+            $(".datepicker").focus(function () {
+                $(".ui-datepicker-calendar").hide();
+                var calendarHeight = $('.ui-datepicker-calendar').height();
+                var thisDatepicker = $(this);
+                console.log();
+                setTimeout(function () {
+                    $('#ui-datepicker-div').css({
+                        top: $(thisDatepicker).position().top + calendarHeight - 60 + 'px',
+                    })
+                }, 0);
+
+            });
+        }
 
     });
 

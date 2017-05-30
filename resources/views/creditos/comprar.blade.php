@@ -20,7 +20,7 @@
                         </div>
                         <div class="form-group">
                             <label for="compra_creditos">Número de tarjeta:</label>
-                            <input id="compra_creditos" type="text" name="num_tarjeta" class="form-control" placeholder="xxxx-xxxx-xxxx-xxxx" required>
+                            <input id="compra_creditos" type="text" name="num_tarjeta" class="form-control numbers-only" placeholder="Ingresa los 16 numeros de tu tarjeta" required>
                         </div>
                         <div class="form-group">
                             <label for="codigo_verification">Código de verificacion</label>

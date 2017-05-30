@@ -15,8 +15,8 @@
                     @if ($errors->has('0'))
                     <div class="form-group{{ $errors->has('0') ? ' has-error' : '' }}">
                         <span class="help-block">
-                                <strong>{!! $errors->first('0') !!}</strong>
-                            </span>
+                            <strong>{!! $errors->first('0') !!}</strong>
+                        </span>
                     </div>
                     @endif
                     <form class="form-horizontal" role="form" method="POST" action="/gauchadas/create" enctype="multipart/form-data">
