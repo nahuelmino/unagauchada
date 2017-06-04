@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Registrar</div>
+                <div class="panel-heading" align="center">Registrar</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
@@ -20,7 +20,7 @@
                             <label for="name" class="col-md-4 control-label">Nombre</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="name" type="text" class="form-control" name="name" maxlength="42" value="{{ old('name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
                                     <span class="help-block">
@@ -34,7 +34,7 @@
                             <label for="surname" class="col-md-4 control-label">Apellido</label>
 
                             <div class="col-md-6">
-                                <input id="surname" type="text" class="form-control" name="surname" value="{{ old('surname') }}" required autofocus>
+                                <input id="surname" type="text" class="form-control" name="surname" maxlength="42" value="{{ old('surname') }}" required autofocus>
 
                                 @if ($errors->has('surname'))
                                     <span class="help-block">
@@ -48,7 +48,7 @@
                             <label for="email" class="col-md-4 control-label">E-mail</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                <input id="email" type="email" class="form-control" name="email" maxlength="42" placeholder="Alguien@ejemplo.com" value="{{ old('email') }}" required>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -77,8 +77,8 @@
 
                                 <div class="col-md-6">
                                     <div class="flex-container">
-                                        <input id="caracteristica" type="text" class="form-control" name="caracteristica" required minlength="2" maxlength="4">
-                                        <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required>
+                                        <input id="caracteristica" type="text" class="form-control" name="caracteristica" placeholder="Codigo de area" required minlength="2" maxlength="4">
+                                        <input id="phone" type="text" class="form-control" name="phone" placeholder="Numero sin 0 ni 15" value="{{ old('phone') }}" required minlength="6" maxlength="8">
 
                                         @if ($errors->has('phone'))
                                             <span class="help-block">
@@ -93,7 +93,7 @@
                             <label for="password" class="col-md-4 control-label">Contraseña</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <input id="password" type="password" class="form-control" name="password" minlength="6" maxlength="20" placeholder="Debe poseer un minimo de 6 caracteres" required>
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
