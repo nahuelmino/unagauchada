@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,3 +13,19 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('home', 'HomeController@index')->name('home');
+
+Route::post('compras', 'ComprasController@generar');
+
+Route::get('/gauchadas/create', 'GauchadasController@create');
+
+Route::get('/gauchadas', 'GauchadasController@index')->name('gauchadas');
+
+Route::get('/gauchadas/{id}', 'GauchadasController@show');
+
+Route::get('comprar', 'ComprasController@index')->name('comprar');
+
+Route::post('/gauchadas/create', 'GauchadasController@store');

@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'surname', 'email', 'password', 'date_of_birth', 'photo', 'phone'
     ];
 
     /**
@@ -24,6 +24,29 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
+
+
+    public function publicaciones() {
+        return $this->hasMany(Gauchada::class);
+    }
+
+    public function postulaciones() {
+        return $this->hasMany(Gauchada::class);
+    }
+
+    public function compras() {
+        return $this->hasMany(Compra::class);
+    }
+
+    public function aceptaciones() {
+        return $this->hasMany(Gauchada::class);
+    }
+
+    public function esAdmin()
+    {
+        return $this->is_admin === 1;
+    }
+
 }
