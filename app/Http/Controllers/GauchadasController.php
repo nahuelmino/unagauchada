@@ -35,8 +35,7 @@ class GauchadasController extends Controller
             $gauchadas = Gauchada::with('categoria')->latest()->paginate(5);
         }
 
-        $categorias = Categoria::all();
-        return view('gauchadas.lista', compact('gauchadas'))->withCategorias($categorias);
+        return view('gauchadas.lista', compact('gauchadas'));
     }
 
     /**

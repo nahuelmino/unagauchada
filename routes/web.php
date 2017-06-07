@@ -26,8 +26,6 @@ Route::get('/gauchadas', 'GauchadasController@index')->name('gauchadas');
 
 Route::get('/gauchadas/{id}', 'GauchadasController@show');
 
-Route::get('/gauchadas/{id}/postulate', 'GauchadasController@postulate');
-
 Route::get('comprar', 'ComprasController@index')->name('comprar');
 
 Route::post('/gauchadas/create', 'GauchadasController@store');
