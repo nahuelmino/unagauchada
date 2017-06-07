@@ -90,8 +90,7 @@
                                         $sel = '';
                                         if (old('categoria') == $categoria->id) {
                                             $sel = ' selected';
-                                        }
-                                        ?>
+                                        } ?>
                                         <option value="{{ $categoria->id }}{{ $sel }}">{{ $categoria->name }}</option>
                                     <?php } ?>
                                 </select>

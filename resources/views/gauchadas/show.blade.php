@@ -22,6 +22,13 @@
         </div>
     </div>
 </div>
+@if (Auth::check() && !Auth::user()->esAdmin())
+    <div class="row">
+        <div class="col-md-10 text-right">
+                <a class="btn btn-orange highlighted" href="/gauchadas/{{ $gauchada['id'] }}/postulate">Postularse</a>
+        </div>
+    </div>
+@endif
             <!--div class="row">
 
             <div class="col-md-6">
