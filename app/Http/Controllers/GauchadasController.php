@@ -47,7 +47,7 @@ class GauchadasController extends Controller
      */
     public function create()
     {
-        if (Auth::check() && !Auth::user()->esAdmin()) {
+        if (!Auth::check() || Auth::user()->esAdmin()) {
             return redirect('/home');
         }
         $categorias = Categoria::all();
@@ -161,14 +161,13 @@ class GauchadasController extends Controller
         if (!Auth::check() || Auth::user()->esAdmin()) {
             return redirect('/home');
         }
-        if (Auth::user()->estaPostulado(request()->gauchada)) {
-            Postulacion::where('postulante', Auth::user()->id)->where('gauchada', request()->gauchada)->where('necesitado', request()->necesitado)->delete();
+        if (Auth::user()->cant_postulaciones(request()->gauchada) > 0) {
+            Postulacion::where('postulante', Auth::user()->id)->where('gauchada', request()->gauchada)->delete();
             session()->flash('alert', 'Postulación cancelada correctamente!');
             return redirect()->back();
         }
         $postulacion_attrs = [
             'postulante' => Auth::user()->id,
-            'necesitado' => request()->necesitado,
             'gauchada' => request()->gauchada
         ];
         Postulacion::create($postulacion_attrs);

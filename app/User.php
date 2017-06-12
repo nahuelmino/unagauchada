@@ -49,8 +49,13 @@ class User extends Authenticatable
         return $this->is_admin === 1;
     }
 
-    public function estaPostulado($gauchada_id) {
-        $postulacion = Postulacion::get()->where('gauchada',$gauchada_id)->where('postulante',$this->id)->count();
-        return $postulacion>0;
+    public function cant_postulaciones($gauchada_id) {
+        $postulaciones = Postulacion::get()->where('gauchada',$gauchada_id)->where('postulante',$this->id)->count();
+        return $postulaciones;
+    }
+
+    public function cant_necesitados($gauchada_id) {
+        $necesitados = Postulacion::get()->where('gauchada',$gauchada_id)->count();
+        return $necesitados;
     }
 }

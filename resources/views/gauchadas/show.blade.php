@@ -18,46 +18,55 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <p>{{ $gauchada['description'] }}</p>
+            <div class="well">
+                {{ $gauchada['description'] }}
+            </div>
         </div>
     </div>
 </div>
-@if (Auth::check() && !Auth::user()->esAdmin())
-    <div class="row">
-        <div class="col-md-5 col-md-offset-1 text-right">
-            <div class="well">
-                <div class="text-left">
-                    <p>Preguntas:</p>
-                    <p>&nbsp</p>
-                    <p>&nbsp</p>
-                    <p>&nbsp</p>
-                </div>
-                <div class="text-left">
-                    <a class="btn btn-success">Deja una Pregunta!</a>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                    </div>
-                </div>
+<div class="row">
+    <div class="col-md-5 col-md-offset-1 text-right">
+        <div class="well">
+            <div class="text-left">
+                <p>Preguntas:</p>
+                <p>&nbsp</p>
+                <p>&nbsp</p>
+                <p>&nbsp</p>
             </div>
-        </div>
-        <div class="col-md-2 col-md-offset-3 text-right">
-            <div class="well">
-                <form method="POST" action="/gauchadas/postulate">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="gauchada" value="{{ $gauchada['id'] }}">
-                    <input type="hidden" name="necesitado" value="{{ $gauchada['creado_por'] }}">
-                    @if (!Auth::user()->estaPostulado($gauchada['id']))
-                        <button type="submit" class="btn btn-block btn-orange">Postularse!</button>
-                    @else
-                        <button type="submit" class="btn btn-block btn-red">Cancelar postulación</button>
-                    @endif
-                </form>
+            <div class="text-left">
+                <a class="btn btn-success">Deja una Pregunta!</a>
             </div>
         </div>
     </div>
-@endif
+    @if (Auth::check() && !Auth::user()->esAdmin())
+        <div class="col-md-2 col-md-offset-3 text-right">
+            <div class="well">
+                @if (Auth::check() && Auth::user()->id === $gauchada['creado_por'])
+                    Cantidad de postulantes: {{ Auth::user()->cant_necesitados($gauchada['id']) }}
+                    @if (Auth::user()->cant_necesitados($gauchada['id']) > 0)
+                        <a href="#">Ver</a>
+                    @endif
+                @else
+                    <form method="POST" action="/gauchadas/postulate">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="gauchada" value="{{ $gauchada['id'] }}">
+                        <input type="hidden" name="necesitado" value="{{ $gauchada['creado_por'] }}">
+                        @if (Auth::user()->cant_postulaciones($gauchada['id']) === 0)
+                            <button type="submit" class="btn btn-block btn-orange">Postularse!</button>
+                        @else
+                            <button type="submit" class="btn btn-block btn-red">Cancelar postulación</button>
+                        @endif
+                    </form>
+                @endif
+            </div>
+        </div>
+    @endif
+</div>
             <!--div class="row">
+            <div class="row">
+                <div class="col-md-12">
+                </div>
+            </div>
 
             <div class="col-md-6">
                 <div class="well">

@@ -16,7 +16,6 @@ class CreatePostulacionsTable extends Migration
         Schema::create('postulacions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('postulante')->unsigned();
-            $table->integer('necesitado')->unsigned();
             //$table->foreign('user_id')->references('id')->on('users');
             $table->integer('gauchada')->unsigned();
             //$table->foreign('gauchada')->references('id')->on('gauchadas');
