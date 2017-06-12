@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->is_admin === 1;
     }
+
+    public function estaPostulado($gauchada_id) {
+        $postulacion = Postulacion::get()->where('gauchada',$gauchada_id)->where('postulante',$this->id)->count();
+        return $postulacion>0;
+    }
 }

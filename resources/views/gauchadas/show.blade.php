@@ -24,13 +24,36 @@
 </div>
 @if (Auth::check() && !Auth::user()->esAdmin())
     <div class="row">
-        <div class="col-md-10 text-right">
-            <form method="POST" action="/gauchadas/postulate">
-                {{ csrf_field() }}
-                <input type="hidden" name="gauchada" value="{{ $gauchada['id'] }}">
-                <input type="hidden" name="necesitado" value="{{ $gauchada['creado_por'] }}">
-                <button type="submit" class="btn btn-primary btn-orange">Postularse</button>
-            </form>
+        <div class="col-md-5 col-md-offset-1 text-right">
+            <div class="well">
+                <div class="text-left">
+                    <p>Preguntas:</p>
+                    <p>&nbsp</p>
+                    <p>&nbsp</p>
+                    <p>&nbsp</p>
+                </div>
+                <div class="text-left">
+                    <a class="btn btn-success">Deja una Pregunta!</a>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-md-offset-3 text-right">
+            <div class="well">
+                <form method="POST" action="/gauchadas/postulate">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="gauchada" value="{{ $gauchada['id'] }}">
+                    <input type="hidden" name="necesitado" value="{{ $gauchada['creado_por'] }}">
+                    @if (!Auth::user()->estaPostulado($gauchada['id']))
+                        <button type="submit" class="btn btn-block btn-orange">Postularse!</button>
+                    @else
+                        <button type="submit" class="btn btn-block btn-red">Cancelar postulación</button>
+                    @endif
+                </form>
+            </div>
         </div>
     </div>
 @endif
@@ -92,22 +115,5 @@
         </div>
 
     </div>
-
-    
-    <div class="container">
-
-        <hr>
-    
-    
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>unaGauchada 2017</p>
-                </div>
-            </div>
-        </footer>
-
-    </div>
-                <a class="btn btn-orange highlighted" href="/gauchadas/{{ $gauchada['id'] }}/postulate"></a>
 -->
 @endsection
