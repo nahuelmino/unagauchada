@@ -46,7 +46,9 @@ class GauchadasController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->esAdmin()) return abort(404);
+        if (Auth::check() && !Auth::user()->esAdmin()) {
+            return redirect('/home');
+        }
         $categorias = Categoria::all();
         return view('gauchadas.create')->withCategorias($categorias);
     }
@@ -152,5 +154,14 @@ class GauchadasController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function postulate() {
+        if (Auth::check() && !Auth::user()->esAdmin()) {
+            return redirect('/home');
+        }
+        //
+        session()->flash('alert', 'Postulación correcta!');
+        return redirect()->back();
     }
 }
