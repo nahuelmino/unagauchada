@@ -161,6 +161,11 @@ class GauchadasController extends Controller
         if (!Auth::check() || Auth::user()->esAdmin()) {
             return redirect('/home');
         }
+        if (Auth::user()->estaPostulado(request()->gauchada)) {
+            Postulacion::where('postulante', Auth::user()->id)->where('gauchada', request()->gauchada)->where('necesitado', request()->necesitado)->delete();
+            session()->flash('alert', 'Postulación cancelada correctamente!');
+            return redirect()->back();
+        }
         $postulacion_attrs = [
             'postulante' => Auth::user()->id,
             'necesitado' => request()->necesitado,
