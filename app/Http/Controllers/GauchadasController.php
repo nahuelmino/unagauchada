@@ -6,6 +6,7 @@ use App\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Gauchada;
+use App\Postulacion;
 use Carbon\Carbon;
 
 class GauchadasController extends Controller
@@ -156,11 +157,16 @@ class GauchadasController extends Controller
         //
     }
 
-    public function postulate() {
-        if (Auth::check() && !Auth::user()->esAdmin()) {
+    public function postulate(Request $request) {
+        if (!Auth::check() || Auth::user()->esAdmin()) {
             return redirect('/home');
         }
-        //
+        $postulacion_attrs = [
+            'postulante' => Auth::user()->id,
+            'necesitado' => request()->necesitado,
+            'gauchada' => request()->gauchada
+        ];
+        Postulacion::create($postulacion_attrs);
         session()->flash('alert', 'Postulación correcta!');
         return redirect()->back();
     }

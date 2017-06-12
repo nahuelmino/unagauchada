@@ -25,7 +25,12 @@
 @if (Auth::check() && !Auth::user()->esAdmin())
     <div class="row">
         <div class="col-md-10 text-right">
-                <a class="btn btn-orange highlighted" href="/gauchadas/{{ $gauchada['id'] }}/postulate">Postularse</a>
+            <form method="POST" action="/gauchadas/postulate">
+                {{ csrf_field() }}
+                <input type="hidden" name="gauchada" value="{{ $gauchada['id'] }}">
+                <input type="hidden" name="necesitado" value="{{ $gauchada['creado_por'] }}">
+                <button type="submit" class="btn btn-primary btn-orange">Postularse</button>
+            </form>
         </div>
     </div>
 @endif
@@ -103,5 +108,6 @@
         </footer>
 
     </div>
+                <a class="btn btn-orange highlighted" href="/gauchadas/{{ $gauchada['id'] }}/postulate"></a>
 -->
 @endsection

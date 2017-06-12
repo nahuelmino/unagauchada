@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePostulacionTable extends Migration
+class CreatePostulacionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreatePostulacionTable extends Migration
      */
     public function up()
     {
-        Schema::create('postulacion', function (Blueprint $table) {
+        Schema::create('postulacions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->integer('postulante')->unsigned();
+            $table->integer('necesitado')->unsigned();
             //$table->foreign('user_id')->references('id')->on('users');
             $table->integer('gauchada')->unsigned();
             //$table->foreign('gauchada')->references('id')->on('gauchadas');
@@ -30,6 +31,6 @@ class CreatePostulacionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('postulacion');
+        Schema::dropIfExists('postulacions');
     }
 }
