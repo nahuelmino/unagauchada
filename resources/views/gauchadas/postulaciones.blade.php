@@ -21,7 +21,7 @@
                 <div class="panel-body">
                     <div class="well" style="width:240px;height:240px;">
                         @if (isset($user['photo']))
-                            <img src="/storage/usuarios/{{ $user['photo'] }}" alt="" width="200" height="200">
+                            <img src="/storage/{{ $user['photo'] }}" alt="" width="200" height="200">
                         @endif
                     </div>
                 </div>
