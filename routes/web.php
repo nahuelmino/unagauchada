@@ -26,6 +26,10 @@ Route::get('/gauchadas', 'GauchadasController@index')->name('gauchadas');
 
 Route::get('/gauchadas/{id}', 'GauchadasController@show');
 
+Route::get('/gauchadas/{id}/edit', 'GauchadasController@edit');
+
+Route::get('/gauchadas/{id}/delete', 'GauchadasController@destroy');
+
 Route::get('/gauchadas/{id}/postulaciones', 'GauchadasController@postulaciones');
 
 Route::post('/gauchadas/postulate', 'GauchadasController@postulate');

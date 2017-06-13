@@ -61,6 +61,12 @@
 						</div>
 						<div class="panel-footer">
 							<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}">Ver</a>
+							@if (Auth::check() && Auth::user()->id === $gauchada['creado_por'])
+								@if (Auth::user()->cant_postulaciones(request()->gauchada) === 0)
+									<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}/edit">Editar</a>
+								@endif
+								<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}/delete">X</a>
+							@endif
 						</div>
 					</div>
 				</div>

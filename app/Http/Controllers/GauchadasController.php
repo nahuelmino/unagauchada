@@ -131,6 +131,10 @@ class GauchadasController extends Controller
      */
     public function edit($id)
     {
+        $gauchada = Gauchada::findOrFail($id);
+        if (!Auth::check() || Auth::user()->id !== $gauchada['creado_por']) {
+            return redirect('/home');
+        }
         //
     }
 
