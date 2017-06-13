@@ -73,7 +73,6 @@ class GauchadasController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         //Validar
 
         $this->validate(request(), [
