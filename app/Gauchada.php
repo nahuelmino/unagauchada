@@ -24,7 +24,7 @@ class Gauchada extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getPhotoAttribute($value) {
-        return '/storage/' . $value;
-    }
+//    public function getPhotoAttribute($value) {
+//        return '/storage/' . $value;
+//    }
 }

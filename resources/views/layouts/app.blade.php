@@ -122,7 +122,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12 text-right">
-                    <p>unaGauchada 2017</p>
+                    <p>Una Gauchada 2017</p>
                 </div>
             </div>
         </footer>

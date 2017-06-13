@@ -73,6 +73,7 @@ class GauchadasController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         //Validar
 
         $this->validate(request(), [
@@ -98,7 +99,7 @@ class GauchadasController extends Controller
         if (request()->hasFile('photo')) {
             $directory = '/gauchadas';
             $path = request()->file('photo')->store($directory, 'public');
-            $gauchada_attrs['photo'] = $path;
+            $gauchada_attrs['photo'] = $path;//'/storage/' . 
         }
 
         //crear y guardar
