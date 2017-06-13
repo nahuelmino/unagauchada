@@ -12,7 +12,7 @@
 
         <div class="col-md-12 form-group">
             @if (isset($gauchada['photo']))
-                <img class="img-responsive" style="margin: 0 auto;" src="{{ $gauchada['photo'] }}" alt="">
+                <img class="img-responsive" style="margin: 0 auto;" src="/storage/{{ $gauchada['photo'] }}" alt="">
             @endif
         </div>
     </div>
