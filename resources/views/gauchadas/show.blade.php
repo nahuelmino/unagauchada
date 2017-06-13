@@ -42,9 +42,9 @@
         <div class="col-md-2 col-md-offset-3 text-right">
             <div class="well">
                 @if (Auth::check() && Auth::user()->id === $gauchada['creado_por'])
-                    Cantidad de postulantes: {{ Auth::user()->cant_necesitados($gauchada['id']) }}
+                    <p>Cantidad de postulantes: {{ Auth::user()->cant_necesitados($gauchada['id']) }}</p>
                     @if (Auth::user()->cant_necesitados($gauchada['id']) > 0)
-                        <a href="#">Ver</a>
+                        <a class="btn btn-orange" href="/gauchadas/{{ $gauchada['id'] }}/postulaciones">Ver</a>
                     @endif
                 @else
                     <form method="POST" action="/gauchadas/postulate">

@@ -174,4 +174,13 @@ class GauchadasController extends Controller
         session()->flash('alert', 'Postulación correcta!');
         return redirect()->back();
     }
+
+    public function postulaciones($id) {
+        $gauchada = Gauchada::findOrFail($id);
+        if (!Auth::check() || Auth::user()->id !== $gauchada['creado_por']) {
+            return redirect('/home');
+        }
+        $postulaciones = Postulacion::where('gauchada',$id)->get();
+        return view('gauchadas.postulaciones')->withGauchada($gauchada)->withPostulaciones($postulaciones);
+    }
 }
