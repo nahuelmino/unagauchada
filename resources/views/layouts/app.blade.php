@@ -88,6 +88,10 @@
                         </li>
                         @endif
                         <li>
+                        <li>
+                            <a href="/gauchadas/create"><span class="glyphicon glyphicon-star"></span>Crear Gauchada</a>
+                        </li>
+                        <li>
                             <a href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();"><span class="glyphicon glyphicon-log-out"></span>
