@@ -37,7 +37,7 @@ class GauchadasController extends Controller
         // 2017-05-29: En el próximo sprint, esto tiene que traerlas ordenadas por cantidad de postulantes de menor a mayor
         $gauchadas = $gauchadas->whereRaw('ends_at >= CURRENT_DATE()')->whereNull('aceptado');
 
-        if (request()->has('sortByPostulaciones')) {
+        if (request()->sortByPostulaciones === '1') {
             $gauchadas = $gauchadas->orderBy('postulacions_count');
         }
 
