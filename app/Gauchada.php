@@ -24,6 +24,10 @@ class Gauchada extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function postulacions() {
+        return $this->hasMany(Postulacion::class,'gauchada');
+    }
+
 //    public function getPhotoAttribute($value) {
 //        return '/storage/' . $value;
 //    }

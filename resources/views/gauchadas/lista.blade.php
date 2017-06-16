@@ -59,8 +59,10 @@
 							</div>
 							<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}">Ver</a>
 								@if (Auth::check() && Auth::user()->id === $gauchada['creado_por'])
-									@if (Auth::user()->cant_postulaciones(request()->gauchada) === 0)
+									@if ($gauchada['postulacions_count'] === 0)
 										<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}/edit">Editar</a>
+									@else
+										<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}/edit" disabled>Editar</a>
 									@endif
 								<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}/delete">X</a>
 							@endif

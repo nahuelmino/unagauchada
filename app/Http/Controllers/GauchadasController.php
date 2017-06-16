@@ -26,16 +26,22 @@ class GauchadasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
+        $gauchadas = Gauchada::with('categoria')->withCount('postulacions');
         if (request()->has('title')) {
             $title = request()->title;
-            $gauchadas = Gauchada::with('categoria')->where('title', 'LIKE', "%$title%")->paginate(5);
-        } else {
-            // 2017-05-29: En el próximo sprint, esto tiene que traerlas ordenadas por cantidad de postulantes de menor a mayor
-            $gauchadas = Gauchada::with('categoria')->latest()->paginate(5);
+            $gauchadas = $gauchadas->where('title', 'LIKE', "%$title%");
+        }
+        // 2017-05-29: En el próximo sprint, esto tiene que traerlas ordenadas por cantidad de postulantes de menor a mayor
+        $gauchadas = $gauchadas->whereRaw('ends_at >= CURRENT_DATE()')->whereNull('aceptado');
+
+        if (request()->has('sortByPostulaciones')) {
+            $gauchadas = $gauchadas->orderBy('postulacions_count');
         }
 
+        $gauchadas = $gauchadas->paginate(6);
         $categorias = Categoria::all();
         return view('gauchadas.lista', compact('gauchadas'))->withCategorias($categorias);
     }
