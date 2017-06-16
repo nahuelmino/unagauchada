@@ -20,21 +20,27 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="well">
-						Cantidad de postulantes: {{ Auth::user()->cant_postulaciones($gauchada['id']) }}
+						Cantidad de postulantes: {{ $postulacions->count() }}
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="well">
 						@if (Auth::check() && !Auth::user()->esAdmin())
-							@if (Auth::user()->cant_postulaciones($gauchada['id']) === 0)
+							@if (Auth::user()->id === $gauchada['creado_por'])
+								@if ($postulacions->count() > 0)
+									<a type="submit" class="btn btn-block btn-orange" href="/gauchadas/{{$gauchada['id']}}/postulaciones">Ver postulantes</a>
+								@else
+									<a type="submit" class="btn btn-block text-orange" href="/gauchadas/{{$gauchada['id']}}/postulaciones" disabled>Ver postulantes</a>
+								@endif
+							@elseif ($postulacions->count() > 0)
+								<button type="submit" class="btn btn-block" disabled>Te postulaste</button>
+							@else
 								<form method="POST" action="/gauchadas/postulate">
 									{{ csrf_field() }}
 									<input type="hidden" name="gauchada" value="{{ $gauchada['id'] }}">
 									<input type="hidden" name="necesitado" value="{{ $gauchada['creado_por'] }}">
 									<button type="submit" class="btn btn-block btn-orange">Postularse!</button>
 								</form>
-							@else
-								<button type="submit" class="btn btn-block" disabled>Te postulaste</button>
 							@endif
 						@endif
 					</div>

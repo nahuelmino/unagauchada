@@ -126,7 +126,8 @@ class GauchadasController extends Controller
     public function show($id)
     {
         $gauchada = Gauchada::findOrFail($id);
-        return view('gauchadas.show')->withGauchada($gauchada);
+        $postulacions = Postulacion::where('gauchada',$id);
+        return view('gauchadas.show')->withGauchada($gauchada)->withPostulacions($postulacions);
     }
 
     /**
