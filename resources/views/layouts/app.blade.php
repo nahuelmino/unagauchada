@@ -81,15 +81,14 @@
                         @else
                         <li><a href="{{ route('comprar') }}">Créditos: {{ Auth::user()->credits }}</a></li>
                         <li>
-                            <a href="{{ route('home') }}"><span class="glyphicon glyphicon-user"></span> Mi perfil</a>
+                            <a href="{{ route('comprar') }}"><span class="glyphicon glyphicon-usd"></span> Comprar créditos</a>
                         </li>
                         <li>
-                            <a href="{{ route('comprar') }}"><span class="glyphicon glyphicon-usd"></span> Comprar créditos</a>
+                            <a href="/gauchadas/create"><span class="glyphicon glyphicon-star"></span>Crear Gauchada</a>
                         </li>
                         @endif
                         <li>
-                        <li>
-                            <a href="/gauchadas/create"><span class="glyphicon glyphicon-star"></span>Crear Gauchada</a>
+                            <a href="{{ route('home') }}"><span class="glyphicon glyphicon-user"></span> Mi perfil</a>
                         </li>
                         <li>
                             <a href="{{ route('logout') }}"
@@ -101,7 +100,6 @@
                                 {{ csrf_field() }}
                             </form>
                         </li>
-
                     </ul>
                 </li>
                 
