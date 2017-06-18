@@ -1,14 +1,5 @@
 @extends('layouts.app')
 
-<style>
-    .list-group-item-active{
-        background-color: #FFFFFF;
-        border-color: #FF8E29;
-        color: #FF8E29;
-
-    }
-</style>
-
 @section('content')
     <div class="container">
 
