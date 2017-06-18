@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+<style>
+    .list-group-item-active{
+        background-color: #FFFFFF;
+        border-color: #FF8E29;
+        color: #FF8E29;
+
+    }
+</style>
+
 @section('content')
     <div class="container">
 
@@ -48,8 +57,13 @@
                           <td>Tarjeta asociada:</td>
                           <td>********</td>
                       </tr>
+                      <tr>
+                          <td>Mis créditos:</td>
+                          <td>cant de creditos</td>
+                      </tr>
                     </tbody>
                   </table>
+                  <a href="#" class="btn btn-orange">Editar</a>
             </div> <!-- cierre de la columna md-9 -->
         </div> <!-- cierre del primer row -->
     </div> <!-- cierre del container -->
