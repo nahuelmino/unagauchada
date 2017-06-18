@@ -29,21 +29,35 @@ class GauchadasController extends Controller
 
     public function index()
     {
+        $request = array();
         $gauchadas = Gauchada::with('categoria')->withCount('postulacions');
         if (request()->has('title')) {
+            $request['title'] = request()->title;
             $title = request()->title;
             $gauchadas = $gauchadas->where('title', 'LIKE', "%$title%");
         }
+        if (request()->has('location')) {
+            $request['location'] = request()->location;
+            $location = request()->location;
+            $gauchadas = $gauchadas->where('location', 'LIKE', "%$location%");
+        }
+        if (request()->has('categoria_id')) {
+            $request['categoria_id'] = request()->categoria_id;
+            $categoria_id = request()->categoria_id;
+            $gauchadas = $gauchadas->where('categoria_id', 'LIKE', "%$categoria_id%");
+        }
         // 2017-05-29: En el próximo sprint, esto tiene que traerlas ordenadas por cantidad de postulantes de menor a mayor
-        $gauchadas = $gauchadas->whereRaw('ends_at >= CURRENT_DATE()')->whereNull('aceptado');
+        if (! request()->has('DbgAllGauchadas'))
+            $gauchadas = $gauchadas->whereRaw('ends_at >= CURRENT_DATE()')->whereNull('aceptado');
 
         if (request()->sortByPostulaciones === '1') {
             $gauchadas = $gauchadas->orderBy('postulacions_count');
+            $request['sortByPostulaciones'] = '1';
         }
 
         $gauchadas = $gauchadas->paginate(6);
         $categorias = Categoria::all();
-        return view('gauchadas.lista', compact('gauchadas'))->withCategorias($categorias);
+        return view('gauchadas.lista', compact('gauchadas'))->withCategorias($categorias)->withRequest($request);
     }
 
     /**
@@ -166,24 +180,6 @@ class GauchadasController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function postulate(Request $request) {
-        if (!Auth::check() || Auth::user()->esAdmin()) {
-            return redirect('/home');
-        }
-        if (Auth::user()->cant_postulaciones(request()->gauchada) > 0) {
-            Postulacion::where('postulante', Auth::user()->id)->where('gauchada', request()->gauchada)->delete();
-            session()->flash('alert', 'Postulación cancelada correctamente!');
-            return redirect()->back();
-        }
-        $postulacion_attrs = [
-            'postulante' => Auth::user()->id,
-            'gauchada' => request()->gauchada
-        ];
-        Postulacion::create($postulacion_attrs);
-        session()->flash('alert', 'Postulación correcta!');
-        return redirect()->back();
     }
 
     public function postulaciones($id) {

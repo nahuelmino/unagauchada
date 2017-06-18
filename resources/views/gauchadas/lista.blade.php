@@ -7,24 +7,36 @@
 				<label for="sel1"><p class="lead">Ciudad:</p></label>
 				<form class="form-group" role="search" method="GET" action="gauchadas">
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Filtrar por ciudad..." name="location">
 						@foreach ($request as $k => $v)
 							@if ($k !== 'location')
 								<input type="hidden" name="{{ $k }}" value="{{ $v }}">
+							@else
+								<input type="text" class="form-control" placeholder="Filtrar por ciudad..." name="location" value="{{ $v }}">
 							@endif
 						@endforeach
+						@if (! isset($request['location']))
+							<input type="text" class="form-control" placeholder="Filtrar por ciudad..." name="location">
+						@endif
 						<div class="input-group-btn">
 							<button class="btn btn-orange" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 						</div>
-						</div>
+					</div>
 				</form>
 				<label for="sel1"><p class="lead">Categoria:</p></label>
 				<form class="form-group" role="search" method="GET" action="gauchadas">
 					<div class="input-group">
 						<select id="categoria" class="form-control" name="categoria_id">
-							<option value="0" selected>Todas</option>
+							@if (! isset($request['categoria_id']))
+								<option value="0" selected>Todas</option>
+							@else
+								<option value="0">Todas</option>
+							@endif
 							@foreach ($categorias as $categoria)
-								<option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
+								@if (isset($request['categoria_id']) && $request['categoria_id'] == $categoria['id'])
+									<option value="{{ $categoria->id }}" selected>{{ $categoria->name }}</option>
+								@else
+									<option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
+								@endif
 							@endforeach
 						</select>
 						@foreach ($request as $k => $v)
@@ -91,7 +103,7 @@
 									@if ($gauchada['postulacions_count'] === 0)
 										<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}/edit">Editar</a>
 									@else
-										<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}/edit" disabled>Editar</a>
+										<a class="btn btn-orange text-white" disabled>Editar</a>
 									@endif
 								<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}/delete">X</a>
 							@endif

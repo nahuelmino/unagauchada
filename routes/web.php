@@ -32,8 +32,10 @@ Route::get('/gauchadas/{id}/delete', 'GauchadasController@destroy');
 
 Route::get('/gauchadas/{id}/postulaciones', 'GauchadasController@postulaciones');
 
-Route::post('/gauchadas/postulate', 'GauchadasController@postulate');
+Route::post('/postulaciones/add', 'PostulacionesController@add');
 
 Route::get('comprar', 'ComprasController@index')->name('comprar');
 
 Route::post('/gauchadas/create', 'GauchadasController@store');
+
+Route::get('/postulaciones/{id}/accept', 'PostulacionesController@accept');
