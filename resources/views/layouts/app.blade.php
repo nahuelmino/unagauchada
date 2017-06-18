@@ -19,6 +19,13 @@
     <style>
         .centered { margin: auto; max-width: 300px;}
         .marg5 {margin-top: 10px;}
+        .margle {margin-left:10px; }
+        .gauchadabox {  
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden ;
+            );}
+
     </style>
 
     @yield('added_styles')

@@ -27,31 +27,20 @@
 						</div>
 					</div>
 				</form>
-				<label for="sel1"><p class="lead">Ordenar por cantidad de postulantes:</p>
-					<label class="radio-inline"><input type="radio" name="optradio">Ascendente</label>
-					<label class="radio-inline"><input type="radio" name="optradio">Descendente</label>
-
-				</label>
-
-
 			</div>
-			
 			<div class="col-md-9">
 				<div class="row">
 					@foreach ($gauchadas as $gauchada)
-						<div class="col-sm-4 col-lg-4 col-md-4">
-							<div class="well">
-								<div class="thumbnail">
-								<a href="/gauchadas/{{$gauchada['id']}}">
-									
+						
+						<div class="gauchadabox"> 
+							<div class="thumbnail ">
+								<a href="/gauchadas/{{$gauchada['id']}}"> 				
 										@if (isset($gauchada['photo']))
 											<img src="{{ $gauchada['photo'] }}" alt="">
 										@else
 											<img src="http://placehold.it/320x240" alt="">
-										@endif
-									
+										@endif									
 								</a>
-								</div>
 								<div class="caption">
 									<h4>
 										<a href="/gauchadas/{{$gauchada['id']}}">{{ $gauchada['title'] }}</a>
@@ -59,21 +48,22 @@
 											{{ $gauchada->categoria->name }}
 										</label>
 									</h4>
-								<!-- este es el texto fer!--><p class="centered">{{ $gauchada['description'] }}</p>
-								</div>
+									
+									<p>{{ $gauchada['description'] }}</p>
+									
+
 
 							
 							<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}">Ver</a>
 								@if (Auth::check() && Auth::user()->id === $gauchada['creado_por'])
-									@if ($gauchada['postulacions_count'] === 0)
+									@if (Auth::user()->cant_postulaciones(request()->gauchada) === 0)
 										<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}/edit">Editar</a>
-									@else
-										<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}/edit" disabled>Editar</a>
 									@endif
 								<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}/delete">X</a>
 							@endif
 							</div>
 						</div>
+						
 					@endforeach
 				</div>
 			</div>

@@ -11,20 +11,22 @@
 		<div class="col-md-12">
 			<div class="thumbnail">
 				@if (isset($gauchada['photo']))
-					<img class="img-responsive" style="margin: 0 auto;" src="/storage/{{ $gauchada['photo'] }}" alt="">
+					<img class="img-responsive marg5"; src="/storage/{{ $gauchada['photo'] }}" alt="">
 				@endif
-				<div class="caption-full">
-					<p>{{ $gauchada['description'] }}</p>
+				<hr>
+				<div class="caption-full marg5" style="margin-left:10px;" >
+					<p">{{ $gauchada['description'] }}</p>
 				</div>
 			</div>
+			@if (Auth::user())
 			<div class="row">
 				<div class="col-md-6">
-					<div class="well">
-						Cantidad de postulantes: {{ Auth::user()->cant_postulaciones($gauchada['id']) }}
+					<div class="well" style="height:75px"> 
+						<p style="margin-top: 8px">Cantidad de postulantes: {{ Auth::user()->cant_postulaciones($gauchada['id']) }}</p>
 					</div>
 				</div>
-				<div class="col-md-6">
-					<div class="well">
+				<div class="col-md-6" >
+					<div class="well" style="height:75px">
 						@if (Auth::check() && !Auth::user()->esAdmin())
 							@if (Auth::user()->cant_postulaciones($gauchada['id']) === 0)
 								<form method="POST" action="/gauchadas/postulate">
@@ -40,6 +42,7 @@
 					</div>
 				</div>
 			</div>
+			@endif
 			<div class="well">
 				<div class="row">
 					<div class="col-md-12">
