@@ -55,6 +55,7 @@
 						</div>
 					</div>
 				</form>
+				<a class="btn btn-orange" href="/gauchadas">Limpiar filtros</a>
 				@if (Auth::check() && !Auth::user()->esAdmin())
 					<div class="col-md-4 text-right">
 						<a class="btn btn-orange highlighted" href="/gauchadas/create">Nueva Gauchada</a>
