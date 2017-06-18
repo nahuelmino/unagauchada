@@ -67,7 +67,12 @@
 						</div>
 					</div>
 				</form>
-				<a class="btn btn-orange" href="/gauchadas">Limpiar filtros</a>
+				<div class="row">
+					<div class="col-md-4">
+					<a class="btn btn-orange" href="/gauchadas">Limpiar filtros</a>
+					</div>
+				</div>
+		<!--		<a class="btn btn-orange" href="/gauchadas">Limpiar filtros</a>  -->
 				@if (Auth::check() && !Auth::user()->esAdmin())
 					<div class="row">
 						<div class="col-md-4">
