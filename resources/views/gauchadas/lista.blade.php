@@ -8,9 +8,14 @@
 				<form class="form-group" role="search" method="GET" action="gauchadas">
 					<div class="input-group">
 						<input type="text" class="form-control" placeholder="Filtrar por ciudad..." name="location">
-							<div class="input-group-btn">
-								<button class="btn btn-orange" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-							</div>
+						@foreach ($request as $k => $v)
+							@if ($k !== 'location')
+								<input type="hidden" name="{{ $k }}" value="{{ $v }}">
+							@endif
+						@endforeach
+						<div class="input-group-btn">
+							<button class="btn btn-orange" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+						</div>
 						</div>
 				</form>
 				<label for="sel1"><p class="lead">Categoria:</p></label>
@@ -22,8 +27,31 @@
 								<option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
 							@endforeach
 						</select>
+						@foreach ($request as $k => $v)
+							@if ($k !== 'categoria_id')
+								<input type="hidden" name="{{ $k }}" value="{{ $v }}">
+							@endif
+						@endforeach
 						<div class="input-group-btn">
 							<button class="btn btn-orange" type="submit"><i class="glyphicon glyphicon-menu-right"></i></button>
+						</div>
+					</div>
+				</form>
+				<form class="form-group" role="search" method="GET" action="gauchadas">
+					<div class="input-group">
+						@foreach ($request as $k => $v)
+							@if ($k !== 'sortByPostulaciones')
+								<input type="hidden" name="{{ $k }}" value="{{ $v }}">
+							@endif
+						@endforeach
+						<div class="input-group-btn">
+							@if (isset($request['sortByPostulaciones']) && $request['sortByPostulaciones'] === '1')
+								<input type="hidden" name="sortByPostulaciones" value="0">
+								<button class="btn btn-orange" type="submit">No ordenar</button>
+							@else
+								<input type="hidden" name="sortByPostulaciones" value="1">
+								<button class="btn btn-orange" type="submit">Ordenar por postulaciones</button>
+							@endif
 						</div>
 					</div>
 				</form>
