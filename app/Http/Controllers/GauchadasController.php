@@ -41,7 +41,7 @@ class GauchadasController extends Controller
             $location = request()->location;
             $gauchadas = $gauchadas->where('location', 'LIKE', "%$location%");
         }
-        if (request()->has('categoria_id')) {
+        if (request()->has('categoria_id') && request()['categoria_id'] !== '0') {
             $request['categoria_id'] = request()->categoria_id;
             $categoria_id = request()->categoria_id;
             $gauchadas = $gauchadas->where('categoria_id', 'LIKE', "%$categoria_id%");
