@@ -86,6 +86,9 @@
                         <li>
                             <a href="/gauchadas/create"><span class="glyphicon glyphicon-star"></span>Crear Gauchada</a>
                         </li>
+                        <li>
+                            <a href="/gauchadas_user"><span class="glyphicon glyphicon-list"></span>Mis Gauchadas</a>
+                        </li>
                         @endif
                         <li>
                             <a href="{{ route('home') }}"><span class="glyphicon glyphicon-user"></span> Mi perfil</a>

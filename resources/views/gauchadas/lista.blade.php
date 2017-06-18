@@ -71,7 +71,7 @@
 				@if (Auth::check() && !Auth::user()->esAdmin())
 					<div class="row">
 						<div class="col-md-4">
-							<a class="btn btn-orange highlighted" href="/gauchadas/create">Nueva Gauchada</a>
+							<a class="btn btn-orange" href="/gauchadas/create">Nueva Gauchada</a>
 						</div>
 					</div>
 				@endif
@@ -80,8 +80,8 @@
 				<div class="row">
 					@foreach ($gauchadas as $gauchada)
 						<div class="col-sm-4 col-lg-4 col-md-4">
-							<div class="thumbnail">
-								<a href="/gauchadas/{{$gauchada['id']}}">
+							<a href="/gauchadas/{{$gauchada['id']}}">
+								<div class="well">
 									<div class="thumbnail">
 										@if (isset($gauchada['photo']))
 											<img src="{{ $gauchada['photo'] }}" alt="">
@@ -89,25 +89,24 @@
 											<img src="http://placehold.it/320x240" alt="">
 										@endif
 									</div>
-								</a>
-								<div class="caption">
-									<h4>
-										<a href="/gauchadas/{{$gauchada['id']}}">{{ $gauchada['title'] }}</a>
-										<label for="" class="label label-primary bg-orange pull-right">
-											{{ $gauchada->categoria->name }}
-										</label>
-									</h4>
-									<p>{{ $gauchada['description'] }}</p>
+									<div class="caption">
+										<h4>
+											{{ $gauchada['title'] }}
+											<label for="" class="label label-primary bg-orange pull-right">
+												{{ $gauchada->categoria->name }}
+											</label>
+										</h4>
+										<p>{{ $gauchada['description'] }}</p>
+									</div>
 								</div>
-							</div>
-							<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}">Ver</a>
-								@if (Auth::check() && Auth::user()->id === $gauchada['creado_por'])
-									@if ($gauchada['postulacions_count'] === 0)
-										<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}/edit">Editar</a>
-									@else
-										<a class="btn btn-orange text-white" disabled>Editar</a>
-									@endif
-								<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}/delete">X</a>
+							</a>
+							@if (Auth::check() && Auth::user()->id === $gauchada['creado_por'])
+								@if ($gauchada['postulacions_count'] === 0)
+									<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}/edit">Editar</a>
+								@else
+									<a class="btn btn-orange text-white" disabled>Editar</a>
+								@endif
+							<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}/delete">X</a>
 							@endif
 						</div>
 					@endforeach
