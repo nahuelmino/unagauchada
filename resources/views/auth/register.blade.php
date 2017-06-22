@@ -62,7 +62,7 @@
                             <label for="date_of_birth" class="col-md-4 control-label">Fecha de nacimiento</label>
 
                             <div class="col-md-6">
-                                <input id="date_of_birth" type="text" class="form-control datepicker" name="date_of_birth" value="{{ old('date_of_birth') }}" required>
+                                <input id="date_of_birth" type="text" placeholder="Click aqui para desplegar el calendario" class="form-control datepicker" name="date_of_birth" value="{{ old('date_of_birth') }}" required>
 
                                 @if ($errors->has('date_of_birth'))
                                     <span class="help-block">
