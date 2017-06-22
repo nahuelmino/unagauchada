@@ -11,7 +11,6 @@
                 <div class="list-group">
                     <a href="#" class="list-group-item active">Mis datos</a>
                     <a href="/gauchadas/user" class="list-group-item">Mis gauchadas</a>
-                    <a href="gauchadas/postulaciones" class="list-group-item">Mis postulaciones</a>
                 </div>
             </div>
 
@@ -50,12 +49,8 @@
                         <td>{{ Auth::user()->phone }}</td>
                       </tr>
                       <tr>
-                          <td>Contraseña:(hay que mostrar esto?)</td>
+                          <td>Contraseña:</td>
                           <td>**********</td>
-                      </tr>
-                      <tr>
-                          <td>Tarjeta asociada:(hay que mostrar esto?)</td>
-                          <td>********</td>
                       </tr>
                       <tr>
                           <td>Mis créditos:</td>
