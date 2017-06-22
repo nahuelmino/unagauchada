@@ -10,8 +10,8 @@
                 <p class="lead">Perfil de usuario</p>
                 <div class="list-group">
                     <a href="#" class="list-group-item active">Mis datos</a>
-                    <a href="#" class="list-group-item">Mis gauchadas</a>
-                    <a href="#" class="list-group-item">Mis postulaciones</a>
+                    <a href="/gauchadas/user" class="list-group-item">Mis gauchadas</a>
+                    <a href="gauchadas/postulaciones" class="list-group-item">Mis postulaciones</a>
                 </div>
             </div>
 
