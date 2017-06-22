@@ -90,7 +90,7 @@
                             <a href="#"><span class="glyphicon glyphicon-cog"></span> Panel de control</a>
                         </li>
                         @else
-                        <li><a href="{{ route('comprar') }}">Créditos: {{ Auth::user()->credits }}</a></li>
+                        <li><a href="#">Créditos: {{ Auth::user()->credits }}</a></li>
                         <li style="background-color:orange">
                             <a href="{{ route('comprar') }}"><span class="glyphicon glyphicon-usd"></span> Comprar créditos</a>
                         </li>
