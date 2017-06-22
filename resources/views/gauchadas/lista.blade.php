@@ -81,7 +81,7 @@
 										@if (isset($gauchada['photo']))
 											<img src="{{ $gauchada['photo'] }}">
 										@else
-											<img src="http://www.jennybeaumont.com/wp-content/uploads/2015/03/placeholder.gif" >
+											<img src="/img/icon.png" >
 										@endif
 								</a>
 							<div class="caption">
