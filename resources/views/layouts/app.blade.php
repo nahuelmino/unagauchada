@@ -82,6 +82,9 @@
                         Menú<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="{{ route('home') }}"><span class="glyphicon glyphicon-user"></span> Mi perfil</a>
+                        </li>
                         @if (Auth::user()->esAdmin())
                         <li>
                             <a href="#"><span class="glyphicon glyphicon-cog"></span> Panel de control</a>
@@ -98,9 +101,6 @@
                             <a href="/gauchadas/user"><span class="glyphicon glyphicon-list"></span>Mis Gauchadas</a>
                         </li>
                         @endif
-                        <li>
-                            <a href="{{ route('home') }}"><span class="glyphicon glyphicon-user"></span> Mi perfil</a>
-                        </li>
                         <li>
                             <a href="{{ route('logout') }}"
                                onclick="event.preventDefault();
