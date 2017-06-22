@@ -22,7 +22,11 @@ Route::post('compras', 'ComprasController@generar');
 
 Route::get('/gauchadas/create', 'GauchadasController@create');
 
+Route::post('/gauchadas/create', 'GauchadasController@store');
+
 Route::get('/gauchadas', 'GauchadasController@index')->name('gauchadas');
+
+Route::get('/gauchadas/user', 'GauchadasController@userGauchadas');
 
 Route::get('/gauchadas/{id}', 'GauchadasController@show');
 
@@ -32,8 +36,8 @@ Route::get('/gauchadas/{id}/delete', 'GauchadasController@destroy');
 
 Route::get('/gauchadas/{id}/postulaciones', 'GauchadasController@postulaciones');
 
-Route::post('/gauchadas/postulate', 'GauchadasController@postulate');
+Route::post('/postulaciones/add', 'PostulacionesController@add');
+
+Route::get('/postulaciones/{id}/accept', 'PostulacionesController@accept');
 
 Route::get('comprar', 'ComprasController@index')->name('comprar');
-
-Route::post('/gauchadas/create', 'GauchadasController@store');

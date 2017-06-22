@@ -27,7 +27,7 @@ class GauchadasController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getGauchadas($request,$moreClauses = []) {
+    public function getGauchadas($request) {
         $gauchadas = Gauchada::with('categoria')->withCount('postulacions');
         if (isset($request['title'])) {
             $title = request()->title;
@@ -48,16 +48,13 @@ class GauchadasController extends Controller
         if (isset($request['sortByPostulaciones']) && $request['sortByPostulaciones'] === '1') {
             $gauchadas = $gauchadas->orderBy('postulacions_count');
         }
-        foreach ($moreClauses as $clause) {
-            $gauchadas = $gauchadas->where($clause['k'],$clause['op'],$clause['v']);
-        }
-        return $gauchadas->paginate(6);
+        return $gauchadas;
     }
 
-    public function index($clauses = [])
+    public function index()
     {
         $request = request()->toArray();
-        $gauchadas = $this->getGauchadas($request,$clauses);
+        $gauchadas = $this->getGauchadas($request)->paginate(6);
         $categorias = Categoria::all();
         return view('gauchadas.lista', compact('gauchadas'))->withCategorias($categorias)->withRequest($request);
     }
@@ -196,11 +193,10 @@ class GauchadasController extends Controller
     public function userGauchadas() {
         if (!Auth::check() || Auth::user()->esAdmin())
             return redirect('/home');
-        $user = Auth::user()->id;
-        return $this->index([[
-            'k' => 'creado_por',
-            'op' => '=',
-            'v' => "$user"
-        ]]);
+        $request = request()->toArray();
+        $usr = Auth::user()->id;
+        $gauchadas = $this->getGauchadas($request)->where('creado_por',$usr)->paginate(6);
+        $categorias = Categoria::all();
+        return view('gauchadas.lista', compact('gauchadas'))->withCategorias($categorias)->withRequest($request);
     }
 }

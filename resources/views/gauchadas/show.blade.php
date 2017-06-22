@@ -11,33 +11,43 @@
 		<div class="col-md-12">
 			<div class="thumbnail">
 				@if (isset($gauchada['photo']))
-					<img class="img-responsive marg5"; src="/storage/{{ $gauchada['photo'] }}" alt="">
+					<img class="img-responsive" style="margin: 0 auto;" src="/storage/{{ $gauchada['photo'] }}" alt="">
+                @else
+                    <img src="http://placehold.it/200x200" alt="">
 				@endif
 				<hr>
 				<div class="caption-full marg5" style="margin-left:10px;" >
-					<p">{{ $gauchada['description'] }}</p>
+					<p>{{ $gauchada['description'] }}</p>
 				</div>
 			</div>
 			@if (Auth::user())
 			<div class="row">
 				<div class="col-md-6">
-					<div class="well" style="height:75px"> 
-						<p style="margin-top: 8px">Cantidad de postulantes: {{ Auth::user()->cant_postulaciones($gauchada['id']) }}</p>
+					<div class="well">
+						Cantidad de postulantes: {{ $postulacions->count() }}
 					</div>
 				</div>
-				<div class="col-md-6" >
-					<div class="well" style="height:75px">
-						@if (Auth::check() && !Auth::user()->esAdmin())
-							@if (Auth::user()->cant_postulaciones($gauchada['id']) === 0)
-								<form method="POST" action="/gauchadas/postulate">
-									{{ csrf_field() }}
-									<input type="hidden" name="gauchada" value="{{ $gauchada['id'] }}">
-									<input type="hidden" name="necesitado" value="{{ $gauchada['creado_por'] }}">
-									<button type="submit" class="btn btn-block btn-orange">Postularse!</button>
-								</form>
+				<div class="col-md-6">
+					<div class="well">
+						@if (!Auth::check())
+							<a href="{{ route('login') }}" class="btn btn-block btn-orange">Ingresa para postularte</a>
+						@elseif (Auth::user()->esAdmin())
+							<a class="btn btn-block text-orange" disabled>Como admin no puedes postularte</a>
+						@elseif (Auth::user()->id === $gauchada['creado_por'])
+							@if ($postulacions->count() > 0)
+								<a class="btn btn-block btn-orange" href="/gauchadas/{{$gauchada['id']}}/postulaciones">Ver postulantes</a>
 							@else
-								<button type="submit" class="btn btn-block" disabled>Te postulaste</button>
+								<a class="btn btn-block text-orange" href="/gauchadas/{{$gauchada['id']}}/postulaciones" disabled>Ver postulantes</a>
 							@endif
+						@elseif ($postulacions->count() > 0)
+							<a class="btn btn-block" disabled>Te postulaste</a>
+						@else
+							<form method="POST" action="/postulaciones/add">
+								{{ csrf_field() }}
+								<input type="hidden" name="gauchada" value="{{ $gauchada['id'] }}">
+								<input type="hidden" name="necesitado" value="{{ $gauchada['creado_por'] }}">
+								<button type="submit" class="btn btn-block btn-orange">Postularse!</button>
+							</form>
 						@endif
 					</div>
 				</div>
