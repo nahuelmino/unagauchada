@@ -9,6 +9,9 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
+			<h4>Publicado por: #mostrar nombre del usuario dueño de la gauchada# </h4>
+		</div>
+		<div class="col-md-12">
 			<div class="thumbnail">
 				@if (isset($gauchada['photo']))
 					<img class="img-responsive" style="margin: 0 auto;" src="/storage/{{ $gauchada['photo'] }}" alt="">
@@ -54,7 +57,7 @@
 			</div>
 			@endif
 			<div class="well">
-				<div class="row">
+			<!--	<div class="row">
 					<div class="col-md-12">
 						<span class="pull-right">Anonymous, 10 days ago</span>
 						<p>Estás libre la semana que viene?</p>
@@ -79,7 +82,7 @@
 						<p>I've seen some better than this, but not at this price. I definitely recommend this item.</p>
 					</div>
 				</div>
-			</div>
+			</div> <-->
 			<hr>
 			<div class="text-left">
 				<a class="btn btn-success">Deja una Pregunta!</a>
