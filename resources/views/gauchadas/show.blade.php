@@ -9,7 +9,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<h4>Publicado por: #mostrar nombre del usuario dueño de la gauchada# </h4>
+			<h4>Publicado por: {{ \App\User::find($gauchada['creado_por'])->name }} </h4>
 		</div>
 		<div class="col-md-12">
 			<div class="thumbnail">
@@ -57,6 +57,23 @@
 			</div>
 			@endif
 			<div class="well">
+			@foreach ($preguntas as $pregunta)
+				<div class="row">
+					<div class="col-md-12">
+						<span class="pull-right">{{ \App\User::find($pregunta['user_id'])->name }}, {{ $pregunta['created_at']->diffForHumans() }}</span>
+						<p>{{ $pregunta['text'] }}</p>
+					</div>
+				</div>
+			@endforeach
+			<hr>
+			<div class="text-left">
+				<a class="btn btn-success">Deja una Pregunta!</a>
+			</div>
+		</div>
+	</div>
+</div>
+@endsection
+
 			<!--	<div class="row">
 					<div class="col-md-12">
 						<span class="pull-right">Anonymous, 10 days ago</span>
@@ -83,11 +100,3 @@
 					</div>
 				</div>
 			</div> <-->
-			<hr>
-			<div class="text-left">
-				<a class="btn btn-success">Deja una Pregunta!</a>
-			</div>
-		</div>
-	</div>
-</div>
-@endsection
