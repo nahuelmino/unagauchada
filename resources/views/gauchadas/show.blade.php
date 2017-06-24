@@ -62,6 +62,11 @@
 					<div class="col-md-12">
 						<span class="pull-right">{{ \App\User::find($pregunta['user_id'])->name }}, {{ $pregunta['created_at']->diffForHumans() }}</span>
 						<p>{{ $pregunta['text'] }}</p>
+						@if (isset($respuestas[$pregunta['id']]))
+							<ul>
+								<small><li>{{ $respuestas[$pregunta['id']][0]['text'] }}</li></small>
+							</ul>
+						@endif
 					</div>
 				</div>
 			@endforeach
