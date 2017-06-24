@@ -16,7 +16,7 @@
 				@if (isset($gauchada['photo']))
 					<img class="img-responsive" style="margin: 0 auto;" src="/storage/{{ $gauchada['photo'] }}" alt="">
                 @else
-                    <img src="http://placehold.it/200x200" alt="">
+                    <img src="/img/icon.png">
 				@endif
 				<hr>
 				<div class="caption-full marg5" style="margin-left:10px;" >
@@ -24,55 +24,60 @@
 				</div>
 			</div>
 			@if (Auth::user())
-			<div class="row">
-				<div class="col-md-6">
-					<div class="well">
-						Cantidad de postulantes: {{ $postulacions->count() }}
+				<div class="row">
+					<div class="col-md-6">
+						<div class="well">
+							Cantidad de postulantes: {{ $postulacions->count() }}
+						</div>
 					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="well">
-						@if (!Auth::check())
-							<a href="{{ route('login') }}" class="btn btn-block btn-orange">Ingresa para postularte</a>
-						@elseif (Auth::user()->esAdmin())
-							<a class="btn btn-block text-orange" disabled>Como admin no puedes postularte</a>
-						@elseif (Auth::user()->id === $gauchada['creado_por'])
-							@if ($postulacions->count() > 0)
-								<a class="btn btn-block btn-orange" href="/gauchadas/{{$gauchada['id']}}/postulaciones">Ver postulantes</a>
+					<div class="col-md-6">
+						<div class="well">
+							@if (!Auth::check())
+								<a href="{{ route('login') }}" class="btn btn-block btn-orange">Ingresa para postularte</a>
+							@elseif (Auth::user()->esAdmin())
+								<a class="btn btn-block text-orange" disabled>Como admin no puedes postularte</a>
+							@elseif (Auth::user()->id === $gauchada['creado_por'])
+								@if ($postulacions->count() > 0)
+									<a class="btn btn-block btn-orange" href="/gauchadas/{{$gauchada['id']}}/postulaciones">Ver postulantes</a>
+								@else
+									<a class="btn btn-block text-orange" href="/gauchadas/{{$gauchada['id']}}/postulaciones" disabled>Ver postulantes</a>
+								@endif
+							@elseif ($postulacions->count() > 0)
+								<a class="btn btn-block" disabled>Te postulaste</a>
 							@else
-								<a class="btn btn-block text-orange" href="/gauchadas/{{$gauchada['id']}}/postulaciones" disabled>Ver postulantes</a>
+								<form method="POST" action="/postulaciones/add">
+									{{ csrf_field() }}
+									<input type="hidden" name="gauchada" value="{{ $gauchada['id'] }}">
+									<input type="hidden" name="necesitado" value="{{ $gauchada['creado_por'] }}">
+									<button type="submit" class="btn btn-block btn-orange">Postularse!</button>
+								</form>
 							@endif
-						@elseif ($postulacions->count() > 0)
-							<a class="btn btn-block" disabled>Te postulaste</a>
-						@else
-							<form method="POST" action="/postulaciones/add">
-								{{ csrf_field() }}
-								<input type="hidden" name="gauchada" value="{{ $gauchada['id'] }}">
-								<input type="hidden" name="necesitado" value="{{ $gauchada['creado_por'] }}">
-								<button type="submit" class="btn btn-block btn-orange">Postularse!</button>
-							</form>
-						@endif
+						</div>
 					</div>
 				</div>
-			</div>
 			@endif
 			<div class="well">
-			@foreach ($preguntas as $pregunta)
-				<div class="row">
-					<div class="col-md-12">
-						<span class="pull-right">{{ \App\User::find($pregunta['user_id'])->name }}, {{ $pregunta['created_at']->diffForHumans() }}</span>
-						<p>{{ $pregunta['text'] }}</p>
-						@if (isset($respuestas[$pregunta['id']]))
-							<ul>
-								<small><li>{{ $respuestas[$pregunta['id']][0]['text'] }}</li></small>
-							</ul>
-						@endif
+				@foreach ($preguntas as $pregunta)
+					<div class="row">
+						<div class="col-md-12">
+							<span class="pull-right">{{ \App\User::find($pregunta['user_id'])->name }}, {{ $pregunta['created_at']->diffForHumans() }}</span>
+							<p>{{ $pregunta['text'] }}</p>
+							@if (isset($pregunta['respuesta']))
+								<ul>
+									<small><li>{{ $pregunta['respuesta']['text'] }} &nbsp &nbsp {{ $pregunta['respuesta']['created_at']->diffForHumans() }}</li></small>
+								</ul>
+							@endif
+						</div>
 					</div>
-				</div>
-			@endforeach
-			<hr>
-			<div class="text-left">
-				<a class="btn btn-success">Deja una Pregunta!</a>
+					<hr>
+				@endforeach
+				<form method="POST" action="/postulaciones/{{ $gauchada['id'] }}/ask">
+					<p>Deja una Pregunta!</p>
+					{{ csrf_field() }}
+					<textarea name="text" id="text" class="form-control" value="{{ old('text') }}" required></textarea>
+					<p></p>
+					<button type="submit" class="btn btn-orange">Enviar</button>
+				</form>
 			</div>
 		</div>
 	</div>
