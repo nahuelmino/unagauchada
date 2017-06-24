@@ -6,6 +6,8 @@ use App\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Gauchada;
+use App\Pregunta;
+use App\Respuesta;
 use App\Postulacion;
 use Carbon\Carbon;
 
@@ -143,7 +145,12 @@ class GauchadasController extends Controller
     {
         $gauchada = Gauchada::findOrFail($id);
         $postulacions = Postulacion::where('gauchada',$id);
-        return view('gauchadas.show')->withGauchada($gauchada)->withPostulacions($postulacions);
+        $preguntas = Pregunta::all()->where('gauchada',$id);
+        foreach ($preguntas as $pregunta) {
+            $pregunta['respuesta'] = Respuesta::all()->where('pregunta',$pregunta['id'])->first();
+        }
+        //dd($preguntas);
+        return view('gauchadas.show')->withGauchada($gauchada)->withPostulacions($postulacions)->withPreguntas($preguntas);
     }
 
     /**
@@ -202,5 +209,9 @@ class GauchadasController extends Controller
             'op' => '=',
             'v' => "$user"
         ]]);
+    }
+
+    public function ask() {
+        return redirect()->back();
     }
 }
