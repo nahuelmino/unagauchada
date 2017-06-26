@@ -20,13 +20,13 @@
 		<div class="col-md-12">
 			<div class="thumbnail">
 				@if (isset($gauchada['photo']))
-					<img class="img-responsive" style="margin: 0 auto;" src="{{ $gauchada['photo'] }}" alt="">
+					<img class="img-responsive" style="margin: 0 auto;" src="{{ $gauchada['photo'] }}" alt="" width="400" height="400">
                 @else
                     <img src="/img/icon.png">
 				@endif
 				<hr>
 				<div class="caption-full marg5" style="margin-left:10px;" >
-					<p>{{ $gauchada['description'] }}</p>
+					<p> <b>{{ $gauchada['description'] }}</b> </p>
 				</div>
 			</div>
 				<div class="row">
@@ -112,29 +112,4 @@
 </div>
 @endsection
 
-			<!--	<div class="row">
-					<div class="col-md-12">
-						<span class="pull-right">Anonymous, 10 days ago</span>
-						<p>Estás libre la semana que viene?</p>
-					</div>
-					<ul>
-						<small><li>Hola. Si, a partir del miércoles</li></small>
-					</ul>
-				</div>
-				<hr>
-				<div class="row">
-					<div class="col-md-12">
-						Anonymous
-						<span class="pull-right">12 days ago</span>
-						<p>I've alredy ordered another one!</p>
-					</div>
-				</div>
-				<hr>
-				<div class="row">
-					<div class="col-md-12">
-						Anonymous
-						<span class="pull-right">15 days ago</span>
-						<p>I've seen some better than this, but not at this price. I definitely recommend this item.</p>
-					</div>
-				</div>
-			</div> <-->
+			
