@@ -27,8 +27,8 @@ class User extends Authenticatable
     ];
 
 
-    public function publicaciones() {
-        return $this->hasMany(Gauchada::class);
+    public function gauchadas() {
+        return $this->hasMany(Gauchada::class, 'creado_por');
     }
 
     public function postulaciones() {

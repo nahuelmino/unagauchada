@@ -17,7 +17,7 @@ class Gauchada extends Model
     }
 
     public function publicado() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'creado_por');
     }
 
     public function aceptado() {
@@ -26,6 +26,14 @@ class Gauchada extends Model
 
     public function postulacions() {
         return $this->hasMany(Postulacion::class,'gauchada');
+    }
+
+    public function tienePostulanteAceptado() {
+        return $this->aceptado !== null;
+    }
+
+    public function borrarPostulantes() {
+        $this->postulacions()->delete();
     }
 
 //    public function getPhotoAttribute($value) {

@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('phone');
             $table->string('photo')->nullable()->default(null);
             $table->integer('credits')->default(0);
+            $table->integer('score')->default(0);
             $table->boolean('is_admin')->default(false);
             $table->rememberToken();
             $table->timestamps();

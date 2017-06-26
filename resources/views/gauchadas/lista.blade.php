@@ -10,13 +10,9 @@
 						@foreach ($request as $k => $v)
 							@if ($k !== 'location')
 								<input type="hidden" name="{{ $k }}" value="{{ $v }}">
-							@else
-								<input type="text" class="form-control" placeholder="Filtrar por ciudad..." name="location" value="{{ $v }}">
 							@endif
 						@endforeach
-						@if (! isset($request['location']))
-							<input type="text" class="form-control" placeholder="Filtrar por ciudad..." name="location">
-						@endif
+						<input type="text" class="form-control" placeholder="Filtrar por ciudad..." name="location">
 						<div class="input-group-btn">
 							<button class="btn btn-orange" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 						</div>
@@ -72,11 +68,21 @@
 			</div>
 			
 			<div class="col-md-9">
+			<div class="row">
+					@if ($errors->has('0'))
+						<span class="help-block">
+							<strong>{{ $errors->first('0') }}</strong>
+						</span>
+					@endif
+			</div>
 				<div class="row">
-					
-					@foreach ($gauchadas as $gauchada)
+				
+					@forelse ($gauchadas as $gauchada)
 						<div class="col-md-4">
-							<div class="well">
+							<div class="well single-gauchada">
+								<label for="" class="label label-primary bg-orange category-label">
+									{{ $gauchada->categoria->name }}
+								</label>
 								<a href="/gauchadas/{{$gauchada['id'] }}" class="thumbnail">
 										@if (isset($gauchada['photo']))
 											<img src="{{ $gauchada['photo'] }}">
@@ -87,11 +93,8 @@
 							<div class="caption">
 								<a href="/gauchadas/{{$gauchada['id'] }}"><h4>
 									{{ $gauchada['title'] }}
-									<label for="" class="label label-primary bg-orange pull-right">
-										{{ $gauchada->categoria->name }}
-									</label>
-								</a></h4>								
-								<p>{{ $gauchada['description'] }}</p>
+								</a></h4>	
+								<p>{{ str_limit($gauchada['description'], 110) }}</p>
 							</div>
 							@if (Auth::check() && Auth::user()->id === $gauchada['creado_por'])
 								@if ($gauchada['postulacions_count'] === 0)
@@ -99,13 +102,16 @@
 								@else
 									<a class="btn btn-orange text-white" disabled>Editar</a>	
 								@endif
-							<a class="btn btn-orange text-white" href="/gauchadas/{{$gauchada['id']}}/delete">X</a>
+							<a class="btn btn-orange text-white needs-confirmation" data-confirmation-message="Esta seguro de eliminar esta gauchada?" href="/gauchadas/{{$gauchada['id']}}/delete">X</a>
 							@endif
 							
 							</div>
 						</div>
-					@endforeach
-
+					@empty
+					<div class="col-md-12">
+						<p>No se encontraron gauchadas.</p>
+					</div>
+					@endforelse
 				</div>
 			</div>
 		

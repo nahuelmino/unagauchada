@@ -17,4 +17,8 @@ class Postulacion extends Model
     public function necesitado() {
         return $this->belongsTo(User::class);
     }
+
+    public function gauchada() {
+        return $this->belongsTo(Gauchada::class, 'gauchada');
+    }
 }

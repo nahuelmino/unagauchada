@@ -8,9 +8,15 @@
 </div>
 <div class="container">
 	<div class="row">
+		@if(!Auth::check() || (Auth::check() && Auth::user()->id !== $gauchada['creado_por']))
 		<div class="col-md-12">
 			<h4>Publicado por: {{ \App\User::find($gauchada['creado_por'])->name }} </h4>
 		</div>
+		@else
+		<div class="col-md-12">
+			<a href="#" class="btn btn-orange">Finalizar gauchada</a>
+		</div>
+		@endif
 		<div class="col-md-12">
 			<div class="thumbnail">
 				@if (isset($gauchada['photo']))
@@ -23,39 +29,47 @@
 					<p>{{ $gauchada['description'] }}</p>
 				</div>
 			</div>
-			@if (Auth::user())
 				<div class="row">
-					<div class="col-md-6">
+					@if (Auth::check() && Auth::user()->id === $gauchada['creado_por'])
+					<div class="col-md-9">
 						<div class="well">
 							Cantidad de postulantes: {{ $postulacions->count() }}
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="well">
+					@endif
+					<div class="col-md-3">
 							@if (!Auth::check())
-								<a href="{{ route('login') }}" class="btn btn-block btn-orange">Ingresa para postularte</a>
+								<div class="well">
+									<a href="{{ route('login') }}" class="btn btn-block btn-orange">Ingresa para postularte</a>
+								</div>
 							@elseif (Auth::user()->esAdmin())
+							<div class="well">
 								<a class="btn btn-block text-orange" disabled>Como admin no puedes postularte</a>
+							</div>
 							@elseif (Auth::user()->id === $gauchada['creado_por'])
 								@if ($postulacions->count() > 0)
-									<a class="btn btn-block btn-orange" href="/gauchadas/{{$gauchada['id']}}/postulaciones">Ver postulantes</a>
-								@else
-									<a class="btn btn-block text-orange" href="/gauchadas/{{$gauchada['id']}}/postulaciones" disabled>Ver postulantes</a>
+									<div class="well">
+										<a class="btn btn-block btn-orange" href="/gauchadas/{{$gauchada['id']}}/postulaciones">Ver postulantes</a>
+									</div>
 								@endif
 							@elseif ($postulacions->count() > 0)
-								<a class="btn btn-block" disabled>Te postulaste</a>
+								<div class="well">
+									<a class="btn btn-block" disabled>Te postulaste</a>
+								</div>
 							@else
-								<form method="POST" action="/postulaciones/add">
-									{{ csrf_field() }}
-									<input type="hidden" name="gauchada" value="{{ $gauchada['id'] }}">
-									<input type="hidden" name="necesitado" value="{{ $gauchada['creado_por'] }}">
-									<button type="submit" class="btn btn-block btn-orange">Postularse!</button>
-								</form>
+								<div class="well">
+									<form method="POST" action="/postulaciones/add">
+										{{ csrf_field() }}
+										<input type="hidden" name="gauchada" value="{{ $gauchada['id'] }}">
+										<input type="hidden" name="necesitado" value="{{ $gauchada['creado_por'] }}">
+										<button type="submit" class="btn btn-block btn-orange">Postularse!</button>
+									</form>
+								</div>
 							@endif
-						</div>
+							
 					</div>
 				</div>
-			@endif
+			@if (count($preguntas) > 0)
 			<div class="well">
 				@foreach ($preguntas as $pregunta)
 					<div class="row">
@@ -63,22 +77,36 @@
 							<span class="pull-right">{{ \App\User::find($pregunta['user_id'])->name }}, {{ $pregunta['created_at']->diffForHumans() }}</span>
 							<p>{{ $pregunta['text'] }}</p>
 							@if (isset($pregunta['respuesta']))
-								<ul>
+								<ul style="list-style: none;">
 									<small><li>{{ $pregunta['respuesta']['text'] }} &nbsp &nbsp {{ $pregunta['respuesta']['created_at']->diffForHumans() }}</li></small>
 								</ul>
+							@else
+							<form action="/preguntas/{{ $pregunta->id }}" method="post">
+								{{ csrf_field() }}
+								<div class="form-group">
+									<textarea name="respuesta" class="form-control" cols="30" rows="2" placeholder="Deja una respuesta" required></textarea>
+								</div>
+								<button type="submit" class="btn btn-orange">Responder</button>
+							</form>
 							@endif
 						</div>
 					</div>
+					@if (!($loop->first || $loop->last))
 					<hr>
+					@endif
 				@endforeach
-				<form method="POST" action="/postulaciones/{{ $gauchada['id'] }}/ask">
+				@if(Auth::check() && Auth::user()->id !== $gauchada['creado_por'])
+				<form method="POST" action="/preguntas">
 					<p>Deja una Pregunta!</p>
 					{{ csrf_field() }}
-					<textarea name="text" id="text" class="form-control" value="{{ old('text') }}" required></textarea>
+					<input type="hidden" name="gauchada_id" value="{{ $gauchada->id }}">
+					<textarea name="pregunta" id="text" class="form-control" value="{{ old('text') }}" placeholder="Deja una pregunta..." required></textarea>
 					<p></p>
-					<button type="submit" class="btn btn-orange">Enviar</button>
+					<button type="submit" class="btn btn-orange">Preguntar</button>
 				</form>
+				@endif
 			</div>
+			@endif
 		</div>
 	</div>
 </div>

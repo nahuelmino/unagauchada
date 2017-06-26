@@ -18,6 +18,14 @@ Auth::routes();
 
 Route::get('home', 'HomeController@index')->name('home');
 
+Route::get('editar-perfil', 'UsersController@edit');
+
+Route::post('users', 'UsersController@update');
+
+Route::get('cambiar-contrasena', 'UsersController@editPassword');
+
+Route::post('cambiar-contrasena', 'UsersController@updatePassword');
+
 Route::post('compras', 'ComprasController@generar');
 
 Route::get('/gauchadas/create', 'GauchadasController@create');
@@ -36,7 +44,8 @@ Route::get('/gauchadas/{id}/delete', 'GauchadasController@destroy');
 
 Route::get('/gauchadas/{id}/postulaciones', 'GauchadasController@postulaciones');
 
-Route::post('/gauchadas/{id}/ask', 'GauchadasController@ask');
+Route::post('/preguntas', 'PreguntasController@store');
+Route::post('/preguntas/{id}', 'PreguntasController@update');
 
 Route::post('/postulaciones/add', 'PostulacionesController@add');
 

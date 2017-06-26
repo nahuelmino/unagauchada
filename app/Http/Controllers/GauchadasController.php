@@ -44,14 +44,18 @@ class GauchadasController extends Controller
             $gauchadas = $gauchadas->where('categoria_id', 'LIKE', "%$categoria_id%");
         }
         // 2017-05-29: En el próximo sprint, esto tiene que traerlas ordenadas por cantidad de postulantes de menor a mayor
-        if (! isset($request['DbgAllGauchadas']))
-            $gauchadas = $gauchadas->whereRaw('ends_at >= CURRENT_DATE()')->whereNull('aceptado');
+        if (! isset($request['DbgAllGauchadas'])) {
+            $gauchadas = $gauchadas->whereRaw('ends_at >= CURRENT_DATE()')
+                                   ->whereNull('aceptado');
+        }            
 
         if (isset($request['sortByPostulaciones']) && $request['sortByPostulaciones'] === '1') {
             $gauchadas = $gauchadas->orderBy('postulacions_count');
         }
         foreach ($moreClauses as $clause) {
-            $gauchadas = $gauchadas->where($clause['k'],$clause['op'],$clause['v']);
+                                                       
+            $gauchadas = $gauchadas->where($clause['k'], $clause['op'], $clause['v']);
+            
         }
         return $gauchadas->paginate(6);
     }
@@ -162,10 +166,10 @@ class GauchadasController extends Controller
     public function edit($id)
     {
         $gauchada = Gauchada::findOrFail($id);
-        if (!Auth::check() || Auth::user()->id !== $gauchada['creado_por']) {
+        if (Auth::user()->id !== $gauchada['creado_por']) {
             return redirect('/home');
         }
-        //
+        return view('gauchadas.edit')->withGauchada($gauchada)->withCategorias(Categoria::all());
     }
 
     /**
@@ -188,7 +192,35 @@ class GauchadasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Eliminar la gauchada implica:
+        // Verificar que la gauchada que estoy eliminando es mía
+        // Verificar que no haya un postulante aceptado
+        // Si hay 0 postulantes hay que devolver el credito que se usó para publicar la gauchada
+        // Borrar de la tabla "postulacions" las postulaciones a la gauchada que estoy eliminando
+        // Borrar la gauchada de la tabla "gauchadas" 
+
+        $gauchada = Gauchada::findOrFail($id);
+        
+        if (!$this->verificarGauchadaEsMia($gauchada)) {
+            return redirect()->back()->withErrors('Hubo un error');
+        } 
+
+        if (!$this->verificarPostulanteAceptado($gauchada)) {
+            return redirect()->back()->withErrors('Esta gauchada ya tiene un postulante aceptado.');
+        }
+        
+        if ($gauchada->postulacions->count() === 0) {
+            $this->devolverCredito();
+        }
+        
+        $gauchada->borrarPostulantes();
+
+        $gauchada->delete();
+        
+        session()->flash('alert', 'Gauchada eliminada');
+
+        return redirect()->back();
+
     }
 
     public function postulaciones($id) {
@@ -211,7 +243,21 @@ class GauchadasController extends Controller
         ]]);
     }
 
-    public function ask() {
-        return redirect()->back();
+    protected function verificarGauchadaEsMia($gauchada) {
+        $user = Auth::user();
+
+        return $gauchada->publicado->id === $user->id;
+    }
+
+    protected function verificarPostulanteAceptado($gauchada) { 
+        return !$gauchada->tienePostulanteAceptado();
+    }
+
+    protected function devolverCredito() {
+        $user = Auth::user();
+
+        $user->credits += 1;
+
+        $user->save();
     }
 }

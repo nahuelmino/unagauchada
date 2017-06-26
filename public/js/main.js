@@ -8,6 +8,14 @@
 
         });
 
+        $('.needs-confirmation').on('click', function(e) {
+            var message = $(this).data('confirmation-message') || '¿Esta seguro de que desea realizar esta acción?';
+            if (!confirm(message)) {
+                return false;
+            }
+        }); 
+
+
     });
 
 

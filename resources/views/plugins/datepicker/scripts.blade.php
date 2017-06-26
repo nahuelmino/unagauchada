@@ -1,8 +1,7 @@
 <script src="/plugins/jquery-ui-datepicker/jquery-ui.js"></script>
 <script>
 
-    $(function() {
-
+    function setDatepicker() {
         var pagesWithMinDate = ['/gauchadas/create'];
         var pagesWithChangeYear = ['/register'];
         var pagesWithNoDays = ['/comprar'];
@@ -68,7 +67,12 @@
 
             });
         }
+    }
 
+    $(function() {
+
+        setDatepicker();
+        
     });
 
 </script>
