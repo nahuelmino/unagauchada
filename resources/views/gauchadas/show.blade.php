@@ -95,7 +95,9 @@
 					<hr>
 					@endif
 				@endforeach
-				@if(Auth::check() && Auth::user()->id !== $gauchada['creado_por'])
+			</div>
+			@endif
+			@if(Auth::check() && Auth::user()->id !== $gauchada['creado_por'])
 				<form method="POST" action="/preguntas">
 					<p>Deja una Pregunta!</p>
 					{{ csrf_field() }}
@@ -105,8 +107,6 @@
 					<button type="submit" class="btn btn-orange">Preguntar</button>
 				</form>
 				@endif
-			</div>
-			@endif
 		</div>
 	</div>
 </div>
