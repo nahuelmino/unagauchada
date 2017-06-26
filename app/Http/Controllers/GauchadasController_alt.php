@@ -115,7 +115,7 @@ class GauchadasController extends Controller
         ];
 
         if (request()->hasFile('photo')) {
-            $directory = '/gauchadas';
+            $directory = '/storage/gauchadas';
             $path = request()->file('photo')->store($directory, 'public');
             $gauchada_attrs['photo'] = $path;//'/storage/' . 
         }

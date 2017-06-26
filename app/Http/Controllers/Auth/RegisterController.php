@@ -75,9 +75,10 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password'])
         ];
         if (isset($data['photo'])) {
-            $directory = '/usuarios';
-            $path = $data['photo']->store($directory, 'public');
-            $usrarr['photo'] = $path;//'/storage/app/public/'
+            $directory = 'usuarios';
+            $path = '/storage/' . $data['photo']->store($directory, 'public');
+            //dd($path);
+            $usrarr['photo'] = $path;//'/storage/usuarios/'
         }
         return User::create($usrarr);
     }
