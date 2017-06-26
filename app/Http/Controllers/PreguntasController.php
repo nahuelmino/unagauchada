@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use App\Pregunta;
 use App\Respuesta;
 
 class PreguntasController extends Controller
@@ -22,7 +23,7 @@ class PreguntasController extends Controller
             $pregunta = new Pregunta;
             $pregunta->text = request()->pregunta;
             $pregunta->user_id = $user->id;
-            $pregunta->gauchada = $gauchada_id;
+            $pregunta->gauchada = request()->gauchada_id;
             $pregunta->save();
 
         }   
