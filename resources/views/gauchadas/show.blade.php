@@ -80,7 +80,7 @@
 								<ul style="list-style: none;">
 									<small><li>{{ $pregunta['respuesta']['text'] }} &nbsp &nbsp {{ $pregunta['respuesta']['created_at']->diffForHumans() }}</li></small>
 								</ul>
-							@else
+							@elseif (Auth::user()->id === $gauchada['creado_por'])
 							<form action="/preguntas/{{ $pregunta->id }}" method="post">
 								{{ csrf_field() }}
 								<div class="form-group">
