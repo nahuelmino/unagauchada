@@ -13,9 +13,9 @@
 			<h4>Publicado por: {{ \App\User::find($gauchada['creado_por'])->name }} </h4>
 		</div>
 		@else
-		<div class="col-md-12">
+	<!--	<div class="col-md-12">
 			<a href="#" class="btn btn-orange">Finalizar gauchada</a>
-		</div>
+		</div> -->
 		@endif
 		<div class="col-md-12">
 			<div class="thumbnail">
