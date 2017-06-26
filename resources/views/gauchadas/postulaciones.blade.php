@@ -23,12 +23,13 @@
     @else
         <?php $user = \App\User::find($gauchada['aceptado']) ?>
         <div class="panel-body">
-            <div class="well" style="width:240px;height:240px;">
+            <div class="well" style="width:240px;height:240px;" align="center">
                 @if (isset($user['photo']))
                     <img src="{{ $user['photo'] }}" alt="" width="200" height="200">
                 @else
-                    <img src="http://placehold.it/200x200" alt="">
+                    <img src="/img/usernopic.jpg" alt="" width="200" height="200">
                 @endif
+                <h3>{{ $user['name'] }}</h3>
             </div>
         </div>
     @endif
