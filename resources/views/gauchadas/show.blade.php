@@ -52,7 +52,7 @@
 										<a class="btn btn-block btn-orange" href="/gauchadas/{{$gauchada['id']}}/postulaciones">Ver postulantes</a>
 									</div>
 								@endif
-							@elseif ($postulacions->count() > 0)
+							@elseif ($postulacions->where('postulante',Auth::user()->id)->count() > 0)
 								<div class="well">
 									<a class="btn btn-block" disabled>Te postulaste</a>
 								</div>
@@ -66,7 +66,6 @@
 									</form>
 								</div>
 							@endif
-							
 					</div>
 				</div>
 			@if (count($preguntas) > 0)
