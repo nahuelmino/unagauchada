@@ -85,9 +85,9 @@
 								</label>
 								<a href="/gauchadas/{{$gauchada['id'] }}" class="thumbnail">
 										@if (isset($gauchada['photo']))
-											<img src="{{ $gauchada['photo'] }}">
+											<img src="{{ $gauchada['photo'] }}" width="150" height="150">
 										@else
-											<img src="/img/icon.png" >
+											<img src="/img/icon.png" width="150" height="150" >
 										@endif
 								</a>
 							<div class="caption">
