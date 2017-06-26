@@ -182,7 +182,20 @@ class GauchadasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $gauchada = Gauchada::findOrFail($id);
+        $gauchada->title = (request()->has('title')) ? request()->title : $gauchada->title;
+        $gauchada->description = (request()->has('description')) ? request()->description : $gauchada->description;
+        $gauchada->location = (request()->has('location')) ? request()->location : $gauchada->location;
+        $gauchada->ends_at = (request()->has('ends_at')) ? Carbon::createFromFormat('d/m/Y',request()->ends_at)->format('Y-m-d') : $gauchada->ends_at;//request()->ends_at
+        $gauchada->categoria_id = (request()->has('categoria_id')) ? request()->categoria_id : $gauchada->categoria_id;
+        if (request()->hasFile('photo')) {
+            $directory = 'usuarios';
+            $path = '/storage/' . request()->photo->store($directory, 'public');
+            $gauchada->photo = $path;
+        }
+        $gauchada->save();
+        session()->flash('alert', 'Los cambios han sido guardados con éxito');
+        return redirect()->back();
     }
 
     /**

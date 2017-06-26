@@ -39,6 +39,7 @@ Route::get('/gauchadas/user', 'GauchadasController@userGauchadas');
 Route::get('/gauchadas/{id}', 'GauchadasController@show');
 
 Route::get('/gauchadas/{id}/edit', 'GauchadasController@edit');
+Route::post('/gauchadas/{id}/edit', 'GauchadasController@update');
 
 Route::get('/gauchadas/{id}/delete', 'GauchadasController@destroy');
 
