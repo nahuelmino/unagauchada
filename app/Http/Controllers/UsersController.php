@@ -38,6 +38,12 @@ class UsersController extends Controller
         if (request()->has('caracteristica') && request()->has('phone')) {
             $user->phone = request()->caracteristica . '-' . request()->phone;
         }
+        if (request()->hasFile('photo')) {
+            $directory = 'usuarios';
+            $path = '/storage/' . request()->photo->store($directory, 'public');
+            $user->photo = $path;
+        }
+        $user->save();
         session()->flash('alert', 'Los cambios han sido guardados con éxito');
         return redirect()->back();
     }

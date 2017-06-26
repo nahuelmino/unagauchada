@@ -77,8 +77,8 @@ class RegisterController extends Controller
         if (isset($data['photo'])) {
             $directory = 'usuarios';
             $path = '/storage/' . $data['photo']->store($directory, 'public');
-            //dd($path);
             $usrarr['photo'] = $path;//'/storage/usuarios/'
+            //dd($path);
         }
         return User::create($usrarr);
     }
