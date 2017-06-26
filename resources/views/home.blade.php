@@ -28,7 +28,7 @@
                                     @if (isset($user['photo']))
                                     <img src="{{ Auth::user()->photo }}" class="img-circle img-responsive">
                                     @else
-                                    <img src="http://usern.tums.ac.ir/asset/UserPhoto/0.JPG">
+                                    <img src="/img/usernopic.jpg" class="img-circle img-responsive">
                                     @endif
                                 </a>
                             </div>
