@@ -26,15 +26,29 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('new_password') ? ' has-error' : '' }}">
-                            <label for="new_password" class="col-md-4 control-label">Contraseña nueva</label>
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <label for="password" class="col-md-4 control-label">Contraseña nueva</label>
 
                             <div class="col-md-6">
-                                <input id="new_password" type="password" class="form-control" name="new_password" required>
+                                <input id="password" type="password" class="form-control" name="password" required>
 
-                                @if ($errors->has('new_password'))
+                                @if ($errors->has('password'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('new_password') }}</strong>
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('password-confirm') ? ' has-error' : '' }}">
+                            <label for="password-confirm" class="col-md-4 control-label">Repetir contraseña nueva</label>
+
+                            <div class="col-md-6">
+                                <input id="password-confirm" type="password" class="form-control" name="password-confirm" required>
+
+                                @if ($errors->has('password-confirm'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password-confirm') }}</strong>
                                     </span>
                                 @endif
                             </div>
