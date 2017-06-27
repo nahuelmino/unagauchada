@@ -60,8 +60,8 @@ class UsersController extends Controller
             if (! Hash::check(request()->old_password, $user->password)) {
                 return redirect()->back()->withErrors(['old_password' => 'La contraseña no coincide.']);
             }
-            if (request()->password !== request()['password-confirm']) {
-                return redirect()->back()->withErrors(['password-confirm' => 'Las contraseñas nuevas no coinciden.']);
+            if (request()->password !== request()->password_confirmation) {
+                return redirect()->back()->withErrors(['password_confirmation' => 'Las contraseñas nuevas no coinciden.']);
             }
             $user->password = Hash::make(request()->password);
             dd(Hash::check(request()->password,$user->password));
