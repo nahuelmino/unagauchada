@@ -45,6 +45,8 @@ Route::get('/gauchadas/{id}/delete', 'GauchadasController@destroy');
 
 Route::get('/gauchadas/{id}/postulaciones', 'GauchadasController@postulaciones');
 
+Route::post('/gauchadas/{id}/calificar', 'GauchadasController@calificar');
+
 Route::post('/preguntas', 'PreguntasController@store');
 Route::post('/preguntas/{id}', 'PreguntasController@update');
 

@@ -17,6 +17,13 @@
 
             <!-- parte derecha de la pantalla con datos -->
             <div class="col-md-9">
+            @if ($errors->has('0'))
+                <div class="errors has-error">
+                    <span class="help-block">
+                        <strong>{!! $errors->first('0') !!}</strong>
+                    </span>
+                </div>
+            @endif
                 <div class="panel panel-info" style="border-color:orange">
                     <div class="panel-heading" style="background-color:orange">
                         <h3 class="panel-title" style="color:black">{{ Auth::user()->name }}</h3>

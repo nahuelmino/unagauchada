@@ -9,6 +9,8 @@ use App\Gauchada;
 use App\Pregunta;
 use App\Respuesta;
 use App\Postulacion;
+use App\Calificacion;
+use App\User;
 use Carbon\Carbon;
 
 class GauchadasController extends Controller
@@ -56,6 +58,15 @@ class GauchadasController extends Controller
         if (!Auth::check() || Auth::user()->esAdmin()) {
             return redirect('/home');
         }
+
+        if (! $this->checkCreditos()) {
+            return redirect()->back()->withErrors('No tiene suficientes créditos! Si querés, podés comprar creditos <a href="/comprar">acá.</a>');
+        }
+
+        if (! $this->checkearGauchadasSinCalificar()) {
+            return redirect()->back()->withErrors('Tenes gauchadas en las que no calificaste a tu postulante! No podes crear gauchadas hasta que los califiques.');
+        }
+
         $categorias = Categoria::all();
         return view('gauchadas.create')->withCategorias($categorias);
     }
@@ -90,6 +101,10 @@ class GauchadasController extends Controller
 
         if (! $this->checkCreditos()) {
             return redirect()->back()->withErrors('No tiene suficientes créditos! Si querés, podés comprar creditos <a href="/comprar">acá.</a>');
+        }
+
+        if (! $this->checkearGauchadasSinCalificar()) {
+            return redirect()->back()->withErrors('Tenes gauchadas en las que no calificaste a tu postulante! No podes crear gauchadas hasta que los califiques.');
         }
 
         $gauchada_attrs = [
@@ -215,13 +230,44 @@ class GauchadasController extends Controller
 
     }
 
+    protected function checkearGauchadasSinCalificar() {
+        $user = Auth::user();
+        
+        return !$user->gauchadas->contains(function($gauchada) {
+            return !$gauchada->calificada() && $gauchada->tienePostulanteAceptado();
+        });
+    }
+
     public function postulaciones($id) {
         $gauchada = Gauchada::findOrFail($id);
         if (!Auth::check() || Auth::user()->id !== $gauchada['creado_por']) {
             return redirect('/home');
         }
         $postulaciones = Postulacion::where('gauchada',$id)->get();
-        return view('gauchadas.postulaciones')->withGauchada($gauchada)->withPostulaciones($postulaciones);
+        $calificaciones = Calificacion::all();
+        return view('gauchadas.postulaciones')->withGauchada($gauchada)->withPostulaciones($postulaciones)->withCalificaciones($calificaciones);
+    }
+
+    public function calificar($id) {
+        if (request()->has('calificacion_id')) {
+            $gauchada = Gauchada::findOrFail($id);
+            $calificacion = Calificacion::findOrFail(request()->calificacion_id);
+            $aceptado = User::findOrFail($gauchada->aceptado);
+            $aceptado->score += $calificacion->score;
+
+            if ($calificacion->name === 'Buena') {
+                $aceptado->credits += 1;
+            }
+            
+            $gauchada->calificacion_id = $calificacion->id;
+
+            $aceptado->save();
+            $gauchada->save();
+
+            session()->flash('alert', 'Calificaste a tu postulante correctamente!');
+        }
+        
+        return redirect()->back();
     }
 
     protected function verificarGauchadaEsMia($gauchada) {

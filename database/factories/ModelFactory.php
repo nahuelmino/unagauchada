@@ -51,6 +51,3 @@ $factory->define(App\Gauchada::class, function (Faker\Generator $faker) {
         'ends_at' => \Carbon\Carbon::tomorrow(),
     ];
 });
-
-
-

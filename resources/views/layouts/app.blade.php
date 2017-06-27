@@ -130,6 +130,15 @@
         {{ session('alert') }}
     </div>
     @endif
+    @if ($errors->has('0'))
+    <div class="container-fluid">
+        <div class="form-group{{ $errors->has('0') ? ' has-error' : '' }}">
+            <span class="help-block">
+                <strong>{!! $errors->first('0') !!}</strong>
+            </span>
+        </div>
+    </div>
+    @endif
     @yield('content')
     <div class="container">
         <footer>
