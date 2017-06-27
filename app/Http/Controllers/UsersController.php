@@ -64,7 +64,7 @@ class UsersController extends Controller
                 return redirect()->back()->withErrors(['password_confirmation' => 'Las contraseñas nuevas no coinciden.']);
             }
             $user->password = Hash::make(request()->password);
-            dd(Hash::check(request()->password,$user->password));
+        /*    dd(Hash::check(request()->password,$user->password)); */
             $user->save();
 
             session()->flash('alert', 'La contraseña ha sido cambiada.');
