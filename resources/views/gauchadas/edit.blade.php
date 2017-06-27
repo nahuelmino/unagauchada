@@ -39,7 +39,8 @@
                             <label for="description" class="col-md-4 control-label">Descripción</label>
 
                             <div class="col-md-6">
-                                <textarea id="description" class="form-control" name="description" value="{{ $gauchada->description }}" required></textarea>
+                              <!--  <textarea id="description" class="form-control" name="description" value="{{ $gauchada->description }}" required></textarea> -->
+                               <input id="description" class="form-control counted" name="description" value="{{ $gauchada->description }}" required> 
                                 <h6 class="pull-right" id="counter">255 caracteres restantes</h6>
 
                                 @if ($errors->has('description'))
@@ -108,7 +109,7 @@
 
                             <div class="col-md-6">
                                 @if(isset($gauchada->photo))
-                                <img src="{{ $gauchada->photo }}" alt="">
+                                <img src="{{ $gauchada->photo }}" alt="" width="200" height="200">
                                 @endif
                                 <input id="photo" type="file" name="photo" value="{{ old('photo') }}">
 
