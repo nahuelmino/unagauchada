@@ -39,8 +39,7 @@
                             <label for="description" class="col-md-4 control-label">Descripción</label>
 
                             <div class="col-md-6">
-                              <!--  <textarea id="description" class="form-control" name="description" value="{{ $gauchada->description }}" required></textarea> -->
-                               <input id="description" class="form-control counted" name="description" value="{{ $gauchada->description }}" required> 
+                              <textarea id="description" class="form-control counted" name="description" value="{{ $gauchada->description }}" required>{{ $gauchada->description }}</textarea> 
                                 <h6 class="pull-right" id="counter">255 caracteres restantes</h6>
 
                                 @if ($errors->has('description'))
