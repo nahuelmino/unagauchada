@@ -6,52 +6,70 @@
                 <h1><p class="text-center">{{ $gauchada['title'] }}</p></h1> 
             </div>
     </div>
-    @if ($gauchada['aceptado'] === null)
-        @foreach ($postulaciones as $postulacion)
-            <?php $user = \App\User::find($postulacion['postulante']) ?>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h3>{{ $user['name'] }}</h3>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        @if($errors->has('ya_aceptado'))
-                            <div class="errors has-error">
-                                <p>{{ $errors->ya_aceptado }}</p>
-                            </div>
-                        @endif
-                        <a class="btn btn-orange" href="/postulaciones/{{ $postulacion['id'] }}/accept">Aceptar</a>
-                    </div>
+    @php
+        $aceptado = \App\User::find($gauchada['aceptado']);
+    @endphp
+    @if($aceptado !== null)
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" style="padding-left: 0; padding-right: 8px;">
+                <div class="well" style="display: flex; flex-direction: column; justify-content: center; height: 120px;">
+                    <h2>{{ $aceptado['name'] }}</h2>                    
+                    <h4><span>Puntos: <strong>{{ $aceptado['score'] }}</strong></span></h4>
                 </div>
             </div>
-        @endforeach
-    @else
-        <?php $user = \App\User::find($gauchada['aceptado']) ?>
-        <div class="panel-body">
-            <div class="well" style="width:300px;height:300px; margin-left: auto; margin-right: auto;" align="center">
-                @if (isset($user['photo']))
-                    <img src="{{ $user['photo'] }}" alt="" width="200" height="200">
-                @else
-                    <img src="/img/usernopic.jpg" alt="" width="200" height="200">
-                @endif
-                <h3>{{ $user['name'] }}</h3>
-            </div>
-            <div class="well" style="width:300px;height:300px; margin-left: auto; margin-right: auto;">
+            <div class="col-md-6" style="padding-left: 8px; padding-right: 0;">
+                <div class="well" style="display: flex; align-items: center; height: 120px;">
                 @if($gauchada->calificada())
-                    <p>Calificación: {{ $gauchada->calificacion->name }}</p>
+                    <p>Calificación: <strong>{{ $gauchada->calificacion->name }}</strong></p>
                 @else
-                <form action="/gauchadas/{{ $gauchada->id }}/calificar" method="post">
+                <form action="/gauchadas/{{ $gauchada->id }}/calificar" method="post" style="width: 100%;">
                     {{ csrf_field() }}
                     <p>Califica a tu postulante!</p>
-                    @foreach($calificaciones as $calificacion)
-                        <input type="radio" name="calificacion_id" value="{{ $calificacion->id }}">{{ $calificacion->name }}
-                    @endforeach
-                    <button class="btn btn-orange text-white">Calificar</button>
+                    <div class="inputs"  style="display: flex; justify-content: space-between;">
+                    
+                        @foreach($calificaciones as $calificacion)
+                        <div class="radio-with-label" style="display: flex; align-items: center;">
+                            <input type="radio" style="margin-right:4px;" name="calificacion_id" value="{{ $calificacion->id }}">{{ $calificacion->name }}
+                        </div>
+                        @endforeach
+                    
+                        <button class="btn btn-orange text-white">Calificar</button>
+                    </div>
+                    
                 </form>
                 @endif
+                </div>
             </div>
         </div>
+    </div>
     @endif
+    @foreach ($postulaciones as $postulacion)
+        @php
+            $user = \App\User::find($postulacion['postulante'])
+        @endphp
+        @if($aceptado === null || ($aceptado !== null && $aceptado->id !== $user->id))
+        <div class="container">
+            <div class="row" style="display: flex; align-items: center;">
+                <div class="col-md-3" style="display: flex; align-items: center;">
+                    <h3 style="margin: 10px 20px 10px 0;">{{ $user['name'] }}</h3>
+                    <h6 style="margin: 0;">Puntos: <strong>{{ $user['score'] }}</strong></span></h6>  
+                </div>
+                
+                <div class="col-md-9" style="display: flex; align-items: center;">
+                    @if($errors->has('ya_aceptado'))
+                        <div class="errors has-error">
+                            <p>{{ $errors->ya_aceptado }}</p>
+                        </div>
+                    @endif
+                    @if($aceptado === null)
+                    <a class="btn btn-orange" href="/postulaciones/{{ $postulacion['id'] }}/accept">Aceptar</a>
+                    @endif
+                </div>
+            </div>
+        </div>
+        @endif
+    @endforeach
 @endsection
                 <?php /* ?>
                 <!--

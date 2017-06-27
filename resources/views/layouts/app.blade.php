@@ -62,7 +62,8 @@
                 <?php //{{ config('app.name', 'Una Gauchada') }}?>
             </div>
             <div class="col-md-5">
-                <form class="form-group" role="search" method="GET" action="gauchadas">
+                <form class="form-group" role="search" method="GET" 
+                    action="{{ (Route::current()->uri === 'gauchadas/user') ? '/gauchadas/user' : '/gauchadas' }}">
                     <div class="input-group marg5">
                         <input type="text" class="form-control" placeholder="Buscar Gauchada..." name="title">
                         <div class="input-group-btn">

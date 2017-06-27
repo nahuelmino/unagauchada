@@ -59,6 +59,10 @@
                                         <td>Mis créditos:</td>
                                         <td>{{ Auth::user()->credits }}</td>
                                     </tr>
+                                    <tr>
+                                        <td>Puntaje:</td>
+                                        <td>{{ Auth::user()->score }}</td>
+                                    </tr>
                                     </tbody>
                                 </table>
                                 <a href="/editar-perfil" class="btn btn-orange text-white">Editar</a>
