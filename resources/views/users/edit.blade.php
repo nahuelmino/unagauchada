@@ -95,7 +95,7 @@
                             <label for="photo" class="col-md-4 control-label">Foto</label>
                             <div class="col-md-6">
                                 @if(isset($user->photo))
-                                    <img src="{{ $user->photo }}" alt="">
+                                    <img src="{{ $user->photo }}" alt="" width="200" height="200">
                                 @endif
                                 <input id="photo" type="file" name="photo" value="{{ old('photo') }}">
                                 @if ($errors->has('photo'))
