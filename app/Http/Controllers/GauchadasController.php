@@ -202,7 +202,7 @@ class GauchadasController extends Controller
         // Eliminar la gauchada implica:
         // Verificar que la gauchada que estoy eliminando es mía
         // Verificar que no haya un postulante aceptado
-        // Si hay 0 postulantes hay que devolver el credito que se usó para publicar la gauchada
+        // Si no hay postulantes aceptados devolver el credito invertido
         // Borrar de la tabla "postulacions" las postulaciones a la gauchada que estoy eliminando
         // Borrar la gauchada de la tabla "gauchadas" 
 
@@ -216,9 +216,9 @@ class GauchadasController extends Controller
             return redirect()->back()->withErrors('Esta gauchada ya tiene un postulante aceptado.');
         }
         
-        if ($gauchada->postulacions->count() === 0) {
+      /*  if ($gauchada->postulacions->count() === 0) { */
             $this->devolverCredito();
-        }
+     //   }
         
         $gauchada->borrarPostulantes();
 
