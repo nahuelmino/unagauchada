@@ -35,7 +35,7 @@
                                     @if (isset($user['photo']))
                                     <img src="{{ Auth::user()->photo }}" class="img-circle img-responsive">
                                     @else
-                                    <img src="/img/usernopic.jpg" class="img-circle img-responsive">
+                                    <img src="/img/usernopic.png" class="img-circle img-responsive">
                                     @endif
                                 </a>
                             </div>
