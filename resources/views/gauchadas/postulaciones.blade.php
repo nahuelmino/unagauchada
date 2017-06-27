@@ -15,6 +15,11 @@
                         <h3>{{ $user['name'] }}</h3>
                     </div>
                     <div class="col-md-6 text-right">
+                        @if($errors->has('ya_aceptado'))
+                            <div class="errors has-error">
+                                <p>{{ $errors->ya_aceptado }}</p>
+                            </div>
+                        @endif
                         <a class="btn btn-orange" href="/postulaciones/{{ $postulacion['id'] }}/accept">Aceptar</a>
                     </div>
                 </div>

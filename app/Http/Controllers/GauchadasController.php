@@ -29,41 +29,19 @@ class GauchadasController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getGauchadas($request,$moreClauses = []) {
-        $gauchadas = Gauchada::with('categoria')->withCount('postulacions');
-        if (isset($request['title'])) {
-            $title = request()->title;
-            $gauchadas = $gauchadas->where('title', 'LIKE', "%$title%");
-        }
-        if (isset($request['location'])) {
-            $location = request()->location;
-            $gauchadas = $gauchadas->where('location', 'LIKE', "%$location%");
-        }
-        if (isset($request['categoria_id']) && $request['categoria_id'] !== '0') {
-            $categoria_id = request()->categoria_id;
-            $gauchadas = $gauchadas->where('categoria_id', 'LIKE', "%$categoria_id%");
-        }
-        // 2017-05-29: En el próximo sprint, esto tiene que traerlas ordenadas por cantidad de postulantes de menor a mayor
-        if (! isset($request['DbgAllGauchadas'])) {
-            $gauchadas = $gauchadas->whereRaw('ends_at >= CURRENT_DATE()')
-                                   ->whereNull('aceptado');
-        }            
-
-        if (isset($request['sortByPostulaciones']) && $request['sortByPostulaciones'] === '1') {
-            $gauchadas = $gauchadas->orderBy('postulacions_count');
-        }
-        foreach ($moreClauses as $clause) {
-                                                       
-            $gauchadas = $gauchadas->where($clause['k'], $clause['op'], $clause['v']);
-            
-        }
-        return $gauchadas->paginate(6);
+    public function index() {
+        $request = request()->toArray();
+        $gauchadas = $this->getAllGauchadas($request);
+        $categorias = Categoria::all();
+        return view('gauchadas.lista', compact('gauchadas'))->withCategorias($categorias)->withRequest($request);
     }
 
-    public function index($clauses = [])
-    {
+    public function userGauchadas() {
+        if (!Auth::check() || Auth::user()->esAdmin())
+            return redirect('/home');
+
         $request = request()->toArray();
-        $gauchadas = $this->getGauchadas($request,$clauses);
+        $gauchadas = $this->getUserGauchadas($request);
         $categorias = Categoria::all();
         return view('gauchadas.lista', compact('gauchadas'))->withCategorias($categorias)->withRequest($request);
     }
@@ -246,17 +224,6 @@ class GauchadasController extends Controller
         return view('gauchadas.postulaciones')->withGauchada($gauchada)->withPostulaciones($postulaciones);
     }
 
-    public function userGauchadas() {
-        if (!Auth::check() || Auth::user()->esAdmin())
-            return redirect('/home');
-        $user = Auth::user()->id;
-        return $this->index([[
-            'k' => 'creado_por',
-            'op' => '=',
-            'v' => "$user"
-        ]]);
-    }
-
     protected function verificarGauchadaEsMia($gauchada) {
         $user = Auth::user();
 
@@ -273,5 +240,54 @@ class GauchadasController extends Controller
         $user->credits += 1;
 
         $user->save();
+    }
+
+    protected function aplicarFiltros($gauchadas) {
+        if (request()->has('title')) {
+            $title = request()->title;
+            $gauchadas = $gauchadas->where('title', 'LIKE', "%$title%");
+        }
+        if (request()->has('location')) {
+            $location = request()->location;
+            $gauchadas = $gauchadas->where('location', 'LIKE', "%$location%");
+        }
+        if (request()->has('categoria_id') && request()->categoria_id !== '0') {
+            $categoria_id = request()->categoria_id;
+            $gauchadas = $gauchadas->where('categoria_id', 'LIKE', "%$categoria_id%");
+        }
+
+        return $gauchadas;
+    }
+
+    protected function getAllGauchadas() {
+        $gauchadas = Gauchada::with('categoria')->withCount('postulacions');
+        
+        $gauchadas = $this->aplicarFiltros($gauchadas);
+
+        if (! isset(request()->DbgAllGauchadas)) {
+            $gauchadas = $gauchadas->whereRaw('ends_at >= CURRENT_DATE()')
+                                   ->whereNull('aceptado');
+        }
+
+        if (isset($request['sortByPostulaciones']) && $request['sortByPostulaciones'] === '1') {
+            $gauchadas = $gauchadas->orderBy('postulacions_count');
+        }
+
+        return $gauchadas->paginate(6);
+    }
+
+    protected function getUserGauchadas() {
+
+        $gauchadas = Gauchada::with('categoria')
+                              ->withCount('postulacions')
+                              ->where('creado_por', Auth::user()->id);
+        
+        $gauchadas = $this->aplicarFiltros($gauchadas);
+
+        if (isset($request['sortByPostulaciones']) && $request['sortByPostulaciones'] === '1') {
+            $gauchadas = $gauchadas->orderBy('postulacions_count');
+        }
+
+        return $gauchadas->paginate(6);
     }
 }
