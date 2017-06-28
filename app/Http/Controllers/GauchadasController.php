@@ -307,6 +307,7 @@ class GauchadasController extends Controller
 
     protected function getAllGauchadas() {
         $gauchadas = Gauchada::with('categoria')->withCount('postulacions');
+        //dd($gauchadas->pluck('postulacions_count'));//Gauchada::with('categoria')->with('postulacions')->get());
         
         $gauchadas = $this->aplicarFiltros($gauchadas);
 
@@ -315,7 +316,7 @@ class GauchadasController extends Controller
                                    ->whereNull('aceptado');
         }
 
-        if (isset($request['sortByPostulaciones']) && $request['sortByPostulaciones'] === '1') {
+        if (isset(request()['sortByPostulaciones']) && request()['sortByPostulaciones'] === '1') {
             $gauchadas = $gauchadas->orderBy('postulacions_count');
         }
 
@@ -330,7 +331,7 @@ class GauchadasController extends Controller
         
         $gauchadas = $this->aplicarFiltros($gauchadas);
 
-        if (isset($request['sortByPostulaciones']) && $request['sortByPostulaciones'] === '1') {
+        if (isset(request()['sortByPostulaciones']) && request()['sortByPostulaciones'] === '1') {
             $gauchadas = $gauchadas->orderBy('postulacions_count');
         }
 
