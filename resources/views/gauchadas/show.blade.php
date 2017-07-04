@@ -81,6 +81,7 @@
 									<small><li>{{ $pregunta['respuesta']['text'] }} &nbsp &nbsp {{ $pregunta['respuesta']['created_at']->diffForHumans() }}</li></small>
 								</ul>
 							@else
+							@if(Auth::check() && Auth::user()->id == $gauchada['creado_por'])
 							<form action="/preguntas/{{ $pregunta->id }}" method="post">
 								{{ csrf_field() }}
 								<div class="form-group">
@@ -88,6 +89,7 @@
 								</div>
 								<button type="submit" class="btn btn-orange">Responder</button>
 							</form>
+							@endif
 							@endif
 						</div>
 					</div>
@@ -106,7 +108,7 @@
 					<p></p>
 					<button type="submit" class="btn btn-orange">Preguntar</button>
 				</form>
-				@endif
+			@endif
 		</div>
 	</div>
 </div>

@@ -13,10 +13,10 @@ class CreateRangeTable extends Migration
      */
     public function up()
     {
-        Schema::create('range', function (Blueprint $table) {
+        Schema::create('rangos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('from');
-            $table->integer('to');
+            $table->integer('valor');
+            $table->string('nombre');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateRangeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('range');
+        Schema::dropIfExists('rangos');
     }
 }
