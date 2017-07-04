@@ -39,10 +39,13 @@ Route::get('/gauchadas/user', 'GauchadasController@userGauchadas');
 Route::get('/gauchadas/{id}', 'GauchadasController@show');
 
 Route::get('/gauchadas/{id}/edit', 'GauchadasController@edit');
+Route::post('/gauchadas/{id}/edit', 'GauchadasController@update');
 
 Route::get('/gauchadas/{id}/delete', 'GauchadasController@destroy');
 
 Route::get('/gauchadas/{id}/postulaciones', 'GauchadasController@postulaciones');
+
+Route::post('/gauchadas/{id}/calificar', 'GauchadasController@calificar');
 
 Route::post('/preguntas', 'PreguntasController@store');
 Route::post('/preguntas/{id}', 'PreguntasController@update');

@@ -62,7 +62,8 @@
                 <?php //{{ config('app.name', 'Una Gauchada') }}?>
             </div>
             <div class="col-md-5">
-                <form class="form-group" role="search" method="GET" action="gauchadas">
+                <form class="form-group" role="search" method="GET" 
+                    action="{{ (Route::current()->uri === 'gauchadas/user') ? '/gauchadas/user' : '/gauchadas' }}">
                     <div class="input-group marg5">
                         <input type="text" class="form-control" placeholder="Buscar Gauchada..." name="title">
                         <div class="input-group-btn">
@@ -128,6 +129,15 @@
     @if (session()->has('alert'))
     <div class="alert alert-success" role="alert">
         {{ session('alert') }}
+    </div>
+    @endif
+    @if ($errors->has('0'))
+    <div class="container-fluid">
+        <div class="form-group{{ $errors->has('0') ? ' has-error' : '' }}">
+            <span class="help-block">
+                <strong>{!! $errors->first('0') !!}</strong>
+            </span>
+        </div>
     </div>
     @endif
     @yield('content')

@@ -13,20 +13,20 @@
 			<h4>Publicado por: {{ \App\User::find($gauchada['creado_por'])->name }} </h4>
 		</div>
 		@else
-		<div class="col-md-12">
+	<!--	<div class="col-md-12">
 			<a href="#" class="btn btn-orange">Finalizar gauchada</a>
-		</div>
+		</div> -->
 		@endif
 		<div class="col-md-12">
 			<div class="thumbnail">
 				@if (isset($gauchada['photo']))
-					<img class="img-responsive" style="margin: 0 auto;" src="{{ $gauchada['photo'] }}" alt="">
+					<img class="img-responsive" style="margin: 0 auto;" src="{{ $gauchada['photo'] }}" alt="" width="400" height="400">
                 @else
                     <img src="/img/icon.png">
 				@endif
 				<hr>
 				<div class="caption-full marg5" style="margin-left:10px;" >
-					<p>{{ $gauchada['description'] }}</p>
+					<p> <b>{{ $gauchada['description'] }}</b> </p>
 				</div>
 			</div>
 				<div class="row">
@@ -52,7 +52,7 @@
 										<a class="btn btn-block btn-orange" href="/gauchadas/{{$gauchada['id']}}/postulaciones">Ver postulantes</a>
 									</div>
 								@endif
-							@elseif ($postulacions->count() > 0)
+							@elseif ($postulacions->where('postulante',Auth::user()->id)->count() > 0)
 								<div class="well">
 									<a class="btn btn-block" disabled>Te postulaste</a>
 								</div>
@@ -66,7 +66,6 @@
 									</form>
 								</div>
 							@endif
-							
 					</div>
 				</div>
 			@if (count($preguntas) > 0)
@@ -80,8 +79,7 @@
 								<ul style="list-style: none;">
 									<small><li>{{ $pregunta['respuesta']['text'] }} &nbsp &nbsp {{ $pregunta['respuesta']['created_at']->diffForHumans() }}</li></small>
 								</ul>
-							@else
-							@if(Auth::check() && Auth::user()->id == $gauchada['creado_por'])
+							@elseif (Auth::user()->id === $gauchada['creado_por'])
 							<form action="/preguntas/{{ $pregunta->id }}" method="post">
 								{{ csrf_field() }}
 								<div class="form-group">
@@ -114,29 +112,4 @@
 </div>
 @endsection
 
-			<!--	<div class="row">
-					<div class="col-md-12">
-						<span class="pull-right">Anonymous, 10 days ago</span>
-						<p>Estás libre la semana que viene?</p>
-					</div>
-					<ul>
-						<small><li>Hola. Si, a partir del miércoles</li></small>
-					</ul>
-				</div>
-				<hr>
-				<div class="row">
-					<div class="col-md-12">
-						Anonymous
-						<span class="pull-right">12 days ago</span>
-						<p>I've alredy ordered another one!</p>
-					</div>
-				</div>
-				<hr>
-				<div class="row">
-					<div class="col-md-12">
-						Anonymous
-						<span class="pull-right">15 days ago</span>
-						<p>I've seen some better than this, but not at this price. I definitely recommend this item.</p>
-					</div>
-				</div>
-			</div> <-->
+			

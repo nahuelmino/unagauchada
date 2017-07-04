@@ -57,17 +57,20 @@ class UsersController extends Controller
         if (request()->has('old_password')) {
             $user = Auth::user();
 
-            if (Hash::check(request()->old_password, $user->password)) {
-                $user->password = request()->new_password;
-                $user->save();
-
-                session()->flash('alert', 'La contraseña ha sido cambiada.');
-               
-                Auth::logout();
-                return redirect('/');
-            } else {
+            if (! Hash::check(request()->old_password, $user->password)) {
                 return redirect()->back()->withErrors(['old_password' => 'La contraseña no coincide.']);
             }
+            if (request()->password !== request()->password_confirmation) {
+                return redirect()->back()->withErrors(['password_confirmation' => 'Las contraseñas nuevas no coinciden.']);
+            }
+            $user->password = Hash::make(request()->password);
+        /*    dd(Hash::check(request()->password,$user->password)); */
+            $user->save();
+
+            session()->flash('alert', 'La contraseña ha sido cambiada.');
+           
+            Auth::logout();
+            return redirect('/');
         }
 
     }

@@ -9,6 +9,8 @@ use App\Gauchada;
 use App\Pregunta;
 use App\Respuesta;
 use App\Postulacion;
+use App\Calificacion;
+use App\User;
 use Carbon\Carbon;
 
 class GauchadasController extends Controller
@@ -29,41 +31,19 @@ class GauchadasController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getGauchadas($request,$moreClauses = []) {
-        $gauchadas = Gauchada::with('categoria')->withCount('postulacions');
-        if (isset($request['title'])) {
-            $title = request()->title;
-            $gauchadas = $gauchadas->where('title', 'LIKE', "%$title%");
-        }
-        if (isset($request['location'])) {
-            $location = request()->location;
-            $gauchadas = $gauchadas->where('location', 'LIKE', "%$location%");
-        }
-        if (isset($request['categoria_id']) && $request['categoria_id'] !== '0') {
-            $categoria_id = request()->categoria_id;
-            $gauchadas = $gauchadas->where('categoria_id', 'LIKE', "%$categoria_id%");
-        }
-        // 2017-05-29: En el próximo sprint, esto tiene que traerlas ordenadas por cantidad de postulantes de menor a mayor
-        if (! isset($request['DbgAllGauchadas'])) {
-            $gauchadas = $gauchadas->whereRaw('ends_at >= CURRENT_DATE()')
-                                   ->whereNull('aceptado');
-        }            
-
-        if (isset($request['sortByPostulaciones']) && $request['sortByPostulaciones'] === '1') {
-            $gauchadas = $gauchadas->orderBy('postulacions_count');
-        }
-        foreach ($moreClauses as $clause) {
-                                                       
-            $gauchadas = $gauchadas->where($clause['k'], $clause['op'], $clause['v']);
-            
-        }
-        return $gauchadas->paginate(6);
+    public function index() {
+        $request = request()->toArray();
+        $gauchadas = $this->getAllGauchadas($request);
+        $categorias = Categoria::all();
+        return view('gauchadas.lista', compact('gauchadas'))->withCategorias($categorias)->withRequest($request);
     }
 
-    public function index($clauses = [])
-    {
+    public function userGauchadas() {
+        if (!Auth::check() || Auth::user()->esAdmin())
+            return redirect('/home');
+
         $request = request()->toArray();
-        $gauchadas = $this->getGauchadas($request,$clauses);
+        $gauchadas = $this->getUserGauchadas($request);
         $categorias = Categoria::all();
         return view('gauchadas.lista', compact('gauchadas'))->withCategorias($categorias)->withRequest($request);
     }
@@ -78,6 +58,15 @@ class GauchadasController extends Controller
         if (!Auth::check() || Auth::user()->esAdmin()) {
             return redirect('/home');
         }
+
+        if (! $this->checkCreditos()) {
+            return redirect()->back()->withErrors('No tiene suficientes créditos! Si querés, podés comprar creditos <a href="/comprar">acá.</a>');
+        }
+
+        if (! $this->checkearGauchadasSinCalificar()) {
+            return redirect()->back()->withErrors('Tenes gauchadas en las que no calificaste a tu postulante! No podes crear gauchadas hasta que los califiques.');
+        }
+
         $categorias = Categoria::all();
         return view('gauchadas.create')->withCategorias($categorias);
     }
@@ -112,6 +101,10 @@ class GauchadasController extends Controller
 
         if (! $this->checkCreditos()) {
             return redirect()->back()->withErrors('No tiene suficientes créditos! Si querés, podés comprar creditos <a href="/comprar">acá.</a>');
+        }
+
+        if (! $this->checkearGauchadasSinCalificar()) {
+            return redirect()->back()->withErrors('Tenes gauchadas en las que no calificaste a tu postulante! No podes crear gauchadas hasta que los califiques.');
         }
 
         $gauchada_attrs = [
@@ -182,7 +175,20 @@ class GauchadasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $gauchada = Gauchada::findOrFail($id);
+        $gauchada->title = (request()->has('title')) ? request()->title : $gauchada->title;
+        $gauchada->description = (request()->has('description')) ? request()->description : $gauchada->description;
+        $gauchada->location = (request()->has('location')) ? request()->location : $gauchada->location;
+        $gauchada->ends_at = (request()->has('ends_at')) ? Carbon::createFromFormat('d/m/Y',request()->ends_at)->format('Y-m-d') : $gauchada->ends_at;//request()->ends_at
+        $gauchada->categoria_id = (request()->has('categoria_id')) ? request()->categoria_id : $gauchada->categoria_id;
+        if (request()->hasFile('photo')) {
+            $directory = 'usuarios';
+            $path = '/storage/' . request()->photo->store($directory, 'public');
+            $gauchada->photo = $path;
+        }
+        $gauchada->save();
+        session()->flash('alert', 'Los cambios han sido guardados con éxito');
+        return redirect()->back();
     }
 
     /**
@@ -196,7 +202,7 @@ class GauchadasController extends Controller
         // Eliminar la gauchada implica:
         // Verificar que la gauchada que estoy eliminando es mía
         // Verificar que no haya un postulante aceptado
-        // Si hay 0 postulantes hay que devolver el credito que se usó para publicar la gauchada
+        // Si no hay postulantes aceptados devolver el credito invertido
         // Borrar de la tabla "postulacions" las postulaciones a la gauchada que estoy eliminando
         // Borrar la gauchada de la tabla "gauchadas" 
 
@@ -210,9 +216,9 @@ class GauchadasController extends Controller
             return redirect()->back()->withErrors('Esta gauchada ya tiene un postulante aceptado.');
         }
         
-        if ($gauchada->postulacions->count() === 0) {
+      /*  if ($gauchada->postulacions->count() === 0) { */
             $this->devolverCredito();
-        }
+     //   }
         
         $gauchada->borrarPostulantes();
 
@@ -224,24 +230,44 @@ class GauchadasController extends Controller
 
     }
 
+    protected function checkearGauchadasSinCalificar() {
+        $user = Auth::user();
+        
+        return !$user->gauchadas->contains(function($gauchada) {
+            return !$gauchada->calificada() && $gauchada->tienePostulanteAceptado();
+        });
+    }
+
     public function postulaciones($id) {
         $gauchada = Gauchada::findOrFail($id);
         if (!Auth::check() || Auth::user()->id !== $gauchada['creado_por']) {
             return redirect('/home');
         }
         $postulaciones = Postulacion::where('gauchada',$id)->get();
-        return view('gauchadas.postulaciones')->withGauchada($gauchada)->withPostulaciones($postulaciones);
+        $calificaciones = Calificacion::all();
+        return view('gauchadas.postulaciones')->withGauchada($gauchada)->withPostulaciones($postulaciones)->withCalificaciones($calificaciones);
     }
 
-    public function userGauchadas() {
-        if (!Auth::check() || Auth::user()->esAdmin())
-            return redirect('/home');
-        $user = Auth::user()->id;
-        return $this->index([[
-            'k' => 'creado_por',
-            'op' => '=',
-            'v' => "$user"
-        ]]);
+    public function calificar($id) {
+        if (request()->has('calificacion_id')) {
+            $gauchada = Gauchada::findOrFail($id);
+            $calificacion = Calificacion::findOrFail(request()->calificacion_id);
+            $aceptado = User::findOrFail($gauchada->aceptado);
+            $aceptado->score += $calificacion->score;
+
+            if ($calificacion->name === 'Buena') {
+                $aceptado->credits += 1;
+            }
+            
+            $gauchada->calificacion_id = $calificacion->id;
+
+            $aceptado->save();
+            $gauchada->save();
+
+            session()->flash('alert', 'Calificaste a tu postulante correctamente!');
+        }
+        
+        return redirect()->back();
     }
 
     protected function verificarGauchadaEsMia($gauchada) {
@@ -260,5 +286,55 @@ class GauchadasController extends Controller
         $user->credits += 1;
 
         $user->save();
+    }
+
+    protected function aplicarFiltros($gauchadas) {
+        if (request()->has('title')) {
+            $title = request()->title;
+            $gauchadas = $gauchadas->where('title', 'LIKE', "%$title%");
+        }
+        if (request()->has('location')) {
+            $location = request()->location;
+            $gauchadas = $gauchadas->where('location', 'LIKE', "%$location%");
+        }
+        if (request()->has('categoria_id') && request()->categoria_id !== '0') {
+            $categoria_id = request()->categoria_id;
+            $gauchadas = $gauchadas->where('categoria_id', 'LIKE', "%$categoria_id%");
+        }
+
+        return $gauchadas;
+    }
+
+    protected function getAllGauchadas() {
+        $gauchadas = Gauchada::with('categoria')->withCount('postulacions');
+        //dd($gauchadas->pluck('postulacions_count'));//Gauchada::with('categoria')->with('postulacions')->get());
+        
+        $gauchadas = $this->aplicarFiltros($gauchadas);
+
+        if (! isset(request()->DbgAllGauchadas)) {
+            $gauchadas = $gauchadas->whereRaw('ends_at >= CURRENT_DATE()')
+                                   ->whereNull('aceptado');
+        }
+
+        if (isset(request()['sortByPostulaciones']) && request()['sortByPostulaciones'] === '1') {
+            $gauchadas = $gauchadas->orderBy('postulacions_count');
+        }
+
+        return $gauchadas->paginate(6);
+    }
+
+    protected function getUserGauchadas() {
+
+        $gauchadas = Gauchada::with('categoria')
+                              ->withCount('postulacions')
+                              ->where('creado_por', Auth::user()->id);
+        
+        $gauchadas = $this->aplicarFiltros($gauchadas);
+
+        if (isset(request()['sortByPostulaciones']) && request()['sortByPostulaciones'] === '1') {
+            $gauchadas = $gauchadas->orderBy('postulacions_count');
+        }
+
+        return $gauchadas->paginate(6);
     }
 }

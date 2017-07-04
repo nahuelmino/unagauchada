@@ -31,10 +31,16 @@ class PostulacionesController extends Controller
     	$postulacion = Postulacion::find($id);
     	
     	$gauchada = Gauchada::find($postulacion['gauchada']);
-    	$gauchada['aceptado'] = $postulacion['postulante'];
-    	$gauchada->save();
+        
+        if (!empty($gauchada['aceptado'])) {
+            return redirect()->back()->withErrors(['ya_aceptado' => 'Lo sentimos, ya se ha aceptado un postulante!']);
+        } else {
+            $gauchada['aceptado'] = $postulacion['postulante'];
+            $gauchada->save();
+            session()->flash('alert', 'Postulación aceptada!');
+            return redirect()->back();
+        }
 
-        session()->flash('alert', 'Postulación aceptada!');
-        return redirect()->back();
+
     }
 }

@@ -18,7 +18,7 @@
                         </span>
                     </div>
                     @endif
-                    <form class="form-horizontal" role="form" method="POST" action="/gauchadas/create" enctype="multipart/form-data">
+                    <form class="form-horizontal" role="form" method="POST" action="/gauchadas/{{$gauchada['id']}}/edit" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
@@ -39,7 +39,8 @@
                             <label for="description" class="col-md-4 control-label">Descripción</label>
 
                             <div class="col-md-6">
-                                <textarea id="description" class="form-control" name="description" value="{{ $gauchada->description }}" required></textarea>
+                              <textarea id="description" class="form-control counted" name="description" value="{{ $gauchada->description }}" required>{{ $gauchada->description }}</textarea> 
+                                <h6 class="pull-right" id="counter">255 caracteres restantes</h6>
 
                                 @if ($errors->has('description'))
                                     <span class="help-block">
@@ -107,7 +108,7 @@
 
                             <div class="col-md-6">
                                 @if(isset($gauchada->photo))
-                                <img src="{{ $gauchada->photo }}" alt="">
+                                <img src="{{ $gauchada->photo }}" alt="" width="200" height="200">
                                 @endif
                                 <input id="photo" type="file" name="photo" value="{{ old('photo') }}">
 

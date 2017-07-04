@@ -17,6 +17,13 @@
 
             <!-- parte derecha de la pantalla con datos -->
             <div class="col-md-9">
+            @if ($errors->has('0'))
+                <div class="errors has-error">
+                    <span class="help-block">
+                        <strong>{!! $errors->first('0') !!}</strong>
+                    </span>
+                </div>
+            @endif
                 <div class="panel panel-info" style="border-color:orange">
                     <div class="panel-heading" style="background-color:orange">
                         <h3 class="panel-title" style="color:black">{{ Auth::user()->name }}</h3>
@@ -28,7 +35,7 @@
                                     @if (isset($user['photo']))
                                     <img src="{{ Auth::user()->photo }}" class="img-circle img-responsive">
                                     @else
-                                    <img src="http://usern.tums.ac.ir/asset/UserPhoto/0.JPG">
+                                    <img src="/img/usernopic.png" class="img-circle img-responsive">
                                     @endif
                                 </a>
                             </div>
@@ -51,6 +58,10 @@
                                     <tr>
                                         <td>Mis créditos:</td>
                                         <td>{{ Auth::user()->credits }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Puntaje:</td>
+                                        <td>{{ Auth::user()->score }}</td>
                                     </tr>
                                     </tbody>
                                 </table>

@@ -25,5 +25,18 @@ class DatabaseSeeder extends Seeder
         factory('App\Categoria', 3)->create();
 
         factory('App\Gauchada', 15)->create();
+
+        $calificaciones = [
+            'Buena' => 2,
+            'Neutra' => 0,
+            'Mala' => -1
+        ];
+
+        foreach($calificaciones as $name => $score) {
+            \App\Calificacion::create([
+                'name' => $name,
+                'score' => $score
+            ]);
+        }
     }
 }

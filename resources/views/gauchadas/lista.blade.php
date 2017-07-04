@@ -2,10 +2,9 @@
 
 @section('content')
 	<div class="container-fluid">
-		
 			<div class="col-md-3">
 				<label for="sel1"><p class="lead">Ciudad:</p></label>
-				<form class="form-group" role="search" method="GET" action="gauchadas">
+				<form class="form-group" role="search" method="GET" action="/{{ Route::current()->uri }}">
 					<div class="input-group">
 						@foreach ($request as $k => $v)
 							@if ($k !== 'location')
@@ -19,7 +18,7 @@
 					</div>
 				</form>
 				<label for="sel1"><p class="lead">Categoria:</p></label>
-				<form class="form-group" role="search" method="GET" action="gauchadas">
+				<form class="form-group" role="search" method="GET" action="/{{ Route::current()->uri }}">
 					<div class="input-group">
 						<select id="categoria" class="form-control" name="categoria_id">
 							@if (! isset($request['categoria_id']))
@@ -45,7 +44,7 @@
 						</div>
 					</div>
 				</form>
-				<form class="form-group" role="search" method="GET" action="gauchadas">
+				<form class="form-group" role="search" method="GET" action="/{{ Route::current()->uri }}">
 					<div class="input-group">
 						@foreach ($request as $k => $v)
 							@if ($k !== 'sortByPostulaciones')
@@ -63,7 +62,7 @@
 						</div>
 					</div>
 				</form>
-				<a class="btn btn-orange" href="/gauchadas">Limpiar filtros</a>
+				<a class="btn btn-orange" href="/{{ Route::current()->uri }}">Limpiar filtros</a>
 
 			</div>
 			
@@ -85,9 +84,9 @@
 								</label>
 								<a href="/gauchadas/{{$gauchada['id'] }}" class="thumbnail">
 										@if (isset($gauchada['photo']))
-											<img src="{{ $gauchada['photo'] }}">
+											<img src="{{ $gauchada['photo'] }}" width="150" height="150">
 										@else
-											<img src="/img/icon.png" >
+											<img src="/img/icon.png" width="150" height="150" >
 										@endif
 								</a>
 							<div class="caption">

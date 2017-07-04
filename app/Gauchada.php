@@ -36,6 +36,14 @@ class Gauchada extends Model
         $this->postulacions()->delete();
     }
 
+    public function calificacion() {
+        return $this->belongsTo(Calificacion::class);
+    }
+    
+    public function calificada() {
+        return $this->calificacion_id !== null;
+    }
+
 //    public function getPhotoAttribute($value) {
 //        return '/storage/' . $value;
 //    }
