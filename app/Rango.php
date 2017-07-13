@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Range extends Model
+class Rango extends Model
 {
     //
 }

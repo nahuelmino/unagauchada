@@ -38,5 +38,17 @@ class DatabaseSeeder extends Seeder
                 'score' => $score
             ]);
         }
+
+        $rangos = [
+            'Mala Persona' => -1,
+            'Observador' => 0
+        ];
+
+        foreach($rangos as $nombre => $valor) {
+            \App\Rango::create([
+                'nombre' => $nombre,
+                'valor' => $valor
+            ]);
+        }
     }
 }

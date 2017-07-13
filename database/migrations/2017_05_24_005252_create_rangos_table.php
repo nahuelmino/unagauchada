@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRangeTable extends Migration
+class CreateRangosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateRangeTable extends Migration
     {
         Schema::create('rangos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('valor');
+            $table->integer('valor')->unique();
             $table->string('nombre');
             $table->timestamps();
         });
