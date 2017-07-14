@@ -88,7 +88,7 @@
                         </li>
                         @if (Auth::user()->esAdmin())
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-cog"></span> Panel de control</a>
+                            <a href="/admin"><span class="glyphicon glyphicon-cog"></span> Panel de control</a>
                         </li>
                         @else
                         <li><a href="#">Créditos: {{ Auth::user()->credits }}</a></li>

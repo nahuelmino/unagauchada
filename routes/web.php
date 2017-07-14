@@ -55,3 +55,17 @@ Route::post('/postulaciones/add', 'PostulacionesController@add');
 Route::get('/postulaciones/{id}/accept', 'PostulacionesController@accept');
 
 Route::get('comprar', 'ComprasController@index')->name('comprar');
+
+Route::get('/admin', 'UsersController@admin');
+
+Route::get('/admin/rangos', 'RangosController@index');
+
+Route::get('/admin/rangos/add', 'RangosController@add');
+
+Route::post('/admin/rangos/add', 'RangosController@store');
+
+Route::get('/admin/rangos/{id}/edit', 'RangosController@edit');
+
+Route::post('/admin/rangos/{id}/edit', 'RangosController@update');
+
+Route::get('/admin/rangos/{id}/delete', 'RangosController@delete');

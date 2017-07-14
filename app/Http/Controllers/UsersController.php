@@ -74,5 +74,11 @@ class UsersController extends Controller
         }
 
     }
+
+    public function admin() {
+        if (! (Auth::check() && Auth::user()->esAdmin()) )
+            return redirect('/home');
+        return view('admin');
+    }
     
 }
