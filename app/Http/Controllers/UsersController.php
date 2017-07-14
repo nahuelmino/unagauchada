@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Hash;
 use App\User;
+use App\Compra;
 
 class UsersController extends Controller
 {
@@ -85,7 +86,8 @@ class UsersController extends Controller
     public function balances() {
         if (! (Auth::check() && Auth::user()->esAdmin()) )
             return redirect('/home');
-        return view('admin.balances');
+        $compras = Compra::with('usuario')->get();
+        return view('admin.balances',compact('compras'));
     }
 
     public function listusers() {
