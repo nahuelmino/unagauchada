@@ -41,7 +41,8 @@ class DatabaseSeeder extends Seeder
 
         $rangos = [
             'Mala Persona' => -1,
-            'Observador' => 0
+            'Observador' => 0,
+            'Buena Persona' => 1
         ];
 
         foreach($rangos as $nombre => $valor) {

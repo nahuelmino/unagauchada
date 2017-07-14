@@ -22,7 +22,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
-                            <label for="nombre" class="col-md-4 control-label">Título</label>
+                            <label for="nombre" class="col-md-4 control-label">Nombre del rango</label>
 
                             <div class="col-md-6">
                                 <input id="nombre" type="text" class="form-control" name="nombre" value="{{ $rango->nombre }}" required autofocus>
@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('valor') ? ' has-error' : '' }}">
-                            <label for="valor" class="col-md-4 control-label">Ubicación (ciudad)</label>
+                            <label for="valor" class="col-md-4 control-label">Valor mínimo para pertenecer</label>
 
                             <div class="col-md-6">
                                 @if ($rango['valor'] <= 0)
