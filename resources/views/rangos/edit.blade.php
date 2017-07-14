@@ -18,103 +18,36 @@
                         </span>
                     </div>
                     @endif
-                    <form class="form-horizontal" role="form" method="POST" action="/gauchadas/{{$gauchada['id']}}/edit" enctype="multipart/form-data">
+                    <form class="form-horizontal" role="form" method="POST" action="/admin/rangos/{{$rango['id']}}/edit" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                            <label for="title" class="col-md-4 control-label">Título</label>
+                        <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
+                            <label for="nombre" class="col-md-4 control-label">Título</label>
 
                             <div class="col-md-6">
-                                <input id="title" type="text" class="form-control" name="title" value="{{ $gauchada->title }}" required autofocus>
+                                <input id="nombre" type="text" class="form-control" name="nombre" value="{{ $rango->nombre }}" required autofocus>
 
-                                @if ($errors->has('title'))
+                                @if ($errors->has('nombre'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('title') }}</strong>
+                                        <strong>{{ $errors->first('nombre') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                            <label for="description" class="col-md-4 control-label">Descripción</label>
+                        <div class="form-group{{ $errors->has('valor') ? ' has-error' : '' }}">
+                            <label for="valor" class="col-md-4 control-label">Ubicación (ciudad)</label>
 
                             <div class="col-md-6">
-                              <textarea id="description" class="form-control counted" name="description" value="{{ $gauchada->description }}" required>{{ $gauchada->description }}</textarea> 
-                                <h6 class="pull-right" id="counter">255 caracteres restantes</h6>
-
-                                @if ($errors->has('description'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('description') }}</strong>
-                                    </span>
+                                @if ($rango['valor'] <= 0)
+                                    <input id="valor" type="number" class="form-control" name="valor" value="{{ $rango->valor }}" disabled>
+                                @else
+                                    <input id="valor" type="number" class="form-control" name="valor" value="{{ $rango->valor }}" required>
                                 @endif
-                            </div>
-                        </div>
 
-                        <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
-                            <label for="location" class="col-md-4 control-label">Ubicación (ciudad)</label>
-
-                            <div class="col-md-6">
-                                <input id="location" type="text" class="form-control" name="location" value="{{ $gauchada->location }}" required>
-
-                                @if ($errors->has('location'))
+                                @if ($errors->has('valor'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('location') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('ends_at') ? ' has-error' : '' }}">
-                            <label for="ends_at" class="col-md-4 control-label">Abierta hasta: </label>
-
-                            <div class="col-md-6">
-                                <input id="ends_at" type="text" class="form-control datepicker" name="ends_at" value="{{ \DateTime::createFromFormat('Y-m-d H:i:s', $gauchada->ends_at)->format('d/m/Y') }}" required>
-
-                                @if ($errors->has('ends_at'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('ends_at') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('categoria') ? ' has-error' : '' }}">
-                            <label for="categoria" class="col-md-4 control-label">Categoría</label>
-
-                            <div class="col-md-6">
-                                <select id="categoria" class="form-control" name="categoria_id">
-                                    <option value="0" disabled selected>-- Seleccione una --</option>
-                                    <?php
-
-                                    foreach ($categorias as $categoria) {
-                                        $sel = '';
-                                        if (old('categoria') == $categoria->id) {
-                                            $sel = ' selected';
-                                        } ?>
-                                        <option value="{{ $categoria->id }}{{ $sel }}">{{ $categoria->name }}</option>
-                                    <?php } ?>
-                                </select>
-
-                                @if ($errors->has('categoria'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('categoria') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('photo') ? ' has-error' : '' }}">
-                            <label for="photo" class="col-md-4 control-label">Foto (opcional)</label>
-
-                            <div class="col-md-6">
-                                @if(isset($gauchada->photo))
-                                <img src="{{ $gauchada->photo }}" alt="" width="200" height="200">
-                                @endif
-                                <input id="photo" type="file" name="photo" value="{{ old('photo') }}">
-
-                                @if ($errors->has('photo'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('photo') }}</strong>
+                                        <strong>{{ $errors->first('valor') }}</strong>
                                     </span>
                                 @endif
                             </div>

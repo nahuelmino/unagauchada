@@ -48,12 +48,19 @@ class RangosController extends Controller
 	public function edit($id) {
         if (! (Auth::check() && Auth::user()->esAdmin()) )
             return redirect('/home');
-		return view('rangos.edit');
+		$rango = Rango::findOrFail($id);
+		return view('rangos.edit', compact('rango'));
 	}
 
 	public function update(Request $request,$id) {
         if (! (Auth::check() && Auth::user()->esAdmin()) )
             return redirect('/home');
+        $rango = Rango::findOrFail($id);
+        $rango->nombre = (request()->has('nombre')) ? request()->nombre : $rango->nombre;
+        $rango->valor = (request()->has('valor')) ? request()->valor : $rango->valor;
+        $rango->save();
+        session()->flash('alert', 'Los cambios han sido guardados con éxito');
+        return redirect('/admin/rangos');
 	}
 
 	public function delete($id) {
