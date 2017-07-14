@@ -88,7 +88,6 @@
 								<button type="submit" class="btn btn-orange">Responder</button>
 							</form>
 							@endif
-							@endif
 						</div>
 					</div>
 					@if (!($loop->first || $loop->last))

@@ -53,7 +53,8 @@
             <div class="row" style="display: flex; align-items: center;">
                 <div class="col-md-3" style="display: flex; align-items: center;">
                     <h3 style="margin: 10px 20px 10px 0;">{{ $user['name'] }}</h3>
-                    <h6 style="margin: 0;">Puntos: <strong>{{ $user['score'] }}</strong></span></h6>  
+                    <h6 style="margin: 10px 20px 10px 0;"><strong>{{ $user->get_rango() }}</strong></span></h6>
+                    <h6 style="margin: 0;">Puntos: <strong>{{ $user['score'] }}</strong></span></h6>
                 </div>
                 
                 <div class="col-md-9" style="display: flex; align-items: center;">

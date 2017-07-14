@@ -57,4 +57,16 @@ class User extends Authenticatable
         $necesitados = Postulacion::get()->where('gauchada',$gauchada_id)->count();
         return $necesitados;
     }
+
+    public function get_rango() {
+        $str_rango = "";
+        if ($this->score < 0)
+            $str_rango = Rango::where('valor',-1);
+        else {
+            $min = Rango::where('valor','<=',$this->score)->max('valor');
+            $str_rango = Rango::where('valor',$min);
+        }
+        //$str_rango = $str_rango->select('nombre');
+        return $str_rango->pluck('nombre')->first();
+    }
 }
