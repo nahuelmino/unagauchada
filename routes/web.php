@@ -55,6 +55,10 @@ Route::get('/postulaciones/{id}/accept', 'PostulacionesController@accept');
 // Admin
 Route::get('/admin', 'UsersController@admin');
 
+//-- Listados
+Route::get('/admin/balances', 'UsersController@balances');
+Route::get('/admin/listusers', 'UsersController@listusers');
+
 //-- Rangos
 Route::get('/admin/rangos', 'RangosController@index');
 

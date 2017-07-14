@@ -34,6 +34,10 @@
                             <label for="fecha_expiracion">Fecha de expiracion</label>
                             <input id="fecha_expiracion" type="text" name="fecha_expiracion" class="form-control datepicker" placeholder="Click aqui para desplegar el calendario" required>
                         </div>
+                        <div class="form-group">
+                            <label for="cantidad">Cantidad</label>
+                            <input id="cantidad" type="number" name="cantidad" class="form-control" required value="1" min="1">
+                        </div>
                         <div class="form-group{{ $errors->has('0') ? ' has-error' : '' }}">
                             <button type="submit" class="btn btn-primary btn-orange">Comprar</button>
 

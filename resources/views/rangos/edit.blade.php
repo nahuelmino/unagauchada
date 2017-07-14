@@ -42,7 +42,7 @@
                                 @if ($rango['valor'] <= 0)
                                     <input id="valor" type="number" class="form-control" name="valor" value="{{ $rango->valor }}" disabled>
                                 @else
-                                    <input id="valor" type="number" class="form-control" name="valor" value="{{ $rango->valor }}" required>
+                                    <input id="valor" type="number" class="form-control" name="valor" value="{{ $rango->valor }}" required min="1">
                                 @endif
 
                                 @if ($errors->has('valor'))

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Hash;
+use App\User;
 
 class UsersController extends Controller
 {
@@ -78,7 +79,20 @@ class UsersController extends Controller
     public function admin() {
         if (! (Auth::check() && Auth::user()->esAdmin()) )
             return redirect('/home');
-        return view('admin');
+        return view('admin.tools');
+    }
+
+    public function balances() {
+        if (! (Auth::check() && Auth::user()->esAdmin()) )
+            return redirect('/home');
+        return view('admin.balances');
+    }
+
+    public function listusers() {
+        if (! (Auth::check() && Auth::user()->esAdmin()) )
+            return redirect('/home');
+        $users = User::all();
+        return view('admin.listusers',compact('users'));
     }
     
 }
