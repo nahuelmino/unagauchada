@@ -10,7 +10,8 @@
                 <p class="lead">Perfil de usuario</p>
                 <div class="list-group">
                     <a href="#" class="list-group-item active">Mis datos</a>
-                    <a href="/gauchadas/user" class="list-group-item">Mis gauchadas</a>
+		            <!-- controlar que admin no tenga opcion de ver sus publicaciones -->
+					<a href="/gauchadas/user" class="list-group-item">Mis gauchadas</a>
                 </div>
             </div>
 

@@ -12,7 +12,7 @@
 			</div>
 			<div class="row">
 			    <div class="container">
-		            <div class="row" style="display: flex; align-items: center;">
+		            <div class="row" style="display: flex; align-items: center; background-color:yellow;">
 		                <div class="col-md-4" style="display: flex;">
 		                    <h5 style="margin: 10px 20px 10px 0;"><strong>Nombre</strong></h5>
 		                </div>
