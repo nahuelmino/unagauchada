@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Compra;
+use App\Precio;
 
 class ComprasController extends Controller
 {
@@ -104,7 +105,7 @@ class ComprasController extends Controller
 
         Compra::create([
             'user_id' => Auth::user()->id,
-            'precio_unitario' => config('app.precio_credito'),
+            'precio_unitario' => Precio::where('nombre','credito')->first()->unitario,
             'cantidad' => $cant
         ]);
 

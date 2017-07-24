@@ -335,6 +335,10 @@ class GauchadasController extends Controller
             $gauchadas = $gauchadas->orderBy('postulacions_count');
         }
 
+        if (! isset(request()->DbgAllGauchadas)) {
+            $gauchadas = $gauchadas->whereNull('calificacion_id');
+        }
+
         return $gauchadas->paginate(6);
     }
 }

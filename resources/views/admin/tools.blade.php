@@ -25,6 +25,7 @@
 					<a href="/admin/categorias" class="list-group-item">Editar categorias</a>
                     <a href="/admin/balances" class="list-group-item">Mostrar balances</a>
                     <a href="/admin/listusers" class="list-group-item">Mostrar usuarios registrados</a>
+                    <a href="/admin/credits" class="list-group-item">Cambiar valor del crédito</a>
                 </div>
             </div>
 

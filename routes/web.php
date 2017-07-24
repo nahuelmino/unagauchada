@@ -68,6 +68,9 @@ Route::post('/admin/rangos/add', 'RangosController@store');
 Route::get('/admin/rangos/{id}/edit', 'RangosController@edit');
 Route::post('/admin/rangos/{id}/edit', 'RangosController@update');
 
+Route::get('/admin/credits', 'CreditsController@edit');
+Route::post('/admin/credits', 'CreditsController@update');
+
 Route::get('/admin/rangos/{id}/delete', 'RangosController@delete');
 
 //-- Categorias
