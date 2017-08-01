@@ -36,7 +36,8 @@
                         </div>
                         <div class="form-group">
                             <label for="cantidad">Cantidad</label>
-                            <input id="cantidad" type="number" name="cantidad" class="form-control" required value="1" min="1">
+                            <input id="cantidad" type="number" name="cantidad" class="form-control" onChange="updatePrice({{ $costo['unitario'] }})" required value="1" min="1">
+                            <b>Costo: $<span id="totalPrice">{{ $costo['unitario'] }}</span></b>
                         </div>
                         <div class="form-group{{ $errors->has('0') ? ' has-error' : '' }}">
                             <button type="submit" class="btn btn-primary btn-orange">Comprar</button>
@@ -57,4 +58,5 @@
 
 @section('added_scripts')
     @include('plugins.datepicker.scripts')
+    @include('plugins.changeprice.scripts')
 @endsection

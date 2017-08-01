@@ -122,7 +122,8 @@ class ComprasController extends Controller
     }
 
     public function index() {
-        return view('creditos.comprar');
+        $costo = \App\Precio::where('nombre','credito')->first();
+        return view('creditos.comprar', compact('costo'));
     }
 
 }

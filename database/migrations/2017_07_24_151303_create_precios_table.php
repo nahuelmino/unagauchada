@@ -15,7 +15,7 @@ class CreatePreciosTable extends Migration
     {
         Schema::create('precios', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre');
+            $table->string('nombre')->unique();
             $table->integer('unitario');
             $table->timestamps();
         });

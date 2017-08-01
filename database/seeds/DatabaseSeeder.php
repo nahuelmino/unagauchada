@@ -51,5 +51,10 @@ class DatabaseSeeder extends Seeder
                 'valor' => $valor
             ]);
         }
+
+        \App\Precio::create([
+                'nombre' => 'credito',
+                'unitario' => 50
+            ]);
     }
 }
