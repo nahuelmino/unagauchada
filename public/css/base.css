@@ -15,6 +15,14 @@ html, body {
     color: #FFFFFF !important;
 }
 
+.text-orange:hover {
+    color: inherit !important;
+}
+
+.text-white:hover {
+    color: inherit !important;
+}
+
 .bg-orange {
     background-color: #FF8E29 !important;
 }
@@ -147,3 +155,13 @@ html, body {
     color: #FF8E29;
 }
 
+.single-gauchada {
+    position: relative;
+    min-height: 375px;
+}
+
+.category-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

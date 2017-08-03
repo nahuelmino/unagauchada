@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePostulacionTable extends Migration
+class CreateRangosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreatePostulacionTable extends Migration
      */
     public function up()
     {
-        Schema::create('postulacion', function (Blueprint $table) {
+        Schema::create('rangos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            //$table->foreign('user_id')->references('id')->on('users');
-            $table->integer('gauchada')->unsigned();
-            //$table->foreign('gauchada')->references('id')->on('gauchadas');
+            $table->integer('valor')->unique();
+            $table->string('nombre');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreatePostulacionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('postulacion');
+        Schema::dropIfExists('rangos');
     }
 }

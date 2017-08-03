@@ -15,13 +15,15 @@
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
 
+    $caracteristicas = ['011', '0221', '02963', '0777'];
+
     return [
         'name' => $faker->firstName,
         'surname' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('unagauchada'),
         'date_of_birth' => $faker->date(),
-        'phone' => $faker->phoneNumber,
+        'phone' => $faker->randomElement($caracteristicas) . '-' . $faker->randomNumber(7),
         'photo' => $faker->imageUrl(),
         'remember_token' => str_random(10),
     ];
@@ -43,13 +45,9 @@ $factory->define(App\Gauchada::class, function (Faker\Generator $faker) {
     return [
         'creado_por' => $faker->unique(true)->randomElement($users),
         'categoria_id' => $faker->unique(true)->randomElement($categorias),
-        'title' => $faker->title,
+        'title' => $faker->catchPhrase,
         'description' => $faker->realText(180),
         'location' => $faker->city,
-        'photo' => $faker->image(null, 400, 400),
         'ends_at' => \Carbon\Carbon::tomorrow(),
     ];
 });
-
-
-

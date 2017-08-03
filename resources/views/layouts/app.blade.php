@@ -19,6 +19,14 @@
     <style>
         .centered { margin: auto; max-width: 300px;}
         .marg5 {margin-top: 10px;}
+        .margle {margin-left:10px; }
+        .gauchadabox {  
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden ;
+            );}
+        
+
     </style>
 
     @yield('added_styles')
@@ -54,7 +62,8 @@
                 <?php //{{ config('app.name', 'Una Gauchada') }}?>
             </div>
             <div class="col-md-5">
-                <form class="form-group" role="search" method="GET" action="gauchadas">
+                <form class="form-group" role="search" method="GET" 
+                    action="{{ (Route::current()->uri === 'gauchadas/user') ? '/gauchadas/user' : '/gauchadas' }}">
                     <div class="input-group marg5">
                         <input type="text" class="form-control" placeholder="Buscar Gauchada..." name="title">
                         <div class="input-group-btn">
@@ -74,17 +83,23 @@
                         Menú<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="{{ route('home') }}"><span class="glyphicon glyphicon-user"></span> Mi perfil</a>
+                        </li>
                         @if (Auth::user()->esAdmin())
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-cog"></span> Panel de control</a>
+                            <a href="/admin"><span class="glyphicon glyphicon-cog"></span> Panel de control</a>
                         </li>
                         @else
-                        <li><a href="{{ route('comprar') }}">Créditos: {{ Auth::user()->credits }}</a></li>
-                        <li>
-                            <a href="#"><span class="glyphicon glyphicon-user"></span> Mi perfil</a>
+                        <li><a href="#">Créditos: {{ Auth::user()->credits }}</a></li>
+                        <li style="background-color:orange">
+                            <a href="{{ route('comprar') }}"><span class="glyphicon glyphicon-usd"></span> Comprar créditos</a>
                         </li>
                         <li>
-                            <a href="{{ route('comprar') }}"><span class="glyphicon glyphicon-usd"></span> Comprar créditos</a>
+                            <a href="/gauchadas/create"><span class="glyphicon glyphicon-star"></span>Crear Gauchada</a>
+                        </li>
+                        <li>
+                            <a href="/gauchadas/user"><span class="glyphicon glyphicon-list"></span>Mis Gauchadas</a>
                         </li>
                         @endif
                         <li>
@@ -97,7 +112,6 @@
                                 {{ csrf_field() }}
                             </form>
                         </li>
-
                     </ul>
                 </li>
                 
@@ -117,7 +131,25 @@
         {{ session('alert') }}
     </div>
     @endif
+    @if ($errors->has('0'))
+    <div class="container-fluid">
+        <div class="form-group{{ $errors->has('0') ? ' has-error' : '' }}">
+            <span class="help-block">
+                <strong>{!! $errors->first('0') !!}</strong>
+            </span>
+        </div>
+    </div>
+    @endif
     @yield('content')
+    <div class="container">
+        <footer>
+            <div class="row">
+                <div class="col-lg-12 text-right">
+                    <p>Una Gauchada 2017</p>
+                </div>
+            </div>
+        </footer>
+    </div>
 </div>
 
 <!-- Scripts -->

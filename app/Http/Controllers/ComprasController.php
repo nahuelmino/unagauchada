@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Compra;
+use App\Precio;
 
 class ComprasController extends Controller
 {
@@ -16,9 +17,9 @@ class ComprasController extends Controller
             return redirect()->back()->withErrors($validacion['mensaje']);
         }
 
-        $this->crearCompra();
+        $this->crearCompra(request()->cantidad);
 
-        $this->agregarCreditosAUsuario();
+        $this->agregarCreditosAUsuario(request()->cantidad);
 
         return redirect('/home');
     
@@ -82,34 +83,47 @@ class ComprasController extends Controller
             ];
         }
 
+        if (!(request()->has('cantidad'))) {
+            return [
+                'esValida' => false,
+                'mensaje' => 'Ingrese la cantidad de créditos a comprar'
+            ];
+        } elseif (request()->cantidad <= 0) {
+            return [
+                'esValida' => false,
+                'mensaje' => 'Ingrese una cantidad válida de créditos'
+            ];
+        }
+
         return [
             'esValida' => true,
         ];
 
     }
 
-    protected function crearCompra() {
+    protected function crearCompra($cant) {
 
         Compra::create([
             'user_id' => Auth::user()->id,
-            'precio_unitario' => config('app.precio_credito'),
-            'cantidad' => '1'
+            'precio_unitario' => Precio::where('nombre','credito')->first()->unitario,
+            'cantidad' => $cant
         ]);
 
     }
 
-    protected function agregarCreditosAUsuario() {
+    protected function agregarCreditosAUsuario($cant) {
 
         $user = Auth::user();
 
-        $user->credits = $user->credits + 1;
+        $user->credits = $user->credits + $cant;
 
         $user->save();
 
     }
 
     public function index() {
-        return view('creditos.comprar');
+        $costo = \App\Precio::where('nombre','credito')->first();
+        return view('creditos.comprar', compact('costo'));
     }
 
 }

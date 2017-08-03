@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -28,8 +27,8 @@ class User extends Authenticatable
     ];
 
 
-    public function publicaciones() {
-        return $this->hasMany(Gauchada::class);
+    public function gauchadas() {
+        return $this->hasMany(Gauchada::class, 'creado_por');
     }
 
     public function postulaciones() {
@@ -49,4 +48,25 @@ class User extends Authenticatable
         return $this->is_admin === 1;
     }
 
+    public function cant_postulaciones($gauchada_id) {
+        $postulaciones = Postulacion::get()->where('gauchada',$gauchada_id)->where('postulante',$this->id)->count();
+        return $postulaciones;
+    }
+
+    public function cant_necesitados($gauchada_id) {
+        $necesitados = Postulacion::get()->where('gauchada',$gauchada_id)->count();
+        return $necesitados;
+    }
+
+    public function get_rango() {
+        $str_rango = "";
+        if ($this->score < 0)
+            $str_rango = Rango::where('valor',-1);
+        else {
+            $min = Rango::where('valor','<=',$this->score)->max('valor');
+            $str_rango = Rango::where('valor',$min);
+        }
+        //$str_rango = $str_rango->select('nombre');
+        return $str_rango->pluck('nombre')->first();
+    }
 }

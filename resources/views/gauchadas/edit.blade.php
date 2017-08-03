@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Publicar nueva gauchada</div>
+                <div class="panel-heading">Editar gauchada</div>
                 <div class="panel-body">
 
                     @if ($errors->has('0'))
@@ -19,14 +19,14 @@
                         </span>
                     </div>
                     @endif
-                    <form class="form-horizontal" role="form" method="POST" action="/gauchadas/create" enctype="multipart/form-data">
+                    <form class="form-horizontal" role="form" method="POST" action="/gauchadas/{{$gauchada['id']}}/edit" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                             <label for="title" class="col-md-4 control-label">Título</label>
 
                             <div class="col-md-6">
-                                <input id="title" type="text" class="form-control" name="title" value="{{ old('title') }}" required autofocus>
+                                <input id="title" type="text" class="form-control" name="title" value="{{ $gauchada->title }}" required autofocus>
 
                                 @if ($errors->has('title'))
                                     <span class="help-block">
@@ -40,7 +40,7 @@
                             <label for="description" class="col-md-4 control-label">Descripción</label>
 
                             <div class="col-md-6">
-                                <textarea id="description" class="form-control counted" name="description" value="{{ old('description') }}" required></textarea>
+                              <textarea id="description" class="form-control counted" name="description" value="{{ $gauchada->description }}" required>{{ $gauchada->description }}</textarea> 
                                 <h6 class="pull-right" id="counter">255 caracteres restantes</h6>
 
                                 @if ($errors->has('description'))
@@ -55,7 +55,7 @@
                             <label for="location" class="col-md-4 control-label">Ubicación (ciudad)</label>
 
                             <div class="col-md-6">
-                                <input id="location" type="text" class="form-control" name="location" value="{{ old('location') }}" required>
+                                <input id="location" type="text" class="form-control" name="location" value="{{ $gauchada->location }}" required>
 
                                 @if ($errors->has('location'))
                                     <span class="help-block">
@@ -69,7 +69,7 @@
                             <label for="ends_at" class="col-md-4 control-label">Abierta hasta: </label>
 
                             <div class="col-md-6">
-                                <input id="ends_at" type="text" class="form-control datepicker" name="ends_at" value="{{ old('ends_at') }}" required>
+                                <input id="ends_at" type="text" class="form-control datepicker" name="ends_at" value="{{ \DateTime::createFromFormat('Y-m-d H:i:s', $gauchada->ends_at)->format('d/m/Y') }}" required>
 
                                 @if ($errors->has('ends_at'))
                                     <span class="help-block">
@@ -108,6 +108,9 @@
                             <label for="photo" class="col-md-4 control-label">Foto (opcional)</label>
 
                             <div class="col-md-6">
+                                @if(isset($gauchada->photo))
+                                <img src="{{ $gauchada->photo }}" alt="" width="200" height="200">
+                                @endif
                                 <input id="photo" type="file" name="photo" value="{{ old('photo') }}">
 
                                 @if ($errors->has('photo'))
@@ -121,7 +124,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary btn-orange">
-                                    Publicar
+                                    Guardar cambios
                                 </button>
                             </div>
                         </div>

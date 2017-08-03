@@ -17,14 +17,34 @@ class Gauchada extends Model
     }
 
     public function publicado() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'creado_por');
     }
 
     public function aceptado() {
         return $this->belongsTo(User::class);
     }
 
-    public function getPhotoAttribute($value) {
-        return '/storage/' . $value;
+    public function postulacions() {
+        return $this->hasMany(Postulacion::class,'gauchada');
     }
+
+    public function tienePostulanteAceptado() {
+        return $this->aceptado !== null;
+    }
+
+    public function borrarPostulantes() {
+        $this->postulacions()->delete();
+    }
+
+    public function calificacion() {
+        return $this->belongsTo(Calificacion::class);
+    }
+    
+    public function calificada() {
+        return $this->calificacion_id !== null;
+    }
+
+//    public function getPhotoAttribute($value) {
+//        return '/storage/' . $value;
+//    }
 }

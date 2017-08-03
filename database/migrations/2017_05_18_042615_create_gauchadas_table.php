@@ -21,6 +21,7 @@ class CreateGauchadasTable extends Migration
             //$table->foreign('categoria')->references('id')->on('gauchada_categorias');
             $table->integer('aceptado')->unsigned()->nullable()->default(null);
             //$table->foreign('aceptado')->references('id')->on('users');
+            $table->integer('calificacion_id')->unsigned()->nullable()->default(null);
             $table->string('title');
             $table->longText('description');
             $table->string('location');
