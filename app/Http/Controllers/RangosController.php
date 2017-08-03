@@ -12,13 +12,13 @@ class RangosController extends Controller
         if (! (Auth::check() && Auth::user()->esAdmin()) )
             return redirect('/home');
     	$rangos = Rango::orderBy('valor')->get();
-    	//dd($rangos);
 		return view('rangos.lista', compact('rangos'));
 	}
 
 	public function add() {
         if (! (Auth::check() && Auth::user()->esAdmin()) )
             return redirect('/home');
+
 		return view('rangos.create');
 	}
 
@@ -36,6 +36,12 @@ class RangosController extends Controller
             'valor' => request()->valor
         ];
 
+        $rango_existente = Rango::where('valor', request()->valor)->first();
+        if (!empty($rango_existente)) {
+
+            //redirigir
+            return redirect('/admin/rangos')->withErrors('El valor del rango ya existe.');
+        }
         //crear y guardar
         Rango::create($rango_attrs);
 
@@ -43,6 +49,9 @@ class RangosController extends Controller
 
         //redirigir
         return redirect('/admin/rangos');
+
+
+
 	}
 
 	public function edit($id) {
@@ -55,6 +64,13 @@ class RangosController extends Controller
 	public function update(Request $request,$id) {
         if (! (Auth::check() && Auth::user()->esAdmin()) )
             return redirect('/home');
+        $rango_existente = Rango::where('valor', request()->valor)->first();
+        if (!empty($rango_existente)) {
+
+            //redirigir
+            return redirect('/admin/rangos')->withErrors('El valor del rango ya existe.');
+        }
+
         $rango = Rango::findOrFail($id);
         $rango->nombre = (request()->has('nombre')) ? request()->nombre : $rango->nombre;
         $rango->valor = (request()->has('valor')) ? request()->valor : $rango->valor;
@@ -73,6 +89,9 @@ class RangosController extends Controller
 		elseif ($rango_eliminar['valor'] === 0) {
 			return redirect()->back()->withErrors('No se puede eliminar el rango neutral!');
 		}
+        elseif ($rango_eliminar['valor'] === 1) {
+            return redirect()->back()->withErrors('No se puede eliminar el rango Buena Persona!');
+        }
 
         $rango_eliminar->delete();
         

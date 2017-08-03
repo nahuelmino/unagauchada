@@ -4,7 +4,7 @@
     function setDatepicker() {
         var pagesWithMinDate = ['/gauchadas/create'];
         var pagesWithChangeYear = ['/register'];
-        var pagesWithNoDays = ['/comprar'];
+        var pagesWithNoDays = ['/comprar', '/admin/balances'];
         var date = new Date(new Date().getTime() + 86400000);
 
         var datepickerOptions = {

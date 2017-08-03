@@ -33,6 +33,11 @@ class CategoriasController extends Controller
             'name' => request()->name
         ];
 
+        $categoria_existente = Categoria::where('name', request()->name)->first();
+        if (!empty($categoria_existente)) {
+            return redirect('/admin/categorias')->withErrors('Ya existe una categoria con ese nombre');
+        }
+
         //crear y guardar
         Categoria::create($categoria_attrs);
 
@@ -54,6 +59,12 @@ class CategoriasController extends Controller
 	public function update(Request $request,$id) {
         if (! (Auth::check() && Auth::user()->esAdmin()) )
             return redirect('/home');
+
+        $categoria_existente = Categoria::where('name', request()->name)->first();
+        if (!empty($categoria_existente)) {
+            return redirect('/admin/categorias')->withErrors('Ya existe una categoria con ese nombre');
+        }
+
         $categoria = Categoria::findOrFail($id);
         $categoria->name = (request()->has('name')) ? request()->name : $categoria->name;
         $categoria->save();

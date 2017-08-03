@@ -40,7 +40,7 @@
                             <label for="valor" class="col-md-4 control-label">Valor mínimo para pertenecer</label>
 
                             <div class="col-md-6">
-                                <input id="valor" type="number" class="form-control" name="valor" value="{{ old('valor') }}" required min="1">
+                                <input id="valor" type="number" class="form-control" name="valor" value="{{ old('valor') }}" required min="2">
 
                                 @if ($errors->has('valor'))
                                     <span class="help-block">

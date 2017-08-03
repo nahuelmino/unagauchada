@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
 use Hash;
@@ -86,7 +87,23 @@ class UsersController extends Controller
     public function balances() {
         if (! (Auth::check() && Auth::user()->esAdmin()) )
             return redirect('/home');
-        $compras = Compra::with('usuario')->get();
+        if (request()->has('fecha_inicio') && request()->has('fecha_fin')) {
+            $fecha_inicio = Carbon::createFromFormat('m/Y', request()->fecha_inicio)->format('Y-m-d');
+            $fecha_fin = Carbon::createFromFormat('m/Y', request()->fecha_fin)->format('Y-m-d');
+            $compras = Compra::with('usuario')->whereBetween('created_at', [$fecha_inicio, $fecha_fin])->get();
+        }
+        elseif (request()->has('fecha_inicio') && !request()->has('fecha_fin')) {
+            $fecha_inicio = Carbon::createFromFormat('m/Y', request()->fecha_inicio)->format('Y-m-d');
+            $fecha_fin = Carbon::createFromFormat('m/Y', request()->fecha_fin)->format('Y-m-d');
+            $compras = Compra::with('usuario')->where('created_at', '>', $fecha_inicio)->get();
+        }
+        elseif(!request()->has('fecha_inicio') && request()->has('fecha_fin')) {
+            $fecha_inicio = Carbon::createFromFormat('m/Y', request()->fecha_inicio)->format('Y-m-d');
+            $fecha_fin = Carbon::createFromFormat('m/Y', request()->fecha_fin)->format('Y-m-d');
+            $compras = Compra::with('usuario')->where('created_at', '<', $fecha_fin)->get();
+        } else {
+            $compras = Compra::with('usuario')->get();
+        }
         return view('admin.balances',compact('compras'));
     }
 

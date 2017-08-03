@@ -1,8 +1,25 @@
 @extends('layouts.app')
 
+@section('added_styles')
+	@include('plugins.datepicker.styles')
+@endsection
+
 @section('content')
 	<div class="container-fluid">
 		<div class="col-md-9">
+			<div class="row">
+				<form action="/admin/balances" method="get" style="margin: 10px 0;">
+					<div class="input-group" style="display: inline-block; vertical-align: middle;">
+						<label for="fecha_inicio">Fecha inicio</label>
+						<input type="text" id="fecha_inicio" name="fecha_inicio" class="datepicker form-control">
+					</div>
+					<div class="input-group" style="display: inline-block; vertical-align: middle;">
+						<label for="fecha_fin">Fecha fin</label>
+						<input type="text" id="fecha_fin" name="fecha_fin" class="datepicker form-control">
+					</div>
+					<input type="submit" value="Buscar" style="display: inline-block; vertical-align: middle;">
+				</form>
+			</div>
 			<div class="row">
 				@if ($errors->has('0'))
 					<span class="help-block">
@@ -68,4 +85,8 @@
 			</div>
 		</div>
 	</div>
+@endsection
+
+@section('added_scripts')
+	@include('plugins.datepicker.scripts')
 @endsection

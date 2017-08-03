@@ -24,7 +24,7 @@
 			                
 			                <div class="col-md-7" style="display: flex;">
 			                    <a class="btn btn-orange" href="/admin/rangos/{{ $rango['id'] }}/edit">Editar</a>
-			                    @if ($rango['valor'] <= 0)
+			                    @if ($rango['valor'] <= 1)
 									<a class="btn btn-orange" disabled>X</a>
 								@else
 									<a class="btn btn-orange needs-confirmation" data-confirmation-message="Esta seguro de eliminar este rango?" href="/admin/rangos/{{ $rango['id'] }}/delete">X</a>
